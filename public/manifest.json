@@ -1,0 +1,179 @@
+{
+  "name": "SoccaZ - Halı Saha Rezervasyon Sistemi",
+  "short_name": "SoccaZ",
+  "description": "SoccaZ ile halı saha rezervasyonlarınızı kolayca yapın. Online rezervasyon sistemi, anlık bildirimler ve kullanıcı dostu arayüz.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#16a34a",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "tr",
+  "categories": ["sports", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "SoccaZ Ana Sayfa - Desktop Görünümü"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "SoccaZ Mobil Görünümü"
+    },
+    {
+      "src": "/SoccaZ.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Rezervasyon Sistemi"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Rezervasyon Yap",
+      "short_name": "Rezervasyon",
+      "description": "Hızlı halı saha rezervasyonu yapın",
+      "url": "/fields",
+      "icons": [
+        {
+          "src": "/SoccaZ.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Rezervasyonlarım",
+      "short_name": "Rezervasyonlarım",
+      "description": "Mevcut rezervasyonlarınızı görüntüleyin ve yönetin",
+      "url": "/reservations",
+      "icons": [
+        {
+          "src": "/SoccaZ.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Profilim",
+      "short_name": "Profil",
+      "description": "Hesap bilgilerinizi düzenleyin",
+      "url": "/profile",
+      "icons": [
+        {
+          "src": "/SoccaZ.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "İletişim",
+      "short_name": "İletişim",
+      "description": "Bizimle iletişime geçin",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/SoccaZ.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "protocol_handlers": [
+    {
+      "protocol": "web+football",
+      "url": "/fields?protocol=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "text/calendar": [".ics"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "permissions": [
+    "notifications",
+    "geolocation"
+  ],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "id": "soccaz-hali-saha-rezervasyon",
+  "dir": "ltr",
+  "iarc_rating_id": "",
+  "scope_extensions": [],
+  "start_url_origin": "https://soccaz.com"
+} 

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/SoccaZ.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>SoccaZ - Halı Saha Rezervasyon Sistemi</title>
+    <meta name="description" content="SoccaZ ile halı saha rezervasyonlarınızı kolayca yapın. Online rezervasyon sistemi, anlık bildirimler ve kullanıcı dostu arayüz." />
+    <meta name="keywords" content="halı saha, rezervasyon, futbol, saha kiralama, online rezervasyon, SoccaZ" />
+    <meta name="author" content="SoccaZ" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="SoccaZ - Halı Saha Rezervasyon Sistemi" />
+    <meta property="og:description" content="SoccaZ ile halı saha rezervasyonlarınızı kolayca yapın. Online rezervasyon sistemi, anlık bildirimler ve kullanıcı dostu arayüz." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://soccaz.com" />
+    <meta property="og:image" content="/SoccaZ.png" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SoccaZ - Halı Saha Rezervasyon Sistemi" />
+    <meta name="twitter:description" content="SoccaZ ile halı saha rezervasyonlarınızı kolayca yapın. Online rezervasyon sistemi, anlık bildirimler ve kullanıcı dostu arayüz." />
+    <meta name="twitter:image" content="/SoccaZ.png" />
+    
+    <!-- Mobile Meta Tags -->
+    <meta name="theme-color" content="#16a34a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SoccaZ" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="SoccaZ" />
+    <meta name="msapplication-TileColor" content="#16a34a" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/SoccaZ.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/SoccaZ.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/SoccaZ.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsActivityLocation",
+      "name": "SoccaZ",
+      "description": "Halı saha rezervasyon sistemi",
+      "url": "https://soccaz.com",
+      "logo": "https://soccaz.com/SoccaZ.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TR"
+      },
+      "sport": "Football",
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Halı Saha",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification", 
+          "name": "Online Rezervasyon",
+          "value": true
+        }
+      ]
+    }
+    </script>
+    
+    <style>
+      /* Loading Animation */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: 'Inter', sans-serif;
+      }
+      
+      .loading-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+      }
+      
+      .loading-text {
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading screen when app loads */
+      .app-loaded .loading-screen {
+        display: none;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #16a34a;
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #15803d;
+      }
+      
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Focus styles for accessibility */
+      *:focus {
+        outline: 2px solid #16a34a;
+        outline-offset: 2px;
+      }
+      
+      /* Selection color */
+      ::selection {
+        background: #16a34a;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <img src="/SoccaZ.png" alt="SoccaZ Logo" class="loading-logo" />
+      <div class="loading-text">SoccaZ</div>
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Hide loading screen when app loads -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.body.classList.add('app-loaded');
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
