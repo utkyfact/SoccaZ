@@ -4,9 +4,10 @@ import { Link, useNavigate } from 'react-router';
 import Layout from '../components/Layout';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { updateProfile, updateEmail, sendEmailVerification, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { updateProfile, updateEmail, sendEmailVerification, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import UserAvatar from '../components/UserAvatar';
 import AvatarSelectionModal from '../components/AvatarSelectionModal';
+import { toast } from 'react-toastify';
 
 function Profile() {
   const { user, userProfile, loading: authLoading, isAdmin, updateAvatar } = useAuth();
@@ -877,6 +878,64 @@ function NotificationsTab() {
 
 // Güvenlik Tab'ı
 function SecurityTab() {
+  const { user, logout } = useAuth();
+  const [showPasswordAccordion, setShowPasswordAccordion] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
+
+  const handleLogout = async () => {
+    try {
+        await logout();
+        toast.success("Başarıyla çıkış yaptınız!")
+    } catch (error) {
+        console.error('Çıkış yapılırken hata:', error);
+        toast.error("Çıkış yapılırken bir hata oluştu!")
+    }
+};
+
+  const handlePasswordChange = async () => {
+    setMessage({ type: '', text: '' });
+    if (!currentPassword || !newPassword || !newPasswordRepeat) {
+      setMessage({ type: 'error', text: 'Tüm alanları doldurun.' });
+      return;
+    }
+    if (newPassword.length < 6) {
+      setMessage({ type: 'error', text: 'Yeni şifre en az 6 karakter olmalı.' });
+      return;
+    }
+    if (newPassword !== newPasswordRepeat) {
+      setMessage({ type: 'error', text: 'Yeni şifreler eşleşmiyor.' });
+      return;
+    }
+    try {
+      setLoading(true);
+      // Mevcut şifre ile yeniden doğrula
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      // Şifreyi güncelle
+      await updatePassword(user, newPassword);
+      toast.success('Şifre başarıyla değiştirildi! Güvenlik nedeniyle çıkış yapılıyor.');
+      handleLogout();
+      // setCurrentPassword('');
+      // // setNewPassword('');
+      // setNewPasswordRepeat('');
+      // setShowPasswordAccordion(false);
+    } catch (error) {
+      if (error.code === 'auth/wrong-password') {
+        setMessage({ type: 'error', text: 'Mevcut şifre yanlış.' });
+      } else if (error.code === 'auth/weak-password') {
+        setMessage({ type: 'error', text: 'Yeni şifre çok zayıf.' });
+      } else {
+        setMessage({ type: 'error', text: 'Şifre değiştirilirken hata oluştu.' });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="p-8">
       <div className="mb-8">
@@ -885,6 +944,31 @@ function SecurityTab() {
           Hesap güvenliğinizi artırın ve koruyun.
         </p>
       </div>
+
+      {message.text && (
+        <div className={`mb-6 p-4 rounded-lg transition-all duration-300 ease-in-out ${
+          message.type === 'success' 
+            ? 'bg-green-50 border border-green-200 text-green-800 shadow-sm' 
+            : 'bg-red-50 border border-red-200 text-red-800 shadow-sm'
+        }`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span className="text-lg">
+                {message.type === 'success' ? '✅' : '❌'}
+              </span>
+              <span className="font-medium">{message.text}</span>
+            </div>
+            <button
+              onClick={() => setMessage({ type: '', text: '' })}
+              className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="space-y-6">
         <div className="bg-gray-50 p-6 rounded-xl">
@@ -895,30 +979,96 @@ function SecurityTab() {
                 <h4 className="font-medium text-gray-900">Şifre Değiştir</h4>
                 <p className="text-sm text-gray-600">Hesap şifrenizi güvenli bir şekilde güncelleyin</p>
               </div>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium">
-                Değiştir
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium cursor-pointer"
+                onClick={() => setShowPasswordAccordion(!showPasswordAccordion)}
+              >
+                {showPasswordAccordion ? 'Kapat' : 'Değiştir'}
               </button>
             </div>
-
-            <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
-              <div>
-                <h4 className="font-medium text-gray-900">İki Faktörlü Doğrulama</h4>
-                <p className="text-sm text-gray-600">Ek güvenlik katmanı ekleyin</p>
+            {/* Accordion İçeriği */}
+            {showPasswordAccordion && (
+              <div className="mt-4 p-4 bg-white rounded-lg border border-blue-200 animate-fade-in">
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Mevcut Şifre</label>
+                  <input
+                    type="password"
+                    value={currentPassword}
+                    onChange={e => setCurrentPassword(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    placeholder="Mevcut şifrenizi girin"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre</label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={e => setNewPassword(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    placeholder="Yeni şifrenizi girin"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre (Tekrar)</label>
+                  <input
+                    type="password"
+                    value={newPasswordRepeat}
+                    onChange={e => setNewPasswordRepeat(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    placeholder="Yeni şifrenizi tekrar girin"
+                  />
+                </div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={handlePasswordChange}
+                    disabled={loading}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? 'Kaydediliyor...' : 'Şifreyi Güncelle'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowPasswordAccordion(false);
+                      setCurrentPassword('');
+                      setNewPassword('');
+                      setNewPasswordRepeat('');
+                      setMessage({ type: '', text: '' });
+                    }}
+                    disabled={loading}
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    İptal
+                  </button>
+                </div>
               </div>
-              <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm font-medium">
-                Aktifleştir
-              </button>
-            </div>
+            )}
+          </div>
+        </div>
 
-            <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
-              <div>
-                <h4 className="font-medium text-gray-900">Oturum Geçmişi</h4>
-                <p className="text-sm text-gray-600">Aktif oturumlarınızı görüntüleyin</p>
-              </div>
-              <button className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium">
-                Görüntüle
-              </button>
+        <div className="bg-gray-50 p-6 rounded-xl">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">İki Faktörlü Doğrulama</h3>
+          <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
+            <div>
+              <h4 className="font-medium text-gray-900">İki Faktörlü Doğrulama</h4>
+              <p className="text-sm text-gray-600">Ek güvenlik katmanı ekleyin</p>
             </div>
+            <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm font-medium cursor-pointer">
+              Aktifleştir
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-gray-50 p-6 rounded-xl">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Oturum Geçmişi</h3>
+          <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
+            <div>
+              <h4 className="font-medium text-gray-900">Oturum Geçmişi</h4>
+              <p className="text-sm text-gray-600">Aktif oturumlarınızı görüntüleyin</p>
+            </div>
+            <button className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium cursor-pointer">
+              Görüntüle
+            </button>
           </div>
         </div>
 

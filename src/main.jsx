@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <NotificationProvider>
           <CookieProvider>
-        <App />
+            <App />
           </CookieProvider>
         </NotificationProvider>
       </AuthProvider>
