@@ -4,6 +4,9 @@ import { db } from '../../firebase/config';
 import FieldsManagement from './FieldsManagement';
 import ReservationsManagement from './ReservationsManagement';
 import UsersManagement from './UsersManagement';
+import ContentManagement from './ContentManagement';
+import ContactContentManagement from './ContactContentManagement';
+import MessagesManagement from './MessagesManagement';
 
 function ContentArea({ activeTab }) {
   const [stats, setStats] = useState({
@@ -192,8 +195,10 @@ function ContentArea({ activeTab }) {
         return 'Rezervasyon Listesi';
       case 'users':
         return 'Kullanıcı Listesi';
-      case 'prices':
-        return 'Fiyat Listesi';
+      case 'content':
+        return 'İçerik Yönetimi';
+      case 'contact':
+        return 'İletişim Sayfası';
       case 'settings':
         return 'Sistem Ayarları';
       default:
@@ -211,8 +216,10 @@ function ContentArea({ activeTab }) {
         return 'Tüm rezervasyonları buradan görüntüleyebilir ve yönetebilirsiniz.';
       case 'users':
         return 'Kayıtlı kullanıcıları buradan yönetebilirsiniz.';
-      case 'prices':
-        return 'Saha fiyatlarını buradan ayarlayabilirsiniz.';
+      case 'content':
+        return 'İçerikleri buradan yönetebilirsiniz.';
+      case 'contact':
+        return 'İletişim sayfasını buradan yönetebilirsiniz.';
       case 'settings':
         return 'Sistem ayarlarını buradan yapılandırabilirsiniz.';
       default:
@@ -243,6 +250,33 @@ function ContentArea({ activeTab }) {
     return (
       <main className='flex-1 p-6'>
         <UsersManagement />
+      </main>
+    );
+  }
+
+  // İçerik yönetimi bölümü için özel component
+  if (activeTab === 'content') {
+    return (
+      <main className='flex-1 p-6'>
+        <ContentManagement />
+      </main>
+    );
+  }
+
+  // Mesajlar yönetimi bölümü için özel component
+  if (activeTab === 'messages') {
+    return (
+      <main className='flex-1 p-6'>
+        <MessagesManagement />
+      </main>
+    );
+  }
+
+  // İletişim içeriği bölümü için özel component
+  if (activeTab === 'contactcontent') {
+    return (
+      <main className='flex-1 p-6'>
+        <ContactContentManagement />
       </main>
     );
   }

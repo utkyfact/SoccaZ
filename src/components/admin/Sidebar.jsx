@@ -75,17 +75,45 @@ function Sidebar({ user, activeTab, setActiveTab }) {
             </button>
           </li>
 
-          {/* Fiyatlar */}
+          {/* İçerikler */}
           <li>
             <button
-              onClick={() => setActiveTab('prices')}
-              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'prices'
+              onClick={() => setActiveTab('content')}
+              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'content'
                   ? 'bg-green-600 text-white shadow-md'
                   : 'text-green-100 hover:bg-green-600 hover:text-white'
                 }`}
             >
-              <span className='text-xl'>💰</span>
-              <span className='font-medium'>Fiyatlar</span>
+              <span className='text-xl'>📝</span>
+              <span className='font-medium'>Anasayfa İçerikleri</span>
+            </button>
+          </li>
+
+          {/* Mesajlar */}
+          <li>
+            <button
+              onClick={() => setActiveTab('messages')}
+              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'messages'
+                  ? 'bg-green-600 text-white shadow-md'
+                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                }`}
+            >
+              <span className='text-xl'>📨</span>
+              <span className='font-medium'>Mesajlar</span>
+            </button>
+          </li>
+
+          {/* İletişim İçeriği */}
+          <li>
+            <button
+              onClick={() => setActiveTab('contactcontent')}
+              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'contactcontent'
+                  ? 'bg-green-600 text-white shadow-md'
+                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                }`}
+            >
+              <span className='text-xl'>📞</span>
+              <span className='font-medium'>İletişim İçeriği</span>
             </button>
           </li>
 

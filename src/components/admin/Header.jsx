@@ -11,8 +11,10 @@ function Header({ activeTab }) {
         return 'Rezervasyonlar';
       case 'users':
         return 'Kullanıcı Yönetimi';
-      case 'prices':
-        return 'Fiyat Yönetimi';
+      case 'content':
+        return 'İçerik Yönetimi';
+      case 'contact':
+        return 'İletişim Sayfası';
       case 'settings':
         return 'Sistem Ayarları';
       default:
@@ -30,8 +32,10 @@ function Header({ activeTab }) {
         return 'Tüm rezervasyonları görüntüle ve yönet';
       case 'users':
         return 'Kullanıcı hesaplarını yönet';
-      case 'prices':
-        return 'Saha fiyatlarını ayarla';
+      case 'content':
+        return 'İçerikleri buradan yönetebilirsiniz.';
+      case 'contact':
+        return 'İletişim sayfasını buradan yönetebilirsiniz.';
       case 'settings':
         return 'Sistem ayarlarını yapılandır';
       default:

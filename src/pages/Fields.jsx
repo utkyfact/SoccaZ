@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import ReservationModal from '../components/ReservationModal';
 import Layout from '../components/Layout';
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 function Fields() {
   const [fields, setFields] = useState([]);
@@ -13,7 +16,8 @@ function Fields() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedField, setSelectedField] = useState(null);
   const [reservations, setReservations] = useState([]);
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, userProfile } = useAuth();
+  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
 
   // Kullanıcı giriş yapmamışsa login sayfasına yönlendir
@@ -23,6 +27,22 @@ function Fields() {
       return;
     }
   }, [user, authLoading, navigate]);
+
+  const loadUserFavorites = async () => {
+    if (!user) return [];
+    
+    try {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return userData.favoriteFields || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('Favoriler yüklenirken hata:', error);
+      return [];
+    }
+  };
 
   // Sahaları ve rezervasyonları getir
   const fetchData = async () => {
@@ -37,7 +57,16 @@ function Fields() {
           ...doc.data()
         }))
         .filter(field => field.isActive !== false);
-      setFields(fieldsData);
+
+      const userFavorites = await loadUserFavorites();
+      setFavorites(userFavorites);
+
+      const fieldsWithFavorites = fieldsData.map(field => ({
+        ...field,
+        isFavorite: userFavorites.includes(field.id)
+      }));
+
+      setFields(fieldsWithFavorites);
 
       // Aktif rezervasyonları getir
       const reservationsQuery = query(
@@ -104,6 +133,43 @@ function Fields() {
       return { text: 'Az Yer', color: 'bg-yellow-100 text-yellow-800' };
     } else {
       return { text: 'Müsait', color: 'bg-green-100 text-green-800' };
+    }
+  };
+
+  const handleFavorite = async (fieldId) => {
+    if (!user) {
+      toast.error('Favori eklemek için giriş yapmanız gerekiyor.');
+      return;
+    }
+
+    try {
+      const field = fields.find(f => f.id === fieldId);
+      const isCurrentlyFavorite = favorites.includes(fieldId);
+      
+      let newFavorites;
+      if (isCurrentlyFavorite) {
+        newFavorites = favorites.filter(id => id !== fieldId);
+        toast.success(`${field.name} favorilerden çıkarıldı.`);
+      } else {
+        newFavorites = [...favorites, fieldId];
+        toast.success(`${field.name} favorilere eklendi.`);
+      }
+
+      await updateDoc(doc(db, 'users', user.uid), {
+        favoriteFields: newFavorites,
+        updatedAt: new Date()
+      });
+
+      setFavorites(newFavorites);
+      setFields(fields.map(f => 
+        f.id === fieldId 
+          ? { ...f, isFavorite: !isCurrentlyFavorite }
+          : f
+      ));
+
+    } catch (error) {
+      console.error('Favori güncellenirken hata:', error);
+      toast.error('Favori güncellenirken bir hata oluştu.');
     }
   };
 
@@ -215,6 +281,20 @@ function Fields() {
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${fieldStatus.color}`}>
                           {fieldStatus.text}
                         </span>
+                      </div>
+                      {/* Favori Ekleme Butonu */}
+                      <div className="absolute top-2 left-2">
+                        <button 
+                          onClick={() => handleFavorite(field.id)} 
+                          className="text-white p-2 rounded-full bg-black bg-opacity-20 hover:bg-opacity-40 transition-all duration-200 backdrop-blur-sm cursor-pointer"
+                          title={field.isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}
+                        >
+                          {field.isFavorite ? (
+                            <FaStar className="text-xl text-yellow-400" />
+                          ) : (
+                            <CiStar className="text-xl" />
+                          )}
+                        </button>
                       </div>
                     </div>
 

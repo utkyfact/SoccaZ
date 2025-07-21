@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router';
 import Layout from '../components/Layout';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, getDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { updateProfile, updateEmail, sendEmailVerification, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import UserAvatar from '../components/UserAvatar';
 import AvatarSelectionModal from '../components/AvatarSelectionModal';
 import { toast } from 'react-toastify';
+import { FaStar } from 'react-icons/fa';
 
 function Profile() {
   const { user, userProfile, loading: authLoading, isAdmin, updateAvatar } = useAuth();
@@ -179,7 +180,7 @@ function Profile() {
                 {/* Kullanıcı Bilgisi */}
                 <div className="bg-gradient-to-br from-green-500 to-green-600 p-6 text-white">
                   <div className="flex items-center space-x-4">
-                    <div 
+                    <div
                       className="cursor-pointer hover:opacity-80 transition-opacity duration-200"
                       onClick={() => setShowAvatarModal(true)}
                       title="Profil resmini değiştir"
@@ -204,19 +205,17 @@ function Profile() {
                       <button
                         key={item.id}
                         onClick={() => setActiveTab(item.id)}
-                        className={`w-full cursor-pointer text-left p-4 rounded-lg group ${
-                          activeTab === item.id
-                            ? 'bg-green-50 border-2 border-green-200 text-green-700'
-                            : 'hover:bg-gray-50 text-gray-700 hover:text-gray-900'
-                        }`}
+                        className={`w-full cursor-pointer text-left p-4 rounded-lg group ${activeTab === item.id
+                          ? 'bg-green-50 border-2 border-green-200 text-green-700'
+                          : 'hover:bg-gray-50 text-gray-700 hover:text-gray-900'
+                          }`}
                       >
                         <div className="flex items-center space-x-3">
                           <span className="text-xl">{item.icon}</span>
                           <div className="flex-1">
                             <div className="font-medium">{item.title}</div>
-                            <div className={`text-xs ${
-                              activeTab === item.id ? 'text-green-600' : 'text-gray-500'
-                            }`}>
+                            <div className={`text-xs ${activeTab === item.id ? 'text-green-600' : 'text-gray-500'
+                              }`}>
                               {item.description}
                             </div>
                           </div>
@@ -360,14 +359,14 @@ function PersonalTab({ user, userProfile, isAdmin }) {
     try {
       setLoading(true);
       setMessage({ type: '', text: '' });
-      
+
       await updateProfile(user, {
         displayName: newName.trim()
       });
-      
+
       setMessage({ type: 'success', text: 'Ad soyad başarıyla güncellendi!' });
       setIsEditingName(false);
-      
+
       // 3 saniye sonra mesajı otomatik temizle
       setTimeout(() => {
         setMessage({ type: '', text: '' });
@@ -395,19 +394,19 @@ function PersonalTab({ user, userProfile, isAdmin }) {
       setLoading(true);
       setMessage({ type: '', text: '' });
       setPasswordError('');
-      
+
       // Önce şifre ile yeniden doğrula
       const credential = EmailAuthProvider.credential(user.email, password);
       await reauthenticateWithCredential(user, credential);
-      
+
       // Şifre doğruysa email'i güncelle
       await updateEmail(user, newEmail.trim());
-      
+
       setMessage({ type: 'success', text: 'Email başarıyla güncellendi!' });
       setIsEditingEmail(false);
       setShowPasswordModal(false);
       setPassword('');
-      
+
       // 3 saniye sonra mesajı otomatik temizle
       setTimeout(() => {
         setMessage({ type: '', text: '' });
@@ -435,14 +434,14 @@ function PersonalTab({ user, userProfile, isAdmin }) {
     try {
       setLoading(true);
       setMessage({ type: '', text: '' });
-      
+
       await updateUserProfile({
         phone: newPhone.trim()
       });
-      
+
       setMessage({ type: 'success', text: 'Telefon numarası başarıyla güncellendi!' });
       setIsEditingPhone(false);
-      
+
       // 3 saniye sonra mesajı otomatik temizle
       setTimeout(() => {
         setMessage({ type: '', text: '' });
@@ -476,12 +475,12 @@ function PersonalTab({ user, userProfile, isAdmin }) {
     try {
       setLoading(true);
       setMessage({ type: '', text: '' });
-      
+
       await sendEmailVerification(user, {
         url: window.location.origin + '/profile',
         handleCodeInApp: true,
       });
-      
+
       setEmailVerificationSent(true);
       setMessage({ type: 'success', text: 'Doğrulama emaili gönderildi! Email kutunuzu kontrol edin.' });
     } catch (error) {
@@ -503,11 +502,10 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
       {/* Mesaj Gösterimi */}
       {message.text && (
-        <div className={`mb-6 p-4 rounded-lg transition-all duration-300 ease-in-out ${
-          message.type === 'success' 
-            ? 'bg-green-50 border border-green-200 text-green-800 shadow-sm' 
-            : 'bg-red-50 border border-red-200 text-red-800 shadow-sm'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg transition-all duration-300 ease-in-out ${message.type === 'success'
+          ? 'bg-green-50 border border-green-200 text-green-800 shadow-sm'
+          : 'bg-red-50 border border-red-200 text-red-800 shadow-sm'
+          }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-lg">
@@ -596,7 +594,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     placeholder="Email adresinizi girin"
                   />
                 </div>
-                
+
                 {/* Şifre Modal */}
                 {showPasswordModal && (
                   <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
@@ -614,9 +612,8 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                             setPassword(e.target.value);
                             setPasswordError('');
                           }}
-                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${
-                            passwordError ? 'border-red-300' : 'border-gray-300'
-                          }`}
+                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${passwordError ? 'border-red-300' : 'border-gray-300'
+                            }`}
                           placeholder="Şifrenizi girin"
                         />
                         {passwordError && (
@@ -626,7 +623,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     </div>
                   </div>
                 )}
-                
+
                 <div className="flex space-x-3">
                   <button
                     onClick={handleUpdateEmail}
@@ -733,7 +730,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-blue-800 mb-2">Email Doğrulama</h3>
                 <p className="text-blue-700 text-sm mb-4">
-                  Email adresinizi doğrulamak için aşağıdaki butona tıklayın. 
+                  Email adresinizi doğrulamak için aşağıdaki butona tıklayın.
                   Doğrulama emaili gönderilecek ve email adresinizi doğruladıktan sonra tüm özellikleri kullanabilirsiniz.
                 </p>
                 <div className="flex items-center space-x-3">
@@ -799,6 +796,93 @@ function ReservationsTab() {
 
 // Favori Sahalar Tab'ı
 function FavoritesTab() {
+  const [favoriteFields, setFavoriteFields] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  // Favori sahaları getir
+  const fetchFavoriteFields = async () => {
+    if (!user) return;
+
+    try {
+      setLoading(true);
+
+      // Kullanıcının favori sahalarını getir
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const favoriteFieldIds = userData.favoriteFields || [];
+
+        if (favoriteFieldIds.length > 0) {
+          // Favori sahaların detaylarını getir
+          const fieldsSnapshot = await getDocs(collection(db, 'fields'));
+          const allFields = fieldsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+
+          // Sadece favori olan ve aktif olan sahaları filtrele
+          const favorites = allFields.filter(field =>
+            favoriteFieldIds.includes(field.id) && field.isActive !== false
+          );
+
+          setFavoriteFields(favorites);
+        } else {
+          setFavoriteFields([]);
+        }
+      }
+    } catch (error) {
+      console.error('Favori sahalar getirilirken hata:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Favorilerden çıkar
+  const removeFavorite = async (fieldId) => {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const currentFavorites = userData.favoriteFields || [];
+        const newFavorites = currentFavorites.filter(id => id !== fieldId);
+
+        await updateDoc(doc(db, 'users', user.uid), {
+          favoriteFields: newFavorites,
+          updatedAt: new Date()
+        });
+
+        // Yerel state'i güncelle
+        setFavoriteFields(favoriteFields.filter(field => field.id !== fieldId));
+        toast.success('Saha favorilerden çıkarıldı.');
+      }
+    } catch (error) {
+      console.error('Favori çıkarılırken hata:', error);
+      toast.error('Favori çıkarılırken bir hata oluştu.');
+    }
+  };
+
+  useEffect(() => {
+    fetchFavoriteFields();
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div className="p-8">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Favori Sahalar</h2>
+          <p className="text-gray-600">
+            Beğendiğiniz sahaları favorilere ekleyin ve hızlı erişim sağlayın.
+          </p>
+        </div>
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Favori sahalar yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8">
       <div className="mb-8">
@@ -808,16 +892,65 @@ function FavoritesTab() {
         </p>
       </div>
 
-      <div className="text-center py-12">
-        <div className="text-gray-400 text-6xl mb-4">⭐</div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">Henüz Favori Sahalarınız Yok</h3>
-        <p className="text-gray-600 mb-6">
-          Sahalar sayfasından beğendiğiniz sahaları favorilere ekleyebilirsiniz.
-        </p>
-        <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium">
-          Sahaları Keşfet
-        </button>
-      </div>
+      {favoriteFields.length === 0 ? (
+        <div className="text-center py-12">
+          <div className="text-gray-400 text-6xl mb-4">⭐</div>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">Henüz Favori Sahalarınız Yok</h3>
+          <p className="text-gray-600 mb-6">
+            Sahalar sayfasından beğendiğiniz sahaları favorilere ekleyebilirsiniz.
+          </p>
+          <Link
+            to="/fields"
+            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium inline-block"
+          >
+            Sahaları Keşfet
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {favoriteFields.map((field) => (
+            <div key={field.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+              {/* Saha Görseli */}
+              <div className="h-32 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center relative">
+                <div className="text-center text-white">
+                  <div className="text-4xl mb-1">⚽</div>
+                  <h3 className="text-lg font-bold">{field.name}</h3>
+                </div>
+                {/* Favori Çıkar Butonu */}
+                <button
+                  onClick={() => removeFavorite(field.id)}
+                  className="absolute top-2 right-2 text-yellow-400 p-2 rounded-full bg-black bg-opacity-20 hover:bg-opacity-40 transition-all duration-200 backdrop-blur-sm cursor-pointer"
+                  title="Favorilerden çıkar"
+                >
+                  <FaStar className="text-lg" />
+                </button>
+              </div>
+
+              {/* Saha Bilgileri */}
+              <div className="p-4">
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Kapasite:</span>
+                    <span className="font-semibold text-gray-900">{field.capacity} kişi</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Kişi Başı Ücret:</span>
+                    <span className="font-semibold text-green-600">₺{field.pricePerPerson}</span>
+                  </div>
+                </div>
+
+                {/* Rezervasyon Butonu */}
+                <Link
+                  to="/fields"
+                  className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center block font-medium"
+                >
+                  Rezervasyon Yap
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -878,8 +1011,12 @@ function NotificationsTab() {
 
 // Güvenlik Tab'ı
 function SecurityTab() {
-  const { user, logout } = useAuth();
+  const { user, logout, deletedUser } = useAuth();
+  const navigate = useNavigate();
   const [showPasswordAccordion, setShowPasswordAccordion] = useState(false);
+  const [showSessionHistory, setShowSessionHistory] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [password, setPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
@@ -888,13 +1025,35 @@ function SecurityTab() {
 
   const handleLogout = async () => {
     try {
-        await logout();
-        toast.success("Başarıyla çıkış yaptınız!")
+      await logout();
+      toast.success("Başarıyla çıkış yaptınız!")
     } catch (error) {
-        console.error('Çıkış yapılırken hata:', error);
-        toast.error("Çıkış yapılırken bir hata oluştu!")
+      console.error('Çıkış yapılırken hata:', error);
+      toast.error("Çıkış yapılırken bir hata oluştu!")
     }
-};
+  };
+
+  const handleDeleteUser = async () => {
+    if (!password) {
+      setMessage({ type: 'error', text: 'Hesabınızı silmek için şifrenizi girmelisiniz.' });
+      return;
+    }
+    try {
+      setLoading(true);
+      setMessage({ type: '', text: '' });
+      await deletedUser(password);
+      toast.success('Hesabınız başarıyla silindi.');
+      navigate('/login');
+    } catch (error) {
+      console.error('Hesap silinirken hata:', error);
+      setMessage({ type: 'error', text: error.message || 'Hesap silinirken bir hata oluştu.' });
+    } finally {
+      setLoading(false);
+      setShowDeleteModal(false);
+      setPassword('');
+    }
+  };
+
 
   const handlePasswordChange = async () => {
     setMessage({ type: '', text: '' });
@@ -912,15 +1071,13 @@ function SecurityTab() {
     }
     try {
       setLoading(true);
-      // Mevcut şifre ile yeniden doğrula
       const credential = EmailAuthProvider.credential(user.email, currentPassword);
       await reauthenticateWithCredential(user, credential);
-      // Şifreyi güncelle
       await updatePassword(user, newPassword);
       toast.success('Şifre başarıyla değiştirildi! Güvenlik nedeniyle çıkış yapılıyor.');
       handleLogout();
       // setCurrentPassword('');
-      // // setNewPassword('');
+      // setNewPassword('');
       // setNewPasswordRepeat('');
       // setShowPasswordAccordion(false);
     } catch (error) {
@@ -946,11 +1103,10 @@ function SecurityTab() {
       </div>
 
       {message.text && (
-        <div className={`mb-6 p-4 rounded-lg transition-all duration-300 ease-in-out ${
-          message.type === 'success' 
-            ? 'bg-green-50 border border-green-200 text-green-800 shadow-sm' 
-            : 'bg-red-50 border border-red-200 text-red-800 shadow-sm'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg transition-all duration-300 ease-in-out ${message.type === 'success'
+          ? 'bg-green-50 border border-green-200 text-green-800 shadow-sm'
+          : 'bg-red-50 border border-red-200 text-red-800 shadow-sm'
+          }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-lg">
@@ -1023,7 +1179,7 @@ function SecurityTab() {
                   <button
                     onClick={handlePasswordChange}
                     disabled={loading}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {loading ? 'Kaydediliyor...' : 'Şifreyi Güncelle'}
                   </button>
@@ -1036,7 +1192,7 @@ function SecurityTab() {
                       setMessage({ type: '', text: '' });
                     }}
                     disabled={loading}
-                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     İptal
                   </button>
@@ -1046,7 +1202,7 @@ function SecurityTab() {
           </div>
         </div>
 
-        <div className="bg-gray-50 p-6 rounded-xl">
+        {/* <div className="bg-gray-50 p-6 rounded-xl">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">İki Faktörlü Doğrulama</h3>
           <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
             <div>
@@ -1057,7 +1213,7 @@ function SecurityTab() {
               Aktifleştir
             </button>
           </div>
-        </div>
+        </div> */}
 
         <div className="bg-gray-50 p-6 rounded-xl">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Oturum Geçmişi</h3>
@@ -1066,27 +1222,80 @@ function SecurityTab() {
               <h4 className="font-medium text-gray-900">Oturum Geçmişi</h4>
               <p className="text-sm text-gray-600">Aktif oturumlarınızı görüntüleyin</p>
             </div>
-            <button className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium cursor-pointer">
-              Görüntüle
+            <button
+              onClick={() => setShowSessionHistory(!showSessionHistory)}
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium cursor-pointer"
+            >
+              {showSessionHistory ? 'Kapat' : 'Görüntüle'}
             </button>
           </div>
+          {showSessionHistory && (
+            <div className="mt-4 p-4 bg-white rounded-lg border border-gray-200 animate-fade-in">
+              <h4 className="text-md font-semibold text-gray-800 mb-3">Oturum Bilgileri</h4>
+              <div className="space-y-2 text-sm text-gray-600">
+                <div className="flex justify-between">
+                  <span className="font-medium">Son Giriş:</span>
+                  <span>{new Date(user.metadata.lastSignInTime).toLocaleString('tr-TR')}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Hesap Oluşturma:</span>
+                  <span>{new Date(user.metadata.creationTime).toLocaleString('tr-TR')}</span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="bg-red-50 border border-red-200 p-6 rounded-xl">
-          <div className="flex items-center space-x-3">
-            <span className="text-red-600 text-xl">⚠️</span>
-            <div>
-              <h3 className="text-lg font-semibold text-red-800">Tehlikeli Bölge</h3>
-              <p className="text-red-700 text-sm mb-4">
-                Bu işlemler geri alınamaz ve hesabınızı etkileyebilir.
-              </p>
-              <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm font-medium">
-                Hesabı Sil
+        <div className="flex items-center justify-end">
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm font-medium cursor-pointer"
+          >
+            Hesabı Sil
+          </button>
+        </div>
+      </div>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Hesabı Sil</h2>
+            <p className="text-gray-600 mb-6">
+              Bu işlem geri alınamaz. Hesabınızı kalıcı olarak silmek istediğinizden emin misiniz? Devam etmek için lütfen şifrenizi girin.
+            </p>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Şifreniz</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                placeholder="Şifrenizi girin"
+              />
+            </div>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setPassword('');
+                  setMessage({ type: '', text: '' });
+                }}
+                disabled={loading}
+                className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium cursor-pointer"
+              >
+                İptal
+              </button>
+              <button
+                onClick={handleDeleteUser}
+                disabled={loading}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium disabled:opacity-50 cursor-pointer"
+              >
+                {loading ? 'Siliniyor...' : 'Hesabı Kalıcı Olarak Sil'}
               </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
