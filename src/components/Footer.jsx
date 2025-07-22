@@ -82,17 +82,12 @@ function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/fields" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
+                                <Link to="/matches" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
                                     <span className="mr-2">⚽</span>
-                                    Sahalar
+                                    Maçlar
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/reservations" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
-                                    <span className="mr-2">📅</span>
-                                    Rezervasyonlarım
-                                </Link>
-                            </li>
+
                             <li>
                                 <Link to="/contact" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
                                     <span className="mr-2">📞</span>

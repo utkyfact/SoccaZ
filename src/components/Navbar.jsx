@@ -96,11 +96,11 @@ function Navbar() {
                             <span className='hidden xl:inline'>Ana Sayfa</span>
                         </Link>
                         <Link 
-                            to="/fields" 
+                            to="/matches" 
                             className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
                         >
                             <span className='text-lg'>⚽</span>
-                            <span className='hidden xl:inline'>Sahalar</span>
+                            <span className='hidden xl:inline'>Maçlar</span>
                         </Link>
                         <Link 
                             to="/contact" 
@@ -109,16 +109,7 @@ function Navbar() {
                             <span className='text-lg'>📞</span>
                             <span className='hidden xl:inline'>İletişim</span>
                         </Link>
-                        {/* Rezervasyonlarım Linki */}
-                        {user && (
-                            <Link 
-                                to="/reservations" 
-                                className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
-                            >
-                                <span className='text-lg'>📅</span>
-                                <span className='hidden xl:inline'>Rezervasyonlarım</span>
-                            </Link>
-                        )}
+
                     </div>
 
                     {/* Sağ Navigasyon ve Auth */}
@@ -362,27 +353,16 @@ function Navbar() {
                                 </span>
                             </Link>
                             <Link 
-                                to="/fields" 
+                                to="/matches" 
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
                             >
                                 <span className='flex items-center space-x-2'>
                                     <span>⚽</span>
-                                    <span>Sahalar</span>
+                                    <span>Maçlar</span>
                                 </span>
                             </Link>
-                            {user && (
-                                <Link 
-                                    to="/reservations" 
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
-                                >
-                                    <span className='flex items-center space-x-2'>
-                                        <span>📅</span>
-                                        <span>Rezervasyonlarım</span>
-                                    </span>
-                                </Link>
-                            )}
+
                             <Link 
                                 to="/contact" 
                                 onClick={() => setIsMobileMenuOpen(false)}

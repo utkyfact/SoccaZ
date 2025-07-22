@@ -45,6 +45,7 @@ function Contact() {
   const [contentData, setContentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -96,6 +97,11 @@ function Contact() {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  // FAQ açma/kapama fonksiyonu
+  const toggleFaq = (index) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
   if (loading) {
@@ -325,12 +331,35 @@ function Contact() {
           <div className="mt-12">
             <div className="bg-white rounded-lg shadow-sm p-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Sıkça Sorulan Sorular</h2>
-              <div className="space-y-4">
+              <div className="border border-gray-200 rounded-lg overflow-hidden">
                 {contentData?.faq?.length > 0 ? (
                   contentData.faq.map((item, idx) => (
-                    <div key={idx} className="border border-gray-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-gray-800 mb-2">{item.question}</h3>
-                      <p className="text-gray-600">{item.answer}</p>
+                    <div key={idx} className={`${idx !== 0 ? 'border-t border-gray-200' : ''}`}>
+                      {/* Soru - Tıklanabilir başlık */}
+                      <button
+                        onClick={() => toggleFaq(idx)}
+                        className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                      >
+                        <h3 className="font-semibold text-gray-800 pr-4 flex-1 text-left whitespace-normal break-words">{item.question}</h3>
+                        <div className={`text-green-600 transform transition-transform duration-200 flex-shrink-0 ${
+                          openFaqIndex === idx ? 'rotate-180' : ''
+                        }`}>
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </button>
+                      
+                      {/* Cevap - Accordion içerik */}
+                      <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        openFaqIndex === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                      }`}>
+                        <div className="px-4 pb-4 pt-2 bg-gray-50">
+                          <div className="text-gray-600 leading-relaxed whitespace-pre-line break-words text-sm">
+                            {item.answer}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ))
                 ) : (

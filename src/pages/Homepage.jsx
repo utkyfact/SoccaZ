@@ -72,10 +72,10 @@ function Homepage() {
         {/* Action Buttons */}
         <div className='flex justify-center'>
           <Link
-            to="/fields"
+            to="/matches"
             className='bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1'
           >
-            🏟️ Sahaları Görüntüle
+            ⚽ Maçlara Katıl
           </Link>
         </div>
 

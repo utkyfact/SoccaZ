@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 function Sidebar({ user, activeTab, setActiveTab }) {
   return (
-    <div className='w-64 bg-gradient-to-b from-green-700 to-green-800 shadow-lg'>
+    <div className='w-64 bg-gradient-to-b from-green-700 to-green-800 shadow-lg min-h-screen flex flex-col'>
       {/* Sidebar Header */}
       <div className='p-6 border-b border-green-600'>
         <div className='flex items-center space-x-3'>
@@ -11,21 +11,21 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           <div>
             <h2 className='text-white font-bold text-lg'>Admin Panel</h2>
             <p className='text-green-200 text-sm'>HalıSaha Yönetimi</p>
-            <Link to="/" className='text-green-200 text-sm'>Ana Sayfa</Link>
+            <Link to="/" className='text-green-200 text-sm'>Siteyi Gör</Link>
           </div>
         </div>
       </div>
 
-      {/* Sidebar Navigation */}
-      <nav className='p-4'>
+      {/* Sidebar Navigation - Flex grow ile boş alanı doldur */}
+      <nav className='p-4 flex-1'>
         <ul className='space-y-2'>
           {/* Dashboard */}
           <li>
             <button
               onClick={() => setActiveTab('dashboard')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'dashboard'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                ? 'bg-green-600 text-white shadow-md'
+                : 'text-green-100 hover:bg-green-600 hover:text-white'
                 }`}
             >
               <span className='text-xl'>📊</span>
@@ -33,45 +33,33 @@ function Sidebar({ user, activeTab, setActiveTab }) {
             </button>
           </li>
 
-          {/* Sahalar */}
-          <li>
-            <button
-              onClick={() => setActiveTab('fields')}
-              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'fields'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
-                }`}
-            >
-              <span className='text-xl'>⚽</span>
-              <span className='font-medium'>Sahalar</span>
-            </button>
-          </li>
 
-          {/* Rezervasyonlar */}
-          <li>
-            <button
-              onClick={() => setActiveTab('reservations')}
-              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'reservations'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
-                }`}
-            >
-              <span className='text-xl'>📅</span>
-              <span className='font-medium'>Rezervasyonlar</span>
-            </button>
-          </li>
 
           {/* Kullanıcılar */}
           <li>
             <button
               onClick={() => setActiveTab('users')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'users'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                ? 'bg-green-600 text-white shadow-md'
+                : 'text-green-100 hover:bg-green-600 hover:text-white'
                 }`}
             >
               <span className='text-xl'>👥</span>
               <span className='font-medium'>Kullanıcılar</span>
+            </button>
+          </li>
+
+          {/* Maç Organizasyonu */}
+          <li>
+            <button
+              onClick={() => setActiveTab('matches')}
+              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'matches'
+                  ? 'bg-green-600 text-white shadow-md'
+                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                }`}
+            >
+              <span className='text-xl'>⚽</span>
+              <span className='font-medium'>Maç Organizasyonu</span>
             </button>
           </li>
 
@@ -94,8 +82,8 @@ function Sidebar({ user, activeTab, setActiveTab }) {
             <button
               onClick={() => setActiveTab('messages')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'messages'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                ? 'bg-green-600 text-white shadow-md'
+                : 'text-green-100 hover:bg-green-600 hover:text-white'
                 }`}
             >
               <span className='text-xl'>📨</span>
@@ -108,8 +96,8 @@ function Sidebar({ user, activeTab, setActiveTab }) {
             <button
               onClick={() => setActiveTab('contactcontent')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'contactcontent'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                ? 'bg-green-600 text-white shadow-md'
+                : 'text-green-100 hover:bg-green-600 hover:text-white'
                 }`}
             >
               <span className='text-xl'>📞</span>
@@ -122,8 +110,8 @@ function Sidebar({ user, activeTab, setActiveTab }) {
             <button
               onClick={() => setActiveTab('settings')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'settings'
-                  ? 'bg-green-600 text-white shadow-md'
-                  : 'text-green-100 hover:bg-green-600 hover:text-white'
+                ? 'bg-green-600 text-white shadow-md'
+                : 'text-green-100 hover:bg-green-600 hover:text-white'
                 }`}
             >
               <span className='text-xl'>⚙️</span>
@@ -133,8 +121,8 @@ function Sidebar({ user, activeTab, setActiveTab }) {
         </ul>
       </nav>
 
-      {/* Sidebar Footer */}
-      <div className='absolute bottom-0 left-0 right-0 p-4 border-t border-green-600'>
+      {/* Sidebar Footer - En altta sabit */}
+      <div className='p-4 border-t border-green-600 mt-auto'>
         <div className='flex items-center space-x-3 text-green-100'>
           <div className='w-8 h-8 bg-green-600 rounded-full flex items-center justify-center'>
             <span className='text-sm font-bold'>

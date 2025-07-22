@@ -16,11 +16,8 @@ function Profile() {
   const [activeTab, setActiveTab] = useState('overview');
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [userStats, setUserStats] = useState({
-    totalReservations: 0,
-    activeReservations: 0,
-    completedReservations: 0,
-    cancelledReservations: 0,
-    totalSpent: 0
+    totalMatches: 0,
+    activeMatches: 0
   });
   const [loading, setLoading] = useState(true);
 
@@ -49,19 +46,19 @@ function Profile() {
 
       try {
         setLoading(true);
-        const q = query(
-          collection(db, 'reservations'),
-          where('userId', '==', user.uid)
+        
+        // Kullanıcının katıldığı maçları getir
+        const matchesSnapshot = await getDocs(collection(db, 'matches'));
+        const allMatches = matchesSnapshot.docs.map(doc => doc.data());
+        
+        // Kullanıcının katıldığı maçları filtrele
+        const userMatches = allMatches.filter(match => 
+          match.participants && match.participants.includes(user.uid)
         );
-        const querySnapshot = await getDocs(q);
-        const reservations = querySnapshot.docs.map(doc => doc.data());
 
         const stats = {
-          totalReservations: reservations.length,
-          activeReservations: reservations.filter(r => r.status === 'active').length,
-          completedReservations: reservations.filter(r => r.status === 'completed').length,
-          cancelledReservations: reservations.filter(r => r.status === 'cancelled').length,
-          totalSpent: reservations.reduce((sum, r) => sum + (r.totalPrice || 0), 0)
+          totalMatches: userMatches.length,
+          activeMatches: userMatches.filter(match => match.status === 'active').length
         };
 
         setUserStats(stats);
@@ -87,19 +84,7 @@ function Profile() {
       id: 'personal',
       title: 'Kişisel Bilgiler',
       icon: '👤',
-      description: 'Ad, ve email değişiklikleri'
-    },
-    {
-      id: 'reservations',
-      title: 'Rezervasyonlarım',
-      icon: '📅',
-      description: 'Tüm rezervasyon geçmişi'
-    },
-    {
-      id: 'favorites',
-      title: 'Favori Sahalar',
-      icon: '⭐',
-      description: 'Beğendiğiniz sahalar'
+      description: 'Ad, email ve telefon numarası değişiklikleri'
     },
     {
       id: 'notifications',
@@ -122,8 +107,6 @@ function Profile() {
         return <OverviewTab user={user} stats={userStats} />;
       case 'personal':
         return <PersonalTab user={user} userProfile={userProfile} isAdmin={isAdmin} />;
-      case 'reservations':
-        return <ReservationsTab />;
       case 'favorites':
         return <FavoritesTab />;
       case 'notifications':
@@ -267,44 +250,24 @@ function OverviewTab({ user, stats }) {
       </div>
 
       {/* İstatistik Kartları */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm">Toplam Rezervasyon</p>
-              <p className="text-3xl font-bold">{stats.totalReservations}</p>
+              <p className="text-blue-100 text-sm">Katıldığım Maçlar</p>
+              <p className="text-3xl font-bold">{stats.totalMatches}</p>
             </div>
-            <div className="text-3xl">📅</div>
+            <div className="text-3xl">⚽</div>
           </div>
         </div>
 
         <div className="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm">Aktif Rezervasyon</p>
-              <p className="text-3xl font-bold">{stats.activeReservations}</p>
+              <p className="text-green-100 text-sm">Aktif Maçlar</p>
+              <p className="text-3xl font-bold">{stats.activeMatches}</p>
             </div>
-            <div className="text-3xl">✅</div>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-6 rounded-xl text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-purple-100 text-sm">Tamamlanan</p>
-              <p className="text-3xl font-bold">{stats.completedReservations}</p>
-            </div>
-            <div className="text-3xl">🏆</div>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-6 rounded-xl text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-orange-100 text-sm">Toplam Harcama</p>
-              <p className="text-3xl font-bold">₺{stats.totalSpent}</p>
-            </div>
-            <div className="text-3xl">💰</div>
+            <div className="text-3xl">🟢</div>
           </div>
         </div>
       </div>
@@ -707,7 +670,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   </p>
                   {!userProfile?.phone && (
                     <p className="text-sm text-red-600 mt-1">
-                      ⚠️ Rezervasyon yapabilmek için telefon numarası gereklidir
+                      ⚠️ Maça katılabilmek için telefon numarası gereklidir
                     </p>
                   )}
                 </div>
@@ -769,192 +732,6 @@ function PersonalTab({ user, userProfile, isAdmin }) {
   );
 }
 
-// Rezervasyonlar Tab'ı
-function ReservationsTab() {
-  return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Rezervasyonlarım</h2>
-        <p className="text-gray-600">
-          Tüm rezervasyon geçmişinizi buradan görüntüleyebilirsiniz.
-        </p>
-      </div>
-
-      <div className="text-center py-12">
-        <div className="text-gray-400 text-6xl mb-4">📅</div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">Rezervasyon Geçmişi</h3>
-        <p className="text-gray-600 mb-6">
-          Detaylı rezervasyon bilgilerinizi görüntülemek için Rezervasyonlarım sayfasını ziyaret edin.
-        </p>
-        <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium">
-          Rezervasyonlarımı Görüntüle
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// Favori Sahalar Tab'ı
-function FavoritesTab() {
-  const [favoriteFields, setFavoriteFields] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
-
-  // Favori sahaları getir
-  const fetchFavoriteFields = async () => {
-    if (!user) return;
-
-    try {
-      setLoading(true);
-
-      // Kullanıcının favori sahalarını getir
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        const favoriteFieldIds = userData.favoriteFields || [];
-
-        if (favoriteFieldIds.length > 0) {
-          // Favori sahaların detaylarını getir
-          const fieldsSnapshot = await getDocs(collection(db, 'fields'));
-          const allFields = fieldsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-
-          // Sadece favori olan ve aktif olan sahaları filtrele
-          const favorites = allFields.filter(field =>
-            favoriteFieldIds.includes(field.id) && field.isActive !== false
-          );
-
-          setFavoriteFields(favorites);
-        } else {
-          setFavoriteFields([]);
-        }
-      }
-    } catch (error) {
-      console.error('Favori sahalar getirilirken hata:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Favorilerden çıkar
-  const removeFavorite = async (fieldId) => {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        const currentFavorites = userData.favoriteFields || [];
-        const newFavorites = currentFavorites.filter(id => id !== fieldId);
-
-        await updateDoc(doc(db, 'users', user.uid), {
-          favoriteFields: newFavorites,
-          updatedAt: new Date()
-        });
-
-        // Yerel state'i güncelle
-        setFavoriteFields(favoriteFields.filter(field => field.id !== fieldId));
-        toast.success('Saha favorilerden çıkarıldı.');
-      }
-    } catch (error) {
-      console.error('Favori çıkarılırken hata:', error);
-      toast.error('Favori çıkarılırken bir hata oluştu.');
-    }
-  };
-
-  useEffect(() => {
-    fetchFavoriteFields();
-  }, [user]);
-
-  if (loading) {
-    return (
-      <div className="p-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Favori Sahalar</h2>
-          <p className="text-gray-600">
-            Beğendiğiniz sahaları favorilere ekleyin ve hızlı erişim sağlayın.
-          </p>
-        </div>
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Favori sahalar yükleniyor...</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Favori Sahalar</h2>
-        <p className="text-gray-600">
-          Beğendiğiniz sahaları favorilere ekleyin ve hızlı erişim sağlayın.
-        </p>
-      </div>
-
-      {favoriteFields.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="text-gray-400 text-6xl mb-4">⭐</div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">Henüz Favori Sahalarınız Yok</h3>
-          <p className="text-gray-600 mb-6">
-            Sahalar sayfasından beğendiğiniz sahaları favorilere ekleyebilirsiniz.
-          </p>
-          <Link
-            to="/fields"
-            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium inline-block"
-          >
-            Sahaları Keşfet
-          </Link>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {favoriteFields.map((field) => (
-            <div key={field.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
-              {/* Saha Görseli */}
-              <div className="h-32 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center relative">
-                <div className="text-center text-white">
-                  <div className="text-4xl mb-1">⚽</div>
-                  <h3 className="text-lg font-bold">{field.name}</h3>
-                </div>
-                {/* Favori Çıkar Butonu */}
-                <button
-                  onClick={() => removeFavorite(field.id)}
-                  className="absolute top-2 right-2 text-yellow-400 p-2 rounded-full bg-black bg-opacity-20 hover:bg-opacity-40 transition-all duration-200 backdrop-blur-sm cursor-pointer"
-                  title="Favorilerden çıkar"
-                >
-                  <FaStar className="text-lg" />
-                </button>
-              </div>
-
-              {/* Saha Bilgileri */}
-              <div className="p-4">
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Kapasite:</span>
-                    <span className="font-semibold text-gray-900">{field.capacity} kişi</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Kişi Başı Ücret:</span>
-                    <span className="font-semibold text-green-600">₺{field.pricePerPerson}</span>
-                  </div>
-                </div>
-
-                {/* Rezervasyon Butonu */}
-                <Link
-                  to="/fields"
-                  className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-center block font-medium"
-                >
-                  Rezervasyon Yap
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 // Bildirimler Tab'ı
 function NotificationsTab() {
   return (
@@ -972,8 +749,8 @@ function NotificationsTab() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium text-gray-900">Rezervasyon Onayları</h4>
-                <p className="text-sm text-gray-600">Rezervasyonunuz onaylandığında bildirim alın</p>
+                <h4 className="font-medium text-gray-900">Maç Onayları</h4>
+                <p className="text-sm text-gray-600">Maçlarınız onaylandığında bildirim alın</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" defaultChecked className="sr-only peer" />
@@ -984,7 +761,7 @@ function NotificationsTab() {
             <div className="flex items-center justify-between">
               <div>
                 <h4 className="font-medium text-gray-900">Hatırlatmalar</h4>
-                <p className="text-sm text-gray-600">Rezervasyonunuzdan önce hatırlatma alın</p>
+                <p className="text-sm text-gray-600">Maçlarınızdan önce hatırlatma alın</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" defaultChecked className="sr-only peer" />

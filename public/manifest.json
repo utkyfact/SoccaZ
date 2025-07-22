@@ -85,10 +85,10 @@
   ],
   "shortcuts": [
     {
-      "name": "Rezervasyon Yap",
-      "short_name": "Rezervasyon",
-      "description": "Hızlı halı saha rezervasyonu yapın",
-      "url": "/fields",
+      "name": "Maçlara Katıl",
+      "short_name": "Maçlar",
+      "description": "Organize edilen maçlara katılın",
+      "url": "/matches",
       "icons": [
         {
           "src": "/SoccaZ.png",
@@ -96,18 +96,7 @@
         }
       ]
     },
-    {
-      "name": "Rezervasyonlarım",
-      "short_name": "Rezervasyonlarım",
-      "description": "Mevcut rezervasyonlarınızı görüntüleyin ve yönetin",
-      "url": "/reservations",
-      "icons": [
-        {
-          "src": "/SoccaZ.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
+
     {
       "name": "Profilim",
       "short_name": "Profil",

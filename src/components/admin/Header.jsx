@@ -5,10 +5,8 @@ function Header({ activeTab }) {
     switch (activeTab) {
       case 'dashboard':
         return 'Dashboard';
-      case 'fields':
-        return 'Sahalar Yönetimi';
-      case 'reservations':
-        return 'Rezervasyonlar';
+
+
       case 'users':
         return 'Kullanıcı Yönetimi';
       case 'content':
@@ -26,10 +24,8 @@ function Header({ activeTab }) {
     switch (activeTab) {
       case 'dashboard':
         return 'Genel istatistikler ve özet bilgiler';
-      case 'fields':
-        return 'Halı sahaları ekle, düzenle ve yönet';
-      case 'reservations':
-        return 'Tüm rezervasyonları görüntüle ve yönet';
+
+
       case 'users':
         return 'Kullanıcı hesaplarını yönet';
       case 'content':
