@@ -52,8 +52,24 @@ function MatchDetail() {
   // Maç geçmiş mi kontrol et
   const isMatchPast = () => {
     if (!match) return false;
-    const matchDate = match.date?.toDate ? match.date.toDate() : new Date(match.date);
-    return matchDate < new Date();
+    
+    // Maç tarihini al
+    let matchDate;
+    if (match.date?.toDate) {
+      matchDate = match.date.toDate();
+    } else {
+      matchDate = new Date(match.date);
+    }
+    
+    // Maç saatini ekle
+    if (match.time) {
+      const [hours, minutes] = match.time.split(':');
+      matchDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+    }
+    
+    // Şu anki zamanla karşılaştır
+    const now = new Date();
+    return matchDate < now;
   };
 
   // Maça katıl

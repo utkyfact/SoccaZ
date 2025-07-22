@@ -117,6 +117,27 @@ function Matches() {
           return;
         }
 
+        // Tarih kontrolü - MatchDetail.jsx ile uyumlu
+        let matchDate;
+        if (match.date?.toDate) {
+          matchDate = match.date.toDate();
+        } else {
+          matchDate = new Date(match.date);
+        }
+        
+        // Maç saatini ekle
+        if (match.time) {
+          const [hours, minutes] = match.time.split(':');
+          matchDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+        }
+        
+        // Şu anki zamanla karşılaştır
+        const now = new Date();
+        if (matchDate < now) {
+          toast.warning('Bu maç için katılım süresi geçmiş.');
+          return;
+        }
+
         // Maça katıl - obje olarak ekle (MatchDetail.jsx ile uyumlu)
         const participantData = {
           userId: user.uid,
