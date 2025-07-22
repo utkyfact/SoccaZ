@@ -372,7 +372,8 @@ function MatchOrganization() {
     setLoadingParticipants(true);
     try {
       // Katılımcı ID'lerini kullanarak kullanıcı bilgilerini getir
-      const participantPromises = match.participants.map(async (userId) => {
+      const participantPromises = match.participants.map(async (p) => {
+        const userId = typeof p === 'string' ? p : (p.userId || p.id);
         try {
           const userDoc = await getDoc(doc(db, 'users', userId));
           if (userDoc.exists()) {
@@ -398,7 +399,6 @@ function MatchOrganization() {
           };
         }
       });
-
       const participantDetails = await Promise.all(participantPromises);
       setParticipants(participantDetails);
     } catch (error) {
@@ -786,7 +786,7 @@ function MatchOrganization() {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 gap-4">
                     {participants.map((participant, index) => (
-                      <div key={participant.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                      <div key={participant.id || index} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
                             {/* Avatar */}

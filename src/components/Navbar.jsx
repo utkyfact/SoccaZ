@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
 import { toast } from 'react-toastify';
 import UserAvatar from './UserAvatar';
+import NotificationsModal from './NotificationsModal';
 
 function Navbar() {
     const { user, userProfile, logout, isAdmin, loading: authLoading } = useAuth();
@@ -11,6 +12,7 @@ function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
+    const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
 
     // Çıkış yapma fonksiyonu
     const handleLogout = async () => {
@@ -180,6 +182,9 @@ function Navbar() {
                                                                     markAsRead(notification.id);
                                                                 }
                                                                 setIsNotificationDropdownOpen(false);
+                                                                if (notification.link) {
+                                                                    window.location.href = notification.link;
+                                                                }
                                                             }}
                                                             title={notification.read ? "Bildirim zaten okundu" : "Bildirimi okundu olarak işaretle"}
                                                         >
@@ -230,13 +235,15 @@ function Navbar() {
                                             {/* Footer */}
                                             {notifications.length > 0 && (
                                                 <div className='px-4 py-2 border-t border-gray-200 text-center'>
-                                                    <Link
-                                                        to="/notifications"
-                                                        onClick={() => setIsNotificationDropdownOpen(false)}
-                                                        className='text-sm text-green-600 hover:text-green-700 font-medium'
+                                                    <button
+                                                        onClick={() => {
+                                                            setIsNotificationsModalOpen(true);
+                                                            setIsNotificationDropdownOpen(false);
+                                                        }}
+                                                        className='text-sm text-green-600 hover:text-green-700 font-medium w-full text-center cursor-pointer'
                                                     >
                                                         Tüm bildirimleri görüntüle
-                                                    </Link>
+                                                    </button>
                                                 </div>
                                             )}
                                         </div>
@@ -474,6 +481,7 @@ function Navbar() {
                     </div>
                 )}
             </div>
+            <NotificationsModal isOpen={isNotificationsModalOpen} onClose={() => setIsNotificationsModalOpen(false)} />
         </nav>
     )
 }

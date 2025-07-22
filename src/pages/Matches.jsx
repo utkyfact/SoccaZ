@@ -22,7 +22,7 @@ function Matches() {
         collection(db, 'matches'),
         where('status', '==', 'active')
       );
-      
+
       const matchesSnapshot = await getDocs(matchesQuery);
       const matchesData = matchesSnapshot.docs.map(doc => ({
         id: doc.id,
@@ -42,25 +42,25 @@ function Matches() {
           } else {
             return false; // Geçersiz tarih
           }
-          
+
           // Bugün veya gelecek tarihli maçları göster
           const today = new Date();
           today.setHours(0, 0, 0, 0);
           const matchDay = new Date(matchDate);
           matchDay.setHours(0, 0, 0, 0);
-          
+
           return matchDay >= today;
         })
         .sort((a, b) => {
           // Basit tarih sıralaması
           const aDate = typeof a.date === 'string' ? a.date : (a.date?.toDate?.() || new Date()).toISOString().split('T')[0];
           const bDate = typeof b.date === 'string' ? b.date : (b.date?.toDate?.() || new Date()).toISOString().split('T')[0];
-          
+
           if (aDate === bDate) {
             // Aynı tarihse saate göre sırala
             return (a.time || '').localeCompare(b.time || '');
           }
-          
+
           return aDate.localeCompare(bDate);
         });
 
@@ -88,7 +88,7 @@ function Matches() {
     // Kullanıcı profilini kontrol et
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     const userData = userDoc.exists() ? userDoc.data() : null;
-    
+
     if (!userData?.phone) {
       toast.error('Maça katılmak için telefon numaranızı profil sayfasından eklemelisiniz.');
       return;
@@ -97,7 +97,7 @@ function Matches() {
     try {
       const match = matches.find(m => m.id === matchId);
       const isUserJoined = match.participants?.includes(user.uid);
-      
+
       let updatedParticipants;
       if (isUserJoined) {
         // Maçtan ayrıl
@@ -109,7 +109,7 @@ function Matches() {
           toast.warning('Bu maç dolu. Katılamazsınız.');
           return;
         }
-        
+
         // Maça katıl
         updatedParticipants = [...(match.participants || []), user.uid];
         toast.success(`${match.title} maçına katıldınız!`);
@@ -122,8 +122,8 @@ function Matches() {
       });
 
       // Local state'i güncelle
-      setMatches(matches.map(m => 
-        m.id === matchId 
+      setMatches(matches.map(m =>
+        m.id === matchId
           ? { ...m, participants: updatedParticipants }
           : m
       ));
@@ -153,7 +153,7 @@ function Matches() {
   const getMatchStatus = (match) => {
     const participantCount = match.participants?.length || 0;
     const maxParticipants = match.maxParticipants || 0;
-    
+
     if (participantCount >= maxParticipants) {
       return { text: 'Dolu', color: 'bg-red-100 text-red-800' };
     } else if (participantCount >= maxParticipants * 0.8) {
@@ -261,18 +261,18 @@ function Matches() {
                     {/* Maç Bilgileri */}
                     <div className="p-6">
                       <div className="space-y-3">
-                                                 {/* Tarih ve Saat */}
-                         <div className="flex items-center text-gray-600 text-sm">
-                           <FaCalendarAlt className="mr-2" />
-                           <span className="mr-4">
-                             {typeof match.date === 'string' 
-                               ? new Date(match.date).toLocaleDateString('tr-TR')
-                               : match.date?.toDate?.()?.toLocaleDateString('tr-TR') || 'Tarih yok'
-                             }
-                           </span>
-                           <FaClock className="mr-2" />
-                           <span>{match.time}</span>
-                         </div>
+                        {/* Tarih ve Saat */}
+                        <div className="flex items-center text-gray-600 text-sm">
+                          <FaCalendarAlt className="mr-2" />
+                          <span className="mr-4">
+                            {typeof match.date === 'string'
+                              ? new Date(match.date).toLocaleDateString('tr-TR')
+                              : match.date?.toDate?.()?.toLocaleDateString('tr-TR') || 'Tarih yok'
+                            }
+                          </span>
+                          <FaClock className="mr-2" />
+                          <span>{match.time}</span>
+                        </div>
 
                         {/* Saha */}
                         <div className="flex items-center justify-between">
@@ -291,20 +291,20 @@ function Matches() {
                           </span>
                         </div>
 
-                                                 {/* Konum */}
-                         {match.location && (
-                           <div className="flex items-center justify-between">
-                             <span className="text-gray-600 text-sm">Konum:</span>
-                             <button
-                               onClick={() => openLocation(match)}
-                               className="flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer"
-                               title={match.locationCoords ? 'GPS koordinatları ile açılacak' : 'Adres ile arama yapılacak'}
-                             >
-                               <FaMapMarkerAlt className="mr-1" />
-                               {match.locationCoords ? 'Konum' : '🔍 Arama'}
-                             </button>
-                           </div>
-                         )}
+                        {/* Konum */}
+                        {match.location && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-gray-600 text-sm">Konum:</span>
+                            <button
+                              onClick={() => openLocation(match)}
+                              className="flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer"
+                              title={match.locationCoords ? 'GPS koordinatları ile açılacak' : 'Adres ile arama yapılacak'}
+                            >
+                              <FaMapMarkerAlt className="mr-1" />
+                              {match.locationCoords ? 'Konum' : '🔍 Arama'}
+                            </button>
+                          </div>
+                        )}
 
                         {/* Açıklama */}
                         {match.description && (
@@ -320,13 +320,12 @@ function Matches() {
                           <button
                             onClick={() => handleJoinMatch(match.id)}
                             disabled={!isUserJoined && isFull}
-                            className={`w-full py-2 px-4 rounded-lg transition-colors duration-200 text-center block font-medium cursor-pointer ${
-                              isUserJoined
+                            className={`w-full py-2 px-4 rounded-lg transition-colors duration-200 text-center block font-medium cursor-pointer ${isUserJoined
                                 ? 'bg-red-600 text-white hover:bg-red-700'
                                 : isFull
-                                ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                                : 'bg-green-600 text-white hover:bg-green-700'
-                            }`}
+                                  ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                                  : 'bg-green-600 text-white hover:bg-green-700'
+                              }`}
                           >
                             {isUserJoined ? 'Maçtan Ayrıl' : isFull ? 'Dolu' : 'Maça Katıl'}
                           </button>
