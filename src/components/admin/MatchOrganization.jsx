@@ -427,17 +427,17 @@ function MatchOrganization() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <div className="flex justify-between items-center">
+      <div className="bg-white rounded-lg shadow-sm p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">Maç Organizasyonu</h2>
-            <p className="text-gray-600 mt-1">Maç organizasyonları oluşturun ve yönetin</p>
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">Maç Organizasyonu</h2>
+            <p className="text-gray-600 mt-1 text-sm lg:text-base">Maç organizasyonları oluşturun ve yönetin</p>
           </div>
           <button
             onClick={() => setShowCreateForm(!showCreateForm)}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 cursor-pointer"
+            className="bg-green-600 text-white px-4 lg:px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 cursor-pointer text-sm lg:text-base"
           >
             {showCreateForm ? '❌ İptal' : '⚽ Yeni Maç Organize Et'}
           </button>
@@ -446,10 +446,10 @@ function MatchOrganization() {
 
       {/* Maç Oluşturma Formu */}
       {showCreateForm && (
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-medium text-gray-800 mb-4">Yeni Maç Oluştur</h3>
+        <div className="bg-white rounded-lg shadow-sm p-4 lg:p-6">
+          <h3 className="text-base lg:text-lg font-medium text-gray-800 mb-4">Yeni Maç Oluştur</h3>
           <form onSubmit={createMatch} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Maç Başlığı *</label>
                 <input

@@ -155,16 +155,16 @@ function ContactContentManagement() {
   return (
     <div className="bg-white rounded-lg shadow-sm">
       {/* Header */}
-      <div className="border-b border-gray-200 p-6">
-        <div className="flex justify-between items-center">
+      <div className="border-b border-gray-200 p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">İletişim Sayfası İçeriği</h2>
-            <p className="text-gray-600 mt-1">İletişim sayfasındaki alanları düzenleyin</p>
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">İletişim Sayfası İçeriği</h2>
+            <p className="text-gray-600 mt-1 text-sm lg:text-base">İletişim sayfasındaki alanları düzenleyin</p>
           </div>
           <button
             onClick={saveContent}
             disabled={saving}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer"
+            className="bg-green-600 text-white px-4 lg:px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer text-sm lg:text-base"
           >
             {saving ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
           </button>
@@ -173,7 +173,7 @@ function ContactContentManagement() {
 
       {/* Section Tabs */}
       <div className="border-b border-gray-200">
-        <div className="flex space-x-8 px-6">
+        <div className="flex flex-wrap gap-2 lg:gap-0 lg:space-x-4 px-4 lg:px-6">
           {[
             { id: 'contact', label: 'İletişim Bilgileri', icon: '📞' },
             { id: 'social', label: 'Sosyal Medya', icon: '🌐' },
@@ -183,21 +183,23 @@ function ContactContentManagement() {
             <button
               key={section.id}
               onClick={() => setActiveSection(section.id)}
-              className={`py-4 px-2 cursor-pointer border-b-2 font-medium text-sm ${
+              className={`py-3 lg:py-4 px-3 lg:px-2 cursor-pointer border-b-2 font-medium text-xs lg:text-sm ${
                 activeSection === section.id
                   ? 'border-green-500 text-green-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              <span className="mr-2">{section.icon}</span>
-              {section.label}
+              <span className="flex items-center justify-center">
+                <span className="mr-1 lg:mr-2">{section.icon}</span>
+                <span className="hidden sm:inline">{section.label}</span>
+              </span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-4 lg:p-6">
         {activeSection === 'contact' && (
           <div className="space-y-6">
             <h3 className="text-lg font-medium text-gray-800">İletişim Bilgileri</h3>

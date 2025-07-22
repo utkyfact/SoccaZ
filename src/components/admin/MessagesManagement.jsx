@@ -122,15 +122,15 @@ function MessagesManagement() {
   return (
     <div className="bg-white rounded-lg shadow-sm">
       {/* Header */}
-      <div className="border-b border-gray-200 p-6">
-        <div className="flex justify-between items-center">
+      <div className="border-b border-gray-200 p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">Mesajlar</h2>
-            <p className="text-gray-600 mt-1">İletişim formundan gelen mesajları yönetin</p>
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">Mesajlar</h2>
+            <p className="text-gray-600 mt-1 text-sm lg:text-base">İletişim formundan gelen mesajları yönetin</p>
           </div>
           <button
             onClick={fetchMessages}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 cursor-pointer"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 cursor-pointer text-sm lg:text-base"
           >
             🔄 Yenile
           </button>
@@ -138,8 +138,8 @@ function MessagesManagement() {
       </div>
 
       {/* Filtreler */}
-      <div className="border-b border-gray-200 p-6">
-        <div className="flex flex-col md:flex-row gap-4">
+      <div className="border-b border-gray-200 p-4 lg:p-6">
+        <div className="flex flex-col lg:flex-row gap-4">
           {/* Durum Filtresi */}
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 mb-2">Durum</label>

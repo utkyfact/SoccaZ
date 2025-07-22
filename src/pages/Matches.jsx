@@ -216,8 +216,8 @@ function Matches() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Organize Edilen Maçlar</h1>
-            <p className="text-gray-600">Yaklaşan maçlara katılın ve futbol keyfi yaşayın</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">Organize Edilen Maçlar</h1>
+            <p className="text-gray-600 text-center">Yaklaşan maçlara katılın ve futbol keyfi yaşayın</p>
           </div>
 
           {matches.length === 0 ? (

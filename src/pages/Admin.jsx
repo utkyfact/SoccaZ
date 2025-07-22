@@ -9,6 +9,7 @@ function Admin() {
   const { user, isAdmin, loading } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Auth ve admin kontrolü
   useEffect(() => {
@@ -44,13 +45,36 @@ function Admin() {
 
   return (
     <div className='flex h-screen bg-gray-100'>
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <Sidebar user={user} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className={`
+        fixed lg:static inset-y-0 left-0 z-50 lg:z-auto
+        transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+        lg:translate-x-0 transition-transform duration-300 ease-in-out
+      `}>
+        <Sidebar 
+          user={user} 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          onMobileItemClick={() => setSidebarOpen(false)}
+        />
+      </div>
 
       {/* Main Content */}
-      <div className='flex-1 flex flex-col'>
+      <div className='flex-1 flex flex-col lg:ml-0'>
         {/* Header */}
-        <Header activeTab={activeTab} />
+        <Header 
+          activeTab={activeTab} 
+          onMenuClick={() => setSidebarOpen(!sidebarOpen)}
+          sidebarOpen={sidebarOpen}
+        />
 
         {/* Content Area */}
         <ContentArea activeTab={activeTab} />

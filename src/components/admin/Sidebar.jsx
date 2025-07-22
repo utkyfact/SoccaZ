@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-function Sidebar({ user, activeTab, setActiveTab }) {
+function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
+  
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    // Mobile'da menü seçildiğinde sidebar'ı kapat
+    if (onMobileItemClick) {
+      onMobileItemClick();
+    }
+  };
   return (
     <div className='w-64 bg-gradient-to-b from-green-700 to-green-800 shadow-lg min-h-screen flex flex-col'>
       {/* Sidebar Header */}
@@ -22,7 +30,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* Dashboard */}
           <li>
             <button
-              onClick={() => setActiveTab('dashboard')}
+              onClick={() => handleTabClick('dashboard')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'dashboard'
                 ? 'bg-green-600 text-white shadow-md'
                 : 'text-green-100 hover:bg-green-600 hover:text-white'
@@ -38,7 +46,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* Kullanıcılar */}
           <li>
             <button
-              onClick={() => setActiveTab('users')}
+              onClick={() => handleTabClick('users')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'users'
                 ? 'bg-green-600 text-white shadow-md'
                 : 'text-green-100 hover:bg-green-600 hover:text-white'
@@ -52,7 +60,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* Maç Organizasyonu */}
           <li>
             <button
-              onClick={() => setActiveTab('matches')}
+              onClick={() => handleTabClick('matches')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'matches'
                   ? 'bg-green-600 text-white shadow-md'
                   : 'text-green-100 hover:bg-green-600 hover:text-white'
@@ -66,7 +74,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* İçerikler */}
           <li>
             <button
-              onClick={() => setActiveTab('content')}
+              onClick={() => handleTabClick('content')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'content'
                   ? 'bg-green-600 text-white shadow-md'
                   : 'text-green-100 hover:bg-green-600 hover:text-white'
@@ -80,7 +88,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* Mesajlar */}
           <li>
             <button
-              onClick={() => setActiveTab('messages')}
+              onClick={() => handleTabClick('messages')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'messages'
                 ? 'bg-green-600 text-white shadow-md'
                 : 'text-green-100 hover:bg-green-600 hover:text-white'
@@ -94,7 +102,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* İletişim İçeriği */}
           <li>
             <button
-              onClick={() => setActiveTab('contactcontent')}
+              onClick={() => handleTabClick('contactcontent')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'contactcontent'
                 ? 'bg-green-600 text-white shadow-md'
                 : 'text-green-100 hover:bg-green-600 hover:text-white'
@@ -108,7 +116,7 @@ function Sidebar({ user, activeTab, setActiveTab }) {
           {/* Ayarlar */}
           <li>
             <button
-              onClick={() => setActiveTab('settings')}
+              onClick={() => handleTabClick('settings')}
               className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'settings'
                 ? 'bg-green-600 text-white shadow-md'
                 : 'text-green-100 hover:bg-green-600 hover:text-white'

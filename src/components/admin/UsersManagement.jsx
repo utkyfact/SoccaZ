@@ -201,22 +201,22 @@ function UsersManagement() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Başlık ve Yenile Butonu */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Kullanıcı Yönetimi</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-800">Kullanıcı Yönetimi</h2>
         <button
           onClick={fetchUsers}
           disabled={loading}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer"
+          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer text-sm lg:text-base"
         >
           {loading ? '🔄' : '🔄 Yenile'}
         </button>
       </div>
 
       {/* Filtreler ve Arama */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white p-4 lg:p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Arama */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Arama</label>
@@ -284,26 +284,26 @@ function UsersManagement() {
       </div>
 
       {/* İstatistikler */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <p className="text-blue-600 text-sm font-medium">Toplam Kullanıcı</p>
-          <p className="text-2xl font-bold text-blue-800">{users.length}</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+        <div className="bg-blue-50 p-3 lg:p-4 rounded-lg border border-blue-200">
+          <p className="text-blue-600 text-xs lg:text-sm font-medium">Toplam Kullanıcı</p>
+          <p className="text-xl lg:text-2xl font-bold text-blue-800">{users.length}</p>
         </div>
-        <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-          <p className="text-green-600 text-sm font-medium">Aktif</p>
-          <p className="text-2xl font-bold text-green-800">
+        <div className="bg-green-50 p-3 lg:p-4 rounded-lg border border-green-200">
+          <p className="text-green-600 text-xs lg:text-sm font-medium">Aktif</p>
+          <p className="text-xl lg:text-2xl font-bold text-green-800">
             {users.filter(u => (u.status || 'active') === 'active').length}
           </p>
         </div>
-        <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-          <p className="text-purple-600 text-sm font-medium">Admin</p>
-          <p className="text-2xl font-bold text-purple-800">
+        <div className="bg-purple-50 p-3 lg:p-4 rounded-lg border border-purple-200">
+          <p className="text-purple-600 text-xs lg:text-sm font-medium">Admin</p>
+          <p className="text-xl lg:text-2xl font-bold text-purple-800">
             {users.filter(u => u.role === 'admin').length}
           </p>
         </div>
-        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-          <p className="text-yellow-600 text-sm font-medium">Doğrulanmamış</p>
-          <p className="text-2xl font-bold text-yellow-800">
+        <div className="bg-yellow-50 p-3 lg:p-4 rounded-lg border border-yellow-200">
+          <p className="text-yellow-600 text-xs lg:text-sm font-medium">Doğrulanmamış</p>
+          <p className="text-xl lg:text-2xl font-bold text-yellow-800">
             {users.filter(u => !u.emailVerified || u.emailVerified === false).length}
           </p>
         </div>
@@ -311,39 +311,41 @@ function UsersManagement() {
 
       {/* Kullanıcı Listesi */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800">
+        <div className="p-4 lg:p-6 border-b border-gray-200">
+          <h3 className="text-base lg:text-lg font-semibold text-gray-800">
             Kullanıcılar ({filteredUsers.length})
           </h3>
         </div>
         
-        <div className="overflow-x-auto">
-          {filteredUsers.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">
-              <div className="text-gray-400 text-4xl mb-2">👥</div>
-              <p>Kullanıcı bulunamadı</p>
-            </div>
-          ) : (
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Kullanıcı
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    İletişim
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Rol & Durum
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tarihler
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    İşlemler
-                  </th>
-                </tr>
-              </thead>
+        {filteredUsers.length === 0 ? (
+          <div className="p-4 lg:p-6 text-center text-gray-500">
+            <div className="text-gray-400 text-4xl mb-2">👥</div>
+            <p>Kullanıcı bulunamadı</p>
+          </div>
+        ) : (
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Kullanıcı
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      İletişim
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Rol & Durum
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Tarihler
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      İşlemler
+                    </th>
+                  </tr>
+                </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50">
@@ -417,8 +419,73 @@ function UsersManagement() {
                 ))}
               </tbody>
             </table>
-          )}
-        </div>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="lg:hidden">
+              <div className="space-y-4 p-4">
+                {filteredUsers.map((user) => (
+                  <div key={user.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    {/* User Info */}
+                    <div className="flex items-center space-x-3">
+                      <UserAvatar user={user} size="sm" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">
+                          {user.displayName || user.name || 'İsimsiz'}
+                        </h4>
+                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                        {user.phone && (
+                          <p className="text-xs text-gray-500 truncate">{user.phone}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Badges */}
+                    <div className="flex flex-wrap gap-2">
+                      {getRoleBadge(user.role)}
+                      {getStatusBadge(user.status)}
+                      {getEmailVerificationBadge(user.emailVerified)}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <select
+                        value={user.role || 'user'}
+                        onChange={(e) => updateUserRole(user.id, e.target.value)}
+                        className="flex-1 text-xs border border-gray-300 rounded px-2 py-2 cursor-pointer"
+                      >
+                        <option value="user">Kullanıcı</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                      <select
+                        value={user.status || 'active'}
+                        onChange={(e) => updateUserStatus(user.id, e.target.value)}
+                        className="flex-1 text-xs border border-gray-300 rounded px-2 py-2 cursor-pointer"
+                      >
+                        <option value="active">Aktif</option>
+                        <option value="inactive">Pasif</option>
+                        <option value="banned">Yasaklı</option>
+                      </select>
+                      <button
+                        onClick={() => deleteUser(user.id)}
+                        className="text-red-600 hover:text-red-900 cursor-pointer px-3 py-2 text-xs border border-red-300 rounded hover:bg-red-50"
+                        title="Kullanıcıyı sil"
+                      >
+                        🗑️ Sil
+                      </button>
+                    </div>
+
+                    {/* Dates */}
+                    <div className="text-xs text-gray-500 space-y-1">
+                      <p>Kayıt: {formatDate(user.createdAt)}</p>
+                      <p>Son giriş: {formatDate(user.lastLogin)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

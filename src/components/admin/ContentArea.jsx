@@ -116,7 +116,7 @@ function ContentArea({ activeTab }) {
   // Kullanıcılar bölümü için özel component
   if (activeTab === 'users') {
     return (
-      <main className='flex-1 p-6'>
+      <main className='flex-1 p-4 lg:p-6'>
         <UsersManagement />
       </main>
     );
@@ -125,7 +125,7 @@ function ContentArea({ activeTab }) {
   // Maç organizasyonu bölümü için özel component
   if (activeTab === 'matches') {
     return (
-      <main className='flex-1 p-6'>
+      <main className='flex-1 p-4 lg:p-6'>
         <MatchOrganization />
       </main>
     );
@@ -134,7 +134,7 @@ function ContentArea({ activeTab }) {
   // İçerik yönetimi bölümü için özel component
   if (activeTab === 'content') {
     return (
-      <main className='flex-1 p-6'>
+      <main className='flex-1 p-4 lg:p-6'>
         <ContentManagement />
       </main>
     );
@@ -143,7 +143,7 @@ function ContentArea({ activeTab }) {
   // Mesajlar yönetimi bölümü için özel component
   if (activeTab === 'messages') {
     return (
-      <main className='flex-1 p-6'>
+      <main className='flex-1 p-4 lg:p-6'>
         <MessagesManagement />
       </main>
     );
@@ -152,7 +152,7 @@ function ContentArea({ activeTab }) {
   // İletişim içeriği bölümü için özel component
   if (activeTab === 'contactcontent') {
     return (
-      <main className='flex-1 p-6'>
+      <main className='flex-1 p-4 lg:p-6'>
         <ContactContentManagement />
       </main>
     );
@@ -160,14 +160,14 @@ function ContentArea({ activeTab }) {
 
   // Dashboard - Ana sayfa
   return (
-    <main className='flex-1 p-6 bg-gray-50'>
+    <main className='flex-1 p-4 lg:p-6 bg-gray-50'>
       <div className='max-w-7xl mx-auto'>
         {/* Header */}
-        <div className='mb-8'>
-          <h1 className='text-3xl font-bold text-gray-900 mb-2'>
+        <div className='mb-6 lg:mb-8'>
+          <h1 className='text-2xl lg:text-3xl font-bold text-gray-900 mb-2'>
             {getContentTitle()}
           </h1>
-          <p className='text-gray-600'>
+          <p className='text-gray-600 text-sm lg:text-base'>
             {getContentDescription()}
           </p>
         </div>
@@ -179,8 +179,8 @@ function ContentArea({ activeTab }) {
         ) : (
           <>
             {/* İstatistik Kartları */}
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
-              <div className='bg-white rounded-lg shadow-sm p-6 border border-gray-200'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8'>
+              <div className='bg-white rounded-lg shadow-sm p-4 lg:p-6 border border-gray-200'>
                 <div className='flex items-center'>
                   <div className='p-3 rounded-full bg-blue-100 text-blue-600'>
                     <span className='text-2xl'>⚽</span>
@@ -192,7 +192,7 @@ function ContentArea({ activeTab }) {
                 </div>
               </div>
 
-              <div className='bg-white rounded-lg shadow-sm p-6 border border-gray-200'>
+              <div className='bg-white rounded-lg shadow-sm p-4 lg:p-6 border border-gray-200'>
                 <div className='flex items-center'>
                   <div className='p-3 rounded-full bg-green-100 text-green-600'>
                     <span className='text-2xl'>🟢</span>
@@ -204,7 +204,7 @@ function ContentArea({ activeTab }) {
                 </div>
               </div>
 
-              <div className='bg-white rounded-lg shadow-sm p-6 border border-gray-200'>
+              <div className='bg-white rounded-lg shadow-sm p-4 lg:p-6 border border-gray-200'>
                 <div className='flex items-center'>
                   <div className='p-3 rounded-full bg-purple-100 text-purple-600'>
                     <span className='text-2xl'>👥</span>
@@ -216,7 +216,7 @@ function ContentArea({ activeTab }) {
                 </div>
               </div>
 
-              <div className='bg-white rounded-lg shadow-sm p-6 border border-gray-200'>
+              <div className='bg-white rounded-lg shadow-sm p-4 lg:p-6 border border-gray-200'>
                 <div className='flex items-center'>
                   <div className='p-3 rounded-full bg-orange-100 text-orange-600'>
                     <span className='text-2xl'>🎯</span>
@@ -231,29 +231,29 @@ function ContentArea({ activeTab }) {
 
             {/* Son Kullanıcılar */}
             <div className='bg-white rounded-lg shadow-sm border border-gray-200'>
-              <div className='px-6 py-4 border-b border-gray-200'>
-                <h3 className='text-lg font-medium text-gray-900'>Son Kayıt Olan Kullanıcılar</h3>
+              <div className='px-4 lg:px-6 py-4 border-b border-gray-200'>
+                <h3 className='text-base lg:text-lg font-medium text-gray-900'>Son Kayıt Olan Kullanıcılar</h3>
               </div>
-              <div className='p-6'>
+              <div className='p-4 lg:p-6'>
                 {recentUsers.length === 0 ? (
                   <p className='text-gray-500 text-center py-4'>Henüz kullanıcı kaydı bulunmuyor.</p>
                 ) : (
                   <div className='space-y-4'>
                     {recentUsers.map((user) => (
                       <div key={user.id} className='flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0'>
-                        <div className='flex items-center space-x-3'>
-                          <div className='w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold'>
+                        <div className='flex items-center space-x-2 lg:space-x-3 min-w-0 flex-1'>
+                          <div className='w-8 h-8 lg:w-10 lg:h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold text-sm lg:text-base'>
                             {(user.displayName || user.email || 'U').charAt(0).toUpperCase()}
                           </div>
-                          <div>
-                            <h4 className='font-medium text-gray-900'>
+                          <div className='min-w-0 flex-1'>
+                            <h4 className='font-medium text-gray-900 text-sm lg:text-base truncate'>
                               {user.displayName || 'İsimsiz Kullanıcı'}
                             </h4>
-                            <p className='text-sm text-gray-600'>{user.email}</p>
+                            <p className='text-xs lg:text-sm text-gray-600 truncate'>{user.email}</p>
                           </div>
                         </div>
-                        <div className='text-right'>
-                          <p className='text-sm text-gray-500'>
+                        <div className='text-right flex-shrink-0'>
+                          <p className='text-xs lg:text-sm text-gray-500'>
                             {user.createdAt?.toDate?.()?.toLocaleDateString('tr-TR') || 'Tarih yok'}
                           </p>
                         </div>
