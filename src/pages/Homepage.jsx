@@ -137,7 +137,7 @@ function Homepage() {
 
         {/* PWA Install Banner */}
         {showInstallBanner && (
-          <div className='w-full max-w-md mx-4 bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow-2xl border border-green-300 animate-bounce-in fixed bottom-4 left-4 right-4 z-50 md:relative md:bottom-auto md:left-auto md:right-auto md:z-auto'>
+                     <div className='w-auto max-w-md bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow-2xl border border-green-300 animate-bounce-in fixed bottom-4 left-2 right-2 z-50 md:relative md:bottom-auto md:left-auto md:right-auto md:z-auto md:w-full md:max-w-md md:mx-auto'>
             <div className='p-6 text-white relative overflow-hidden'>
               {/* Arka plan dekoratif elemanlar */}
               <div className='absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-green-400 rounded-full opacity-20'></div>
