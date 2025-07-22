@@ -84,6 +84,9 @@ function Contact() {
 
       toast.success('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
       setFormData({ name: '', email: '', subject: '', message: '' });
+      
+      // Admin panelindeki badge'i güncelle için custom event gönder
+      window.dispatchEvent(new CustomEvent('messageStatusChanged'));
     } catch (error) {
       console.error('Mesaj gönderilirken hata:', error);
       toast.error('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');

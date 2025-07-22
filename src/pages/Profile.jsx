@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import Layout from '../components/Layout';
 import { collection, query, where, getDocs, getDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { updateProfile, updateEmail, sendEmailVerification, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
+import { updateProfile, updateEmail, sendEmailVerification, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword, verifyBeforeUpdateEmail } from 'firebase/auth';
 import UserAvatar from '../components/UserAvatar';
 import AvatarSelectionModal from '../components/AvatarSelectionModal';
 import { toast } from 'react-toastify';
@@ -362,26 +362,34 @@ function PersonalTab({ user, userProfile, isAdmin }) {
       const credential = EmailAuthProvider.credential(user.email, password);
       await reauthenticateWithCredential(user, credential);
 
-      // Şifre doğruysa email'i güncelle
-      await updateEmail(user, newEmail.trim());
+      // Yeni email adresine doğrulama maili gönder
+      await verifyBeforeUpdateEmail(user, newEmail.trim());
 
-      setMessage({ type: 'success', text: 'Email başarıyla güncellendi!' });
+      setMessage({ 
+        type: 'success', 
+        text: `${newEmail} adresine doğrulama maili gönderildi. Mailinizi kontrol edip bağlantıya tıklayarak email adresinizi güncelleyin.` 
+      });
       setIsEditingEmail(false);
       setShowPasswordModal(false);
       setPassword('');
+      setNewEmail('');
 
-      // 3 saniye sonra mesajı otomatik temizle
+      // 5 saniye sonra mesajı otomatik temizle
       setTimeout(() => {
         setMessage({ type: '', text: '' });
-      }, 3000);
+      }, 5000);
     } catch (error) {
       console.error('Email güncellenirken hata:', error);
       if (error.code === 'auth/wrong-password') {
         setPasswordError('Şifre yanlış!');
       } else if (error.code === 'auth/email-already-in-use') {
         setMessage({ type: 'error', text: 'Bu email adresi zaten kullanılıyor!' });
+      } else if (error.code === 'auth/invalid-email') {
+        setMessage({ type: 'error', text: 'Geçerli bir email adresi girin!' });
+      } else if (error.code === 'auth/operation-not-allowed') {
+        setMessage({ type: 'error', text: 'Email güncelleme şu anda devre dışı.' });
       } else {
-        setMessage({ type: 'error', text: 'Email güncellenirken bir hata oluştu.' });
+        setMessage({ type: 'error', text: 'Email doğrulama maili gönderilirken bir hata oluştu.' });
       }
     } finally {
       setLoading(false);

@@ -49,6 +49,9 @@ function MessagesManagement() {
         setSelectedMessage({ ...selectedMessage, status });
       }
       toast.success('Mesaj durumu güncellendi.');
+      
+      // Sidebar'daki badge'i güncelle için custom event gönder
+      window.dispatchEvent(new CustomEvent('messageStatusChanged'));
     } catch (error) {
       toast.error('Durum güncellenirken hata oluştu.');
     }
@@ -82,6 +85,9 @@ function MessagesManagement() {
       }
       toast.success('Mesaj silindi.');
       closeDeleteModal();
+      
+      // Sidebar'daki badge'i güncelle için custom event gönder
+      window.dispatchEvent(new CustomEvent('messageStatusChanged'));
     } catch (error) {
       toast.error('Mesaj silinirken hata oluştu.');
     }

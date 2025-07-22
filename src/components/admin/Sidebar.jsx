@@ -1,7 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
 function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  // Okunmamış mesaj sayısını getir
+  const fetchUnreadCount = async () => {
+    try {
+      const q = query(
+        collection(db, 'messages'), 
+        where('status', '==', 'unread')
+      );
+      const querySnapshot = await getDocs(q);
+      setUnreadCount(querySnapshot.size);
+    } catch (error) {
+      console.error('Okunmamış mesaj sayısı alınırken hata:', error);
+      setUnreadCount(0);
+    }
+  };
+
+  // Component mount olduğunda ve mesajlar sekmesi aktif olduğunda sayıyı güncelle
+  useEffect(() => {
+    fetchUnreadCount();
+    
+    // Her 30 saniyede bir güncelle (real-time için)
+    const interval = setInterval(fetchUnreadCount, 30000);
+    
+    // Mesaj durumu değiştiğinde hemen güncelle
+    const handleMessageStatusChange = () => {
+      fetchUnreadCount();
+    };
+    
+    window.addEventListener('messageStatusChanged', handleMessageStatusChange);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('messageStatusChanged', handleMessageStatusChange);
+    };
+  }, []);
+
+  // Mesajlar sekmesine tıklandığında sayıyı yenile
+  useEffect(() => {
+    if (activeTab === 'messages') {
+      fetchUnreadCount();
+    }
+  }, [activeTab]);
   
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -95,7 +140,14 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>📨</span>
-              <span className='font-medium'>Mesajlar</span>
+              <div className='flex items-center space-x-2 flex-1'>
+                <span className='font-medium'>Mesajlar</span>
+                {unreadCount > 0 && (
+                  <span className='bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] h-5 flex items-center justify-center animate-pulse'>
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
+              </div>
             </button>
           </li>
 
