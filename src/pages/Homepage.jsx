@@ -3,10 +3,13 @@ import Layout from '../components/Layout';
 import { Link } from 'react-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { toast } from 'react-toastify';
 
 function Homepage() {
   const [contentData, setContentData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallBanner, setShowInstallBanner] = useState(false);
 
   // Anasayfa içeriklerini Firebase'den yükle
   const loadContent = async () => {
@@ -27,7 +30,70 @@ function Homepage() {
 
   useEffect(() => {
     loadContent();
+    
+    // PWA Install Prompt'u yakala
+    const handleBeforeInstallPrompt = (e) => {
+      // Varsayılan browser prompt'unu engelle
+      e.preventDefault();
+      
+      // 24 saat içinde kapat denmiş mi kontrol et
+      const dismissedTime = localStorage.getItem('pwa-banner-dismissed');
+      if (dismissedTime) {
+        const now = Date.now();
+        const timeDiff = now - parseInt(dismissedTime);
+        const hoursPassedSinceDismiss = timeDiff / (1000 * 60 * 60);
+        
+        // 24 saat geçmemişse banner gösterme
+        if (hoursPassedSinceDismiss < 24) {
+          return;
+        }
+      }
+      
+      // Event'i sakla
+      setDeferredPrompt(e);
+      // Banner'ı göster
+      setShowInstallBanner(true);
+    };
+
+    // Event listener ekle
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Temizleme
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, []);
+
+  // PWA Install fonksiyonu
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) {
+      toast.info('Uygulama zaten yüklenmiş veya bu cihazda desteklenmiyor.');
+      return;
+    }
+
+    // Install prompt'unu göster
+    deferredPrompt.prompt();
+    
+    // Kullanıcının seçimini bekle
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      toast.success('SoccaZ uygulaması ana ekrana eklendi! 🎉');
+    } else {
+      toast.info('Uygulama yükleme iptal edildi.');
+    }
+    
+    // Prompt'u temizle
+    setDeferredPrompt(null);
+    setShowInstallBanner(false);
+  };
+
+  // Banner'ı kapat
+  const dismissInstallBanner = () => {
+    setShowInstallBanner(false);
+    // 24 saat sonra tekrar göster
+    localStorage.setItem('pwa-banner-dismissed', Date.now().toString());
+  };
 
   // Loading durumunda
   if (loading) {
@@ -68,6 +134,62 @@ function Homepage() {
             {contentData?.hero?.subtitle}
           </p>
         </div>
+
+        {/* PWA Install Banner */}
+        {showInstallBanner && (
+          <div className='w-full max-w-md mx-4 bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow-2xl border border-green-300 animate-bounce-in fixed bottom-4 left-4 right-4 z-50 md:relative md:bottom-auto md:left-auto md:right-auto md:z-auto'>
+            <div className='p-6 text-white relative overflow-hidden'>
+              {/* Arka plan dekoratif elemanlar */}
+              <div className='absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-green-400 rounded-full opacity-20'></div>
+              <div className='absolute bottom-0 left-0 -mb-4 -ml-4 w-16 h-16 bg-green-400 rounded-full opacity-20'></div>
+              
+              {/* İçerik */}
+              <div className='relative z-10'>
+                <div className='flex items-center justify-between mb-4'>
+                  <div className='flex items-center space-x-3'>
+                    <div className='w-12 h-12 bg-white rounded-lg flex items-center justify-center'>
+                      <img src="/SoccaZ.png" alt="SoccaZ" className='w-10 h-10' />
+                    </div>
+                    <div>
+                      <h3 className='font-bold text-lg'>SoccaZ Uygulaması</h3>
+                      <p className='text-green-100 text-sm'>Ana Ekrana Ekle</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={dismissInstallBanner}
+                    className='text-green-200 hover:text-white transition-colors duration-200 p-1 cursor-pointer'
+                  >
+                    <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+                    </svg>
+                  </button>
+                </div>
+                
+                <p className='text-green-100 text-sm mb-6 leading-relaxed'>
+                  📱 SoccaZ'ı telefonuna yükle! Tek tıkla maçlara katıl, bildirim al ve çevrimdışı erişim sağla.
+                </p>
+                
+                <div className='flex space-x-3'>
+                  <button
+                    onClick={handleInstallApp}
+                    className='flex-1 bg-white text-green-600 px-4 py-3 rounded-lg font-bold text-sm hover:bg-green-50 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 cursor-pointer'
+                  >
+                    <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
+                    </svg>
+                    <span>Yükle</span>
+                  </button>
+                  <button
+                    onClick={dismissInstallBanner}
+                    className='px-4 py-3 border-2 border-green-300 text-green-100 rounded-lg font-medium text-sm hover:bg-green-400 hover:bg-opacity-20 transition-all duration-200 cursor-pointer'
+                  >
+                    Daha Sonra
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className='flex justify-center'>

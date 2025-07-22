@@ -90,24 +90,27 @@ function Navbar() {
                     <div className='hidden lg:flex items-center space-x-4'>
                         <Link
                             to="/"
-                            className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
+                            className='text-white hover:text-green-100 transition-all duration-300 font-semibold text-base flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-green-600 hover:bg-opacity-50 hover:scale-105 transform shadow-md hover:shadow-lg backdrop-blur-sm border border-transparent hover:border-green-400'
+                            style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
                         >
-                            <span className='text-lg'>🏠</span>
-                            <span className='hidden xl:inline'>Ana Sayfa</span>
+                            <span className='text-xl'>🏠</span>
+                            <span className='hidden lg:inline'>Ana Sayfa</span>
                         </Link>
                         <Link
                             to="/matches"
-                            className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
+                            className='text-white hover:text-green-100 transition-all duration-300 font-semibold text-base flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-green-600 hover:bg-opacity-50 hover:scale-105 transform shadow-md hover:shadow-lg backdrop-blur-sm border border-transparent hover:border-green-400'
+                            style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
                         >
-                            <span className='text-lg'>⚽</span>
-                            <span className='hidden xl:inline'>Maçlar</span>
+                            <span className='text-xl'>⚽</span>
+                            <span className='hidden lg:inline'>Maçlar</span>
                         </Link>
                         <Link
                             to="/contact"
-                            className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
+                            className='text-white hover:text-green-100 transition-all duration-300 font-semibold text-base flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-green-600 hover:bg-opacity-50 hover:scale-105 transform shadow-md hover:shadow-lg backdrop-blur-sm border border-transparent hover:border-green-400'
+                            style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
                         >
-                            <span className='text-lg'>📞</span>
-                            <span className='hidden xl:inline'>İletişim</span>
+                            <span className='text-xl'>📞</span>
+                            <span className='hidden lg:inline'>İletişim</span>
                         </Link>
 
                     </div>
@@ -346,20 +349,22 @@ function Navbar() {
                             <Link
                                 to="/"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
+                                className='text-white hover:text-green-100 block px-4 py-3 rounded-lg text-lg font-bold hover:bg-green-600 hover:bg-opacity-70 transition-all duration-300 shadow-md hover:shadow-lg border border-transparent hover:border-green-400 backdrop-blur-sm'
+                                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}
                             >
-                                <span className='flex items-center space-x-2'>
-                                    <span>🏠</span>
+                                <span className='flex items-center space-x-3'>
+                                    <span className='text-2xl'>🏠</span>
                                     <span>Ana Sayfa</span>
                                 </span>
                             </Link>
                             <Link
                                 to="/matches"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
+                                className='text-white hover:text-green-100 block px-4 py-3 rounded-lg text-lg font-bold hover:bg-green-600 hover:bg-opacity-70 transition-all duration-300 shadow-md hover:shadow-lg border border-transparent hover:border-green-400 backdrop-blur-sm'
+                                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}
                             >
-                                <span className='flex items-center space-x-2'>
-                                    <span>⚽</span>
+                                <span className='flex items-center space-x-3'>
+                                    <span className='text-2xl'>⚽</span>
                                     <span>Maçlar</span>
                                 </span>
                             </Link>
@@ -367,10 +372,11 @@ function Navbar() {
                             <Link
                                 to="/contact"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
+                                className='text-white hover:text-green-100 block px-4 py-3 rounded-lg text-lg font-bold hover:bg-green-600 hover:bg-opacity-70 transition-all duration-300 shadow-md hover:shadow-lg border border-transparent hover:border-green-400 backdrop-blur-sm'
+                                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}
                             >
-                                <span className='flex items-center space-x-2'>
-                                    <span>📞</span>
+                                <span className='flex items-center space-x-3'>
+                                    <span className='text-2xl'>📞</span>
                                     <span>İletişim</span>
                                 </span>
                             </Link>
