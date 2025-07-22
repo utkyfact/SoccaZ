@@ -11,6 +11,7 @@ function Navbar() {
     const { notifications, unreadCount, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+    const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
     const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
 
     // Çıkış yapma fonksiyonu
@@ -34,6 +35,13 @@ function Navbar() {
     // Kullanıcı dropdown'ını aç/kapat
     const toggleUserDropdown = () => {
         setIsUserDropdownOpen(!isUserDropdownOpen);
+        setIsNotificationDropdownOpen(false);
+    };
+
+    // Bildirim dropdown'ını aç/kapat
+    const toggleNotificationDropdown = () => {
+        setIsNotificationDropdownOpen(!isNotificationDropdownOpen);
+        setIsUserDropdownOpen(false);
     };
 
     return (
@@ -42,28 +50,28 @@ function Navbar() {
             <div className='absolute inset-0 pointer-events-none'>
                 {/* Orta Çizgi */}
                 <div className='absolute left-1/2 top-0 bottom-0 w-0.5 bg-white opacity-60'></div>
-                
+
                 {/* Orta Daire */}
                 <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white rounded-full opacity-60'></div>
-                
+
                 {/* Orta Nokta */}
                 <div className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-80'></div>
-                
+
                 {/* Sol Penaltı Sahası */}
                 <div className='absolute left-0 top-1/2 transform -translate-y-1/2 w-18 h-16 border-2 border-white opacity-60'></div>
-                
+
                 {/* Sağ Penaltı Sahası */}
                 <div className='absolute right-0 top-1/2 transform -translate-y-1/2 w-18 h-16 border-2 border-white opacity-60'></div>
-                
+
                 {/* Sol Kaleci Sahası */}
                 <div className='absolute left-0 top-1/2 transform -translate-y-1/2 w-6 h-8 border-2 border-white opacity-60'></div>
-                
+
                 {/* Sağ Kaleci Sahası */}
                 <div className='absolute right-0 top-1/2 transform -translate-y-1/2 w-6 h-8 border-2 border-white opacity-60'></div>
-                
+
                 {/* Sol Penaltı Noktası */}
                 <div className='absolute left-12 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full opacity-80'></div>
-                
+
                 {/* Sağ Penaltı Noktası */}
                 <div className='absolute right-12 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full opacity-80'></div>
             </div>
@@ -80,22 +88,22 @@ function Navbar() {
                     </Link>
                     {/* Orta: Navigasyon Linkleri (sadece desktop) */}
                     <div className='hidden lg:flex items-center space-x-4'>
-                        <Link 
-                            to="/" 
+                        <Link
+                            to="/"
                             className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
                         >
                             <span className='text-lg'>🏠</span>
                             <span className='hidden xl:inline'>Ana Sayfa</span>
                         </Link>
-                        <Link 
-                            to="/matches" 
+                        <Link
+                            to="/matches"
                             className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
                         >
                             <span className='text-lg'>⚽</span>
                             <span className='hidden xl:inline'>Maçlar</span>
                         </Link>
-                        <Link 
-                            to="/contact" 
+                        <Link
+                            to="/contact"
                             className='text-white hover:text-green-200 transition-colors duration-200 font-medium flex items-center space-x-1 hover:scale-105 transform'
                         >
                             <span className='text-lg'>📞</span>
@@ -107,23 +115,127 @@ function Navbar() {
                     <div className='flex items-center space-x-2'>
                         {/* Bildirim Butonu */}
                         {user && (
-                            <button
-                                onClick={() => setIsNotificationsModalOpen(true)}
-                                className='relative p-2 text-white hover:text-green-200 transition-colors duration-200 bg-green-800 bg-opacity-50 rounded-lg backdrop-blur-sm hover:bg-green-700 cursor-pointer'
-                            >
-                                <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 17h5l-5 5v-5zM10.5 3.75a6 6 0 0 1 6 6v3.75l2.25 2.25V12a8.25 8.25 0 0 0-16.5 0v3.75l2.25-2.25V9.75a6 6 0 0 1 6-6z' />
-                                </svg>
-                                {unreadCount > 0 && (
-                                    <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse'>
-                                        {unreadCount > 99 ? '99+' : unreadCount}
-                                    </span>
+                            <div className='relative'>
+                                <button
+                                    onClick={toggleNotificationDropdown}
+                                    className='relative p-2 text-white hover:text-green-200 transition-colors duration-200 bg-green-800 bg-opacity-50 rounded-lg backdrop-blur-sm hover:bg-green-700 cursor-pointer'
+                                >
+                                    <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 17h5l-5 5v-5zM10.5 3.75a6 6 0 0 1 6 6v3.75l2.25 2.25V12a8.25 8.25 0 0 0-16.5 0v3.75l2.25-2.25V9.75a6 6 0 0 1 6-6z' />
+                                    </svg>
+                                    {unreadCount > 0 && (
+                                        <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse'>
+                                            {unreadCount > 99 ? '99+' : unreadCount}
+                                        </span>
+                                    )}
+                                </button>
+
+                                                                    {/* Bildirim Dropdown */}
+                                    {isNotificationDropdownOpen && (
+                                        <div className='absolute right-2 lg:right-0 mt-2 w-72 lg:w-80 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 overflow-y-auto z-50'>
+                                        {/* Header */}
+                                        <div className='px-4 py-2 border-b border-gray-200'>
+                                            <div className='flex items-center justify-between mb-1'>
+                                                <h3 className='font-semibold text-gray-900'>Bildirimler</h3>
+                                                {unreadCount > 0 && (
+                                                    <button
+                                                        onClick={markAllAsRead}
+                                                        className='text-sm text-green-600 hover:text-green-700 font-medium'
+                                                    >
+                                                        Tümünü okundu işaretle
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Bildirimler Listesi */}
+                                        <div className='max-h-64 overflow-y-auto'>
+                                            {notifications.length === 0 ? (
+                                                <div className='px-4 py-8 text-center text-gray-500'>
+                                                    <svg className='w-12 h-12 mx-auto mb-3 text-gray-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 17h5l-5 5v-5zM10.5 3.75a6 6 0 0 1 6 6v3.75l2.25 2.25V12a8.25 8.25 0 0 0-16.5 0v3.75l2.25-2.25V9.75a6 6 0 0 1 6-6z' />
+                                                    </svg>
+                                                    <p>Henüz bildiriminiz yok</p>
+                                                </div>
+                                            ) : (
+                                                notifications.slice(0, 5).map((notification) => (
+                                                    <div
+                                                        key={notification.id}
+                                                        className={`px-4 py-3 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-l-4 ${notification.read ? 'border-transparent' : 'border-green-500'
+                                                            }`}
+                                                        onClick={() => {
+                                                            if (!notification.read) {
+                                                                markAsRead(notification.id);
+                                                            }
+                                                            setIsNotificationDropdownOpen(false);
+                                                            if (notification.link) {
+                                                                window.location.href = notification.link;
+                                                            }
+                                                        }}
+                                                        title={notification.read ? "Bildirim zaten okundu" : "Bildirimi okundu olarak işaretle"}
+                                                    >
+                                                        <div className='flex items-start justify-between'>
+                                                            <div className='flex-1'>
+                                                                <div className='flex items-center space-x-2 mb-1'>
+                                                                    <span className={`inline-block w-2 h-2 rounded-full ${notification.type === 'success' ? 'bg-green-500' :
+                                                                            notification.type === 'warning' ? 'bg-yellow-500' :
+                                                                                notification.type === 'error' ? 'bg-red-500' :
+                                                                                    'bg-blue-500'
+                                                                        }`}></span>
+                                                                    <h4 className={`text-sm font-medium ${notification.read ? 'text-gray-600' : 'text-gray-900'
+                                                                        }`}>
+                                                                        {notification.title}
+                                                                    </h4>
+                                                                    {!notification.read && (
+                                                                        <span className='inline-block w-2 h-2 bg-green-500 rounded-full'></span>
+                                                                    )}
+                                                                </div>
+                                                                <p className={`text-xs ${notification.read ? 'text-gray-500' : 'text-gray-700'
+                                                                    }`}>
+                                                                    {notification.message}
+                                                                </p>
+                                                                <p className='text-xs text-gray-400 mt-1'>
+                                                                    {notification.createdAt?.toDate().toLocaleString('tr-TR')}
+                                                                </p>
+                                                            </div>
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    deleteNotification(notification.id);
+                                                                }}
+                                                                className='text-gray-400 hover:text-red-500 transition-colors duration-200 ml-2'
+                                                            >
+                                                                <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+
+                                        {/* Footer */}
+                                        {notifications.length > 0 && (
+                                            <div className='px-4 py-2 border-t border-gray-200 text-center'>
+                                                <button
+                                                    onClick={() => {
+                                                        setIsNotificationsModalOpen(true);
+                                                        setIsNotificationDropdownOpen(false);
+                                                    }}
+                                                    className='text-sm text-green-600 hover:text-green-700 font-medium w-full text-center cursor-pointer'
+                                                >
+                                                    Tüm bildirimleri görüntüle
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 )}
-                            </button>
+                            </div>
                         )}
                         {/* Hamburger Menü Butonu (mobilde sağda) */}
                         <div className='lg:hidden'>
-                            <button 
+                            <button
                                 onClick={toggleMobileMenu}
                                 className='text-white hover:text-green-200 transition-colors duration-200 p-2'
                             >
@@ -168,54 +280,54 @@ function Navbar() {
                                         {/* Dropdown Menu */}
                                         {isUserDropdownOpen && (
                                             <div className='absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2'>
-                            {/* Admin Panel Linki */}
-                            {isAdmin && (
-                                <Link 
-                                    to="/admin" 
-                                    onClick={() => setIsUserDropdownOpen(false)}
-                                    className='flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200'
-                                >
-                                    <span>👑</span>
-                                    <span>Admin Paneli</span>
-                                </Link>
-                            )}
-                            
-                            {/* Profil Linki */}
-                            <Link
-                                to="/profile"
-                                onClick={() => setIsUserDropdownOpen(false)}
-                                className='flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200'
-                            >
-                                <span>👤</span>
-                                <span>Profil</span>
-                            </Link>
+                                                {/* Admin Panel Linki */}
+                                                {isAdmin && (
+                                                    <Link
+                                                        to="/admin"
+                                                        onClick={() => setIsUserDropdownOpen(false)}
+                                                        className='flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200'
+                                                    >
+                                                        <span>👑</span>
+                                                        <span>Admin Paneli</span>
+                                                    </Link>
+                                                )}
 
-                            {/* Ayırıcı */}
-                            <div className='border-t border-gray-200 my-1'></div>
+                                                {/* Profil Linki */}
+                                                <Link
+                                                    to="/profile"
+                                                    onClick={() => setIsUserDropdownOpen(false)}
+                                                    className='flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200'
+                                                >
+                                                    <span>👤</span>
+                                                    <span>Profil</span>
+                                                </Link>
 
-                            {/* Çıkış Butonu */}
-                            <button 
-                                onClick={handleLogout}
-                                className='w-full flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors duration-200 cursor-pointer'
-                            >
-                                <span>🚪</span>
-                                <span>Çıkış Yap</span>
-                            </button>
-                        </div>
+                                                {/* Ayırıcı */}
+                                                <div className='border-t border-gray-200 my-1'></div>
+
+                                                {/* Çıkış Butonu */}
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className='w-full flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors duration-200 cursor-pointer'
+                                                >
+                                                    <span>🚪</span>
+                                                    <span>Çıkış Yap</span>
+                                                </button>
+                                            </div>
                                         )}
                                     </div>
                                 </>
                             ) : (
                                 // Giriş yapmamış kullanıcı için
                                 <div className='flex items-center space-x-2'>
-                                    <Link 
-                                        to="/login" 
+                                    <Link
+                                        to="/login"
                                         className='bg-white text-green-600 px-3 py-1 rounded text-sm font-medium hover:bg-green-50 transition-colors duration-200 shadow-md'
                                     >
                                         Giriş
                                     </Link>
-                                    <Link 
-                                        to="/register" 
+                                    <Link
+                                        to="/register"
                                         className='bg-green-500 text-white px-3 py-1 rounded text-sm font-medium hover:bg-green-400 transition-colors duration-200 shadow-md'
                                     >
                                         Kayıt
@@ -231,8 +343,8 @@ function Navbar() {
                     <div className='lg:hidden bg-green-700 border-t border-green-600 shadow-lg'>
                         <div className='px-2 pt-2 pb-3 space-y-1'>
                             {/* Mobil Navigasyon Linkleri */}
-                            <Link 
-                                to="/" 
+                            <Link
+                                to="/"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
                             >
@@ -241,8 +353,8 @@ function Navbar() {
                                     <span>Ana Sayfa</span>
                                 </span>
                             </Link>
-                            <Link 
-                                to="/matches" 
+                            <Link
+                                to="/matches"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
                             >
@@ -252,8 +364,8 @@ function Navbar() {
                                 </span>
                             </Link>
 
-                            <Link 
-                                to="/contact" 
+                            <Link
+                                to="/contact"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className='text-white hover:text-green-200 block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200'
                             >
@@ -307,7 +419,7 @@ function Navbar() {
                                             </span>
                                         </Link>
 
-                                        <button 
+                                        <button
                                             onClick={handleLogout}
                                             className='w-full bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-all duration-200 shadow-md cursor-pointer'
                                         >
@@ -316,15 +428,15 @@ function Navbar() {
                                     </div>
                                 ) : (
                                     <div className='space-y-2'>
-                                        <Link 
-                                            to="/login" 
+                                        <Link
+                                            to="/login"
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             className='w-full bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-green-50 transition-colors duration-200 shadow-md block text-center'
                                         >
                                             Giriş
                                         </Link>
-                                        <Link 
-                                            to="/register" 
+                                        <Link
+                                            to="/register"
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             className='w-full bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-400 transition-colors duration-200 shadow-md block text-center'
                                         >

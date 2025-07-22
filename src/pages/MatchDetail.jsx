@@ -37,7 +37,10 @@ function MatchDetail() {
   // Kullanıcının katılıp katılmadığını kontrol et
   const isUserParticipant = () => {
     if (!user || !match) return false;
-    return match.participants?.some(p => p.userId === user.uid) || false;
+    // Hem string hem obje formatını destekle
+    return match.participants?.some(p => 
+      typeof p === 'string' ? p === user.uid : p.userId === user.uid
+    ) || false;
   };
 
   // Maç dolup dolmadığını kontrol et
@@ -120,7 +123,10 @@ function MatchDetail() {
 
     setJoining(true);
     try {
-      const userParticipant = match.participants.find(p => p.userId === user.uid);
+      // Hem string hem obje formatını destekle
+      const userParticipant = match.participants.find(p => 
+        typeof p === 'string' ? p === user.uid : p.userId === user.uid
+      );
       
       await updateDoc(doc(db, 'matches', id), {
         participants: arrayRemove(userParticipant)
@@ -129,7 +135,9 @@ function MatchDetail() {
       // Local state'i güncelle
       setMatch(prev => ({
         ...prev,
-        participants: prev.participants.filter(p => p.userId !== user.uid)
+        participants: prev.participants.filter(p => 
+          typeof p === 'string' ? p !== user.uid : p.userId !== user.uid
+        )
       }));
 
       toast.success('Maçtan ayrıldınız.');

@@ -96,12 +96,19 @@ function Matches() {
 
     try {
       const match = matches.find(m => m.id === matchId);
-      const isUserJoined = match.participants?.includes(user.uid);
+      // Katılımcı kontrolü - obje yapısına uygun
+      const isUserJoined = match.participants?.some(p => 
+        typeof p === 'string' ? p === user.uid : p.userId === user.uid
+      );
 
-      let updatedParticipants;
       if (isUserJoined) {
-        // Maçtan ayrıl
-        updatedParticipants = match.participants.filter(id => id !== user.uid);
+        // Maçtan ayrıl - arrayRemove kullan
+        await updateDoc(doc(db, 'matches', matchId), {
+          participants: match.participants.filter(p => 
+            typeof p === 'string' ? p !== user.uid : p.userId !== user.uid
+          ),
+          updatedAt: new Date()
+        });
         toast.success(`${match.title} maçından ayrıldınız.`);
       } else {
         // Kapasite kontrolü
@@ -110,23 +117,23 @@ function Matches() {
           return;
         }
 
-        // Maça katıl
-        updatedParticipants = [...(match.participants || []), user.uid];
+        // Maça katıl - obje olarak ekle (MatchDetail.jsx ile uyumlu)
+        const participantData = {
+          userId: user.uid,
+          userEmail: user.email,
+          userName: user.displayName || user.email,
+          joinedAt: new Date()
+        };
+
+        await updateDoc(doc(db, 'matches', matchId), {
+          participants: [...(match.participants || []), participantData],
+          updatedAt: new Date()
+        });
         toast.success(`${match.title} maçına katıldınız!`);
       }
 
-      // Firestore'u güncelle
-      await updateDoc(doc(db, 'matches', matchId), {
-        participants: updatedParticipants,
-        updatedAt: new Date()
-      });
-
-      // Local state'i güncelle
-      setMatches(matches.map(m =>
-        m.id === matchId
-          ? { ...m, participants: updatedParticipants }
-          : m
-      ));
+      // Maçları yeniden getir (güncel veri için)
+      await fetchMatches();
 
     } catch (error) {
       console.error('Maça katılım güncellenirken hata:', error);
@@ -230,7 +237,10 @@ function Matches() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {matches.map((match) => {
                 const participantCount = match.participants?.length || 0;
-                const isUserJoined = user && match.participants?.includes(user.uid);
+                // Hem string hem obje formatını destekle
+                const isUserJoined = user && match.participants?.some(p => 
+                  typeof p === 'string' ? p === user.uid : p.userId === user.uid
+                );
                 const matchStatus = getMatchStatus(match);
                 const isFull = participantCount >= match.maxParticipants;
 
