@@ -3,6 +3,7 @@ import { collection, getDocs, query, where, doc, updateDoc, getDoc } from 'fireb
 import { db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
+import ConfirmationModal from '../components/ConfirmationModal';
 import { FaMapMarkerAlt, FaUsers, FaClock, FaCalendarAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
@@ -10,6 +11,8 @@ function Matches() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState(null);
   const { user, loading: authLoading } = useAuth();
 
   // Maçları getir
@@ -78,7 +81,7 @@ function Matches() {
     fetchMatches();
   }, []);
 
-  // Maça katılma/ayrılma fonksiyonu
+  // Maça katılma/ayrılma modal açma fonksiyonu
   const handleJoinMatch = async (matchId) => {
     if (!user) {
       toast.error('Maça katılmak için giriş yapmanız gerekiyor.');
@@ -94,51 +97,63 @@ function Matches() {
       return;
     }
 
+    const match = matches.find(m => m.id === matchId);
+    const isUserJoined = match.participants?.some(p => 
+      typeof p === 'string' ? p === user.uid : p.userId === user.uid
+    );
+
+    // Kapasite kontrolü (sadece katılım için)
+    if (!isUserJoined && match.participants?.length >= match.maxParticipants) {
+      toast.warning('Bu maç dolu. Katılamazsınız.');
+      return;
+    }
+
+    // Tarih kontrolü (sadece katılım için)
+    if (!isUserJoined) {
+      let matchDate;
+      if (match.date?.toDate) {
+        matchDate = match.date.toDate();
+      } else {
+        matchDate = new Date(match.date);
+      }
+      
+      if (match.time) {
+        const [hours, minutes] = match.time.split(':');
+        matchDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      }
+      
+      const now = new Date();
+      if (matchDate < now) {
+        toast.warning('Bu maç için katılım süresi geçmiş.');
+        return;
+      }
+    }
+
+    // Modal'ı aç
+    setSelectedMatch(match);
+    setShowConfirmModal(true);
+  };
+
+  // Gerçek katılım/ayrılma işlemi
+  const confirmJoinMatch = async () => {
+    if (!selectedMatch) return;
+
     try {
-      const match = matches.find(m => m.id === matchId);
-      // Katılımcı kontrolü - obje yapısına uygun
-      const isUserJoined = match.participants?.some(p => 
+      const isUserJoined = selectedMatch.participants?.some(p => 
         typeof p === 'string' ? p === user.uid : p.userId === user.uid
       );
 
       if (isUserJoined) {
-        // Maçtan ayrıl - arrayRemove kullan
-        await updateDoc(doc(db, 'matches', matchId), {
-          participants: match.participants.filter(p => 
+        // Maçtan ayrıl
+        await updateDoc(doc(db, 'matches', selectedMatch.id), {
+          participants: selectedMatch.participants.filter(p => 
             typeof p === 'string' ? p !== user.uid : p.userId !== user.uid
           ),
           updatedAt: new Date()
         });
-        toast.success(`${match.title} maçından ayrıldınız.`);
+        toast.success(`${selectedMatch.title} maçından ayrıldınız.`);
       } else {
-        // Kapasite kontrolü
-        if (match.participants?.length >= match.maxParticipants) {
-          toast.warning('Bu maç dolu. Katılamazsınız.');
-          return;
-        }
-
-        // Tarih kontrolü - MatchDetail.jsx ile uyumlu
-        let matchDate;
-        if (match.date?.toDate) {
-          matchDate = match.date.toDate();
-        } else {
-          matchDate = new Date(match.date);
-        }
-        
-        // Maç saatini ekle
-        if (match.time) {
-          const [hours, minutes] = match.time.split(':');
-          matchDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-        }
-        
-        // Şu anki zamanla karşılaştır
-        const now = new Date();
-        if (matchDate < now) {
-          toast.warning('Bu maç için katılım süresi geçmiş.');
-          return;
-        }
-
-        // Maça katıl - obje olarak ekle (MatchDetail.jsx ile uyumlu)
+        // Maça katıl
         const participantData = {
           userId: user.uid,
           userEmail: user.email,
@@ -146,14 +161,14 @@ function Matches() {
           joinedAt: new Date()
         };
 
-        await updateDoc(doc(db, 'matches', matchId), {
-          participants: [...(match.participants || []), participantData],
+        await updateDoc(doc(db, 'matches', selectedMatch.id), {
+          participants: [...(selectedMatch.participants || []), participantData],
           updatedAt: new Date()
         });
-        toast.success(`${match.title} maçına katıldınız!`);
+        toast.success(`${selectedMatch.title} maçına katıldınız!`);
       }
 
-      // Maçları yeniden getir (güncel veri için)
+      // Maçları yeniden getir
       await fetchMatches();
 
     } catch (error) {
@@ -401,6 +416,38 @@ function Matches() {
           )}
         </div>
       </div>
+
+      {/* Onay Modalı */}
+      <ConfirmationModal
+        isOpen={showConfirmModal}
+        onClose={() => {
+          setShowConfirmModal(false);
+          setSelectedMatch(null);
+        }}
+        onConfirm={confirmJoinMatch}
+        title={selectedMatch && selectedMatch.participants?.some(p => 
+          typeof p === 'string' ? p === user.uid : p.userId === user.uid
+        ) ? "Maçtan Ayrıl" : "Maça Katıl"}
+        message={selectedMatch && selectedMatch.participants?.some(p => 
+          typeof p === 'string' ? p === user.uid : p.userId === user.uid
+        ) 
+          ? `${selectedMatch?.title} maçından ayrılmak istediğinizden emin misiniz?`
+          : `${selectedMatch?.title} maçına katılmak istediğinizden emin misiniz?\n\nTarih: ${
+              selectedMatch?.date 
+                ? (typeof selectedMatch.date === 'string'
+                    ? new Date(selectedMatch.date).toLocaleDateString('tr-TR')
+                    : selectedMatch.date?.toDate?.()?.toLocaleDateString('tr-TR'))
+                : 'Tarih yok'
+            }\nSaat: ${selectedMatch?.time || 'Belirtilmemiş'}\nSaha: ${selectedMatch?.fieldName || 'Belirtilmemiş'}`
+        }
+        confirmText={selectedMatch && selectedMatch.participants?.some(p => 
+          typeof p === 'string' ? p === user.uid : p.userId === user.uid
+        ) ? "Ayrıl" : "Katıl"}
+        cancelText="İptal"
+        type={selectedMatch && selectedMatch.participants?.some(p => 
+          typeof p === 'string' ? p === user.uid : p.userId === user.uid
+        ) ? "warning" : "success"}
+      />
     </Layout>
   );
 }
