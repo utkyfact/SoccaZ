@@ -165,6 +165,20 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
             </button>
           </li>
 
+          {/* DDoS Koruması */}
+          <li>
+            <button
+              onClick={() => handleTabClick('ddos')}
+              className={`w-full cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${activeTab === 'ddos'
+                ? 'bg-green-600 text-white shadow-md'
+                : 'text-green-100 hover:bg-green-600 hover:text-white'
+                }`}
+            >
+              <span className='text-xl'>🛡️</span>
+              <span className='font-medium'>DDoS Koruması</span>
+            </button>
+          </li>
+
           {/* Ayarlar */}
           <li>
             <button

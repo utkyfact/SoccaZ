@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import { useAuth } from '../context/AuthContext';
 import { FcGoogle } from "react-icons/fc";
 import { toast } from 'react-toastify';
+import { validateEmail, sanitizeInput } from '../utils/inputSanitizer';
+import { checkDDoSProtection } from '../utils/advancedRateLimiter';
 
 function Login() {
     const [loginObj, setLoginObj] = useState({ email: "", password: "" })
@@ -12,9 +14,11 @@ function Login() {
 
     const updateValue = (e) => {
         const { value, name } = e.target
+        // Input'ları sanitize et
+        const sanitizedValue = sanitizeInput(value);
         setLoginObj({
             ...loginObj,
-            [name]: value
+            [name]: sanitizedValue
         })
     }
 
@@ -23,6 +27,14 @@ function Login() {
 
     async function handleEmailLogin(e) {
         e.preventDefault()
+        
+        // DDoS Protection kontrolü
+        const ddosCheck = checkDDoSProtection('login');
+        if (!ddosCheck.allowed) {
+            toast.error(ddosCheck.message);
+            return;
+        }
+        
         if (!loginObj.email || !loginObj.password) {
             toast.error("Lütfen tüm alanları doldurun!")
             return

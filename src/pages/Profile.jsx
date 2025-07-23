@@ -9,6 +9,7 @@ import UserAvatar from '../components/UserAvatar';
 import AvatarSelectionModal from '../components/AvatarSelectionModal';
 import { toast } from 'react-toastify';
 import { FaStar } from 'react-icons/fa';
+import { validateEmail, validatePhone, sanitizeInput } from '../utils/inputSanitizer';
 
 function Profile() {
   const { user, userProfile, loading: authLoading, isAdmin, updateAvatar } = useAuth();
@@ -402,6 +403,12 @@ function PersonalTab({ user, userProfile, isAdmin }) {
       return;
     }
 
+    // Güçlü telefon validation
+    if (!validatePhone(newPhone.trim())) {
+      setMessage({ type: 'error', text: 'Geçerli bir telefon numarası girin!' });
+      return;
+    }
+
     try {
       setLoading(true);
       setMessage({ type: '', text: '' });
@@ -560,7 +567,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   <input
                     type="email"
                     value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}
+                    onChange={(e) => setNewEmail(sanitizeInput(e.target.value))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     placeholder="Email adresinizi girin"
                   />
@@ -647,7 +654,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   <input
                     type="tel"
                     value={newPhone}
-                    onChange={(e) => setNewPhone(e.target.value)}
+                    onChange={(e) => setNewPhone(sanitizeInput(e.target.value))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     placeholder="Telefon numaranızı girin"
                   />

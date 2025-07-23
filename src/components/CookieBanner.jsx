@@ -70,7 +70,7 @@ function CookieBanner() {
           </div>
 
           {/* Sağ Taraf - Butonlar */}
-          <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+          <div className="flex gap-3 flex-shrink-0">
             {/* Detaylı Bilgi */}
             <Link
               to="/privacy"
@@ -82,7 +82,7 @@ function CookieBanner() {
             {/* Reddet */}
             <button
               onClick={decline}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 cursor-pointer"
             >
               Reddet
             </button>
@@ -90,7 +90,7 @@ function CookieBanner() {
             {/* Sadece Gerekli */}
             <button
               onClick={acceptNecessary}
-              className="px-4 py-2 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg transition-colors duration-200"
+              className="px-4 py-2 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg transition-colors duration-200 cursor-pointer"
             >
               Sadece Gerekli
             </button>
@@ -98,7 +98,7 @@ function CookieBanner() {
             {/* Tümünü Kabul Et */}
             <button
               onClick={acceptAll}
-              className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-200 shadow-sm"
+              className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-200 shadow-sm cursor-pointer"
             >
               Tümünü Kabul Et
             </button>

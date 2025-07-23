@@ -4,6 +4,9 @@ import { Link } from 'react-router';
 import { doc, getDoc, addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { toast } from 'react-toastify';
+import { sanitizeFormData, validateEmail } from '../utils/inputSanitizer';
+import { checkFormRateLimit } from '../utils/rateLimiter';
+import { checkDDoSProtection } from '../utils/advancedRateLimiter';
 
 const SOCIAL_SVGS = {
   facebook: (
@@ -69,13 +72,50 @@ function Contact() {
     e.preventDefault();
     setSubmitting(true);
     
+    // DDoS Protection kontrolü
+    const ddosCheck = checkDDoSProtection('contact');
+    if (!ddosCheck.allowed) {
+      toast.error(ddosCheck.message);
+      setSubmitting(false);
+      return;
+    }
+    
+    // Rate limiting check
+    if (checkFormRateLimit('contact', formData.email)) {
+      toast.error('Çok fazla mesaj gönderdiniz. Lütfen 5 dakika bekleyin.');
+      setSubmitting(false);
+      return;
+    }
+    
+    // Input validation
+    if (!validateEmail(formData.email)) {
+      toast.error('Geçerli bir email adresi girin!');
+      setSubmitting(false);
+      return;
+    }
+    
+    if (formData.message.length < 10) {
+      toast.error('Mesaj en az 10 karakter olmalıdır!');
+      setSubmitting(false);
+      return;
+    }
+    
+    if (formData.message.length > 1000) {
+      toast.error('Mesaj 1000 karakterden uzun olamaz!');
+      setSubmitting(false);
+      return;
+    }
+    
     try {
+      // Sanitize form data
+      const sanitizedData = sanitizeFormData(formData);
+      
       // Mesajı Firestore'a kaydet
       await addDoc(collection(db, 'messages'), {
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
+        name: sanitizedData.name,
+        email: sanitizedData.email,
+        subject: sanitizedData.subject,
+        message: sanitizedData.message,
         status: 'unread', // unread, read, replied
         createdAt: new Date(),
         ipAddress: null, // Opsiyonel

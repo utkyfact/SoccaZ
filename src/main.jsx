@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router";
 import { AuthProvider } from './context/AuthContext.jsx';
 import { NotificationProvider } from './context/NotificationContext.jsx';
 import { CookieProvider } from './context/CookieContext.jsx';
+import { developmentCacheFix, debugPWAStatus } from './utils/cacheManager.js';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -19,8 +20,13 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>,
 )
 
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
+// Development cache fix - Development mode'da cache sorunlarını çöz
+if (import.meta.env.DEV) {
+  developmentCacheFix();
+}
+
+// Service Worker Registration - Only in production
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then((registration) => {

@@ -31,37 +31,39 @@ function Homepage() {
   useEffect(() => {
     loadContent();
     
-    // PWA Install Prompt'u yakala
-    const handleBeforeInstallPrompt = (e) => {
-      // Varsayılan browser prompt'unu engelle
-      e.preventDefault();
-      
-      // 24 saat içinde kapat denmiş mi kontrol et
-      const dismissedTime = localStorage.getItem('pwa-banner-dismissed');
-      if (dismissedTime) {
-        const now = Date.now();
-        const timeDiff = now - parseInt(dismissedTime);
-        const hoursPassedSinceDismiss = timeDiff / (1000 * 60 * 60);
+    // PWA Install Prompt'u yakala - Sadece production'da
+    if (import.meta.env.PROD) {
+      const handleBeforeInstallPrompt = (e) => {
+        // Varsayılan browser prompt'unu engelle
+        e.preventDefault();
         
-        // 24 saat geçmemişse banner gösterme
-        if (hoursPassedSinceDismiss < 24) {
-          return;
+        // 24 saat içinde kapat denmiş mi kontrol et
+        const dismissedTime = localStorage.getItem('pwa-banner-dismissed');
+        if (dismissedTime) {
+          const now = Date.now();
+          const timeDiff = now - parseInt(dismissedTime);
+          const hoursPassedSinceDismiss = timeDiff / (1000 * 60 * 60);
+          
+          // 24 saat geçmemişse banner gösterme
+          if (hoursPassedSinceDismiss < 24) {
+            return;
+          }
         }
-      }
-      
-      // Event'i sakla
-      setDeferredPrompt(e);
-      // Banner'ı göster
-      setShowInstallBanner(true);
-    };
+        
+        // Event'i sakla
+        setDeferredPrompt(e);
+        // Banner'ı göster
+        setShowInstallBanner(true);
+      };
 
-    // Event listener ekle
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      // Event listener ekle
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    // Temizleme
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
+      // Temizleme
+      return () => {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      };
+    }
   }, []);
 
   // PWA Install fonksiyonu

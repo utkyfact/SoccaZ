@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { FcGoogle } from 'react-icons/fc';
+import { validateEmail, sanitizeInput } from '../utils/inputSanitizer';
+import { checkDDoSProtection } from '../utils/advancedRateLimiter';
 
 function Register() {
     const navigate = useNavigate()
@@ -20,14 +22,23 @@ function Register() {
 
     const updateValue = (e) => {
         const { value, name } = e.target
+        // Input'ları sanitize et
+        const sanitizedValue = sanitizeInput(value);
         setRegisterObj({
             ...registerObj,
-            [name]: value
+            [name]: sanitizedValue
         })
     }
 
     async function handleEmailRegister(e) {
         e.preventDefault()
+        
+        // DDoS Protection kontrolü
+        const ddosCheck = checkDDoSProtection('register');
+        if (!ddosCheck.allowed) {
+            toast.error(ddosCheck.message);
+            return;
+        }
         
         // Form validasyonu
         if (!registerObj.email || !registerObj.password || !registerObj.confirmPassword || !registerObj.displayName) {
@@ -45,7 +56,7 @@ function Register() {
             return
         }
 
-        if (!registerObj.email.includes('@')) {
+        if (!validateEmail(registerObj.email)) {
             toast.error("Geçerli bir email adresi girin!")
             return
         }

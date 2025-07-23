@@ -7,6 +7,7 @@ import ContentManagement from './ContentManagement';
 import ContactContentManagement from './ContactContentManagement';
 import MessagesManagement from './MessagesManagement';
 import MatchOrganization from './MatchOrganization';
+import DDoSMonitoring from './DDoSMonitoring';
 
 function ContentArea({ activeTab }) {
   const [stats, setStats] = useState({
@@ -154,6 +155,15 @@ function ContentArea({ activeTab }) {
     return (
       <main className='flex-1 p-4 lg:p-6'>
         <ContactContentManagement />
+      </main>
+    );
+  }
+
+  // DDoS Koruması monitoring
+  if (activeTab === 'ddos') {
+    return (
+      <main className='flex-1 p-4 lg:p-6 bg-gray-50'>
+        <DDoSMonitoring />
       </main>
     );
   }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where, orderBy, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import UserAvatar from '../UserAvatar';
+import { sanitizeInput } from '../../utils/inputSanitizer';
 
 function UsersManagement() {
   const [users, setUsers] = useState([]);
@@ -223,7 +224,7 @@ function UsersManagement() {
             <input
               type="text"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(sanitizeInput(e.target.value))}
               placeholder="İsim, email, telefon..."
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />

@@ -43,6 +43,26 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Skip WebSocket connections and HMR requests
+  if (event.request.url.includes('ws://') || 
+      event.request.url.includes('wss://') ||
+      event.request.url.includes('?token=') ||
+      event.request.url.includes('@vite/client') ||
+      event.request.url.includes('/@react-refresh') ||
+      event.request.url.includes('/__vite_ping') ||
+      event.request.url.includes('localhost:3001')) {
+    return;
+  }
+
+  // Skip development server requests  
+  if (event.request.url.includes('localhost:3000') && 
+      (event.request.url.includes('.js?') || 
+       event.request.url.includes('.ts?') ||
+       event.request.url.includes('.jsx?') ||
+       event.request.url.includes('.tsx?'))) {
+    return;
+  }
+
   // For HTML documents, try network first
   if (event.request.destination === 'document') {
     event.respondWith(
