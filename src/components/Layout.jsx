@@ -46,30 +46,30 @@ function Layout({ children }) {
                                 <span className="text-xl">⚠️</span>
                                 <div>
                                     <p className="font-medium">
-                                        Email adresinizi doğrulamanız gerekmektedir.
+                                        Ihre E-Mail-Adresse muss bestätigt werden.
                                     </p>
                                     <p className="text-sm opacity-90">
-                                        Doğrulama yapmadan bazı özellikleri kullanamazsınız.
+                                        Ohne Bestätigung können Sie bestimmte Funktionen nicht nutzen.
                                     </p>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-3">
                                 {emailSent && (
                                     <span className="text-sm bg-green-600 px-3 py-1 rounded-full">
-                                        ✅ Email gönderildi!
+                                        ✅ E-Mail gesendet!
                                     </span>
                                 )}
                                 <button
                                     onClick={handleSendVerificationEmail}
                                     className="bg-white text-orange-600 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 font-medium text-sm cursor-pointer"
                                 >
-                                    Doğrulama Emaili Gönder
+                                    E-Mail-Bestätigung senden
                                 </button>
                                 <button
                                     onClick={() => window.location.reload()}
                                     className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors duration-200 font-medium text-sm cursor-pointer"
                                 >
-                                    Sayfayı Yenile
+                                    Seite aktualisieren
                                 </button>
                             </div>
                         </div>

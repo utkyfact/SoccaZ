@@ -54,16 +54,16 @@ function CookieBanner() {
               
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Çerez Politikası 🍪
+                  Cookie-Richtlinie 🍪
                 </h3>
                 <p className="text-sm text-gray-600 mb-3">
-                  Web sitemizde deneyiminizi geliştirmek için çerezler kullanıyoruz. 
-                  Bu çerezler, site performansını artırmak ve size kişiselleştirilmiş içerik sunmak için kullanılır.
+                  Wir verwenden Cookies, um Ihr Erlebnis auf unserer Website zu verbessern. 
+                  Diese Cookies verbessern die Leistung unserer Website und bieten Ihnen personalisierte Inhalte.
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs text-gray-500">
-                  <span className="bg-gray-100 px-2 py-1 rounded">Zorunlu Çerezler</span>
-                  <span className="bg-gray-100 px-2 py-1 rounded">Analitik Çerezler</span>
-                  <span className="bg-gray-100 px-2 py-1 rounded">Fonksiyonel Çerezler</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">Erforderliche Cookies</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">Analytische Cookies</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">Funktionale Cookies</span>
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@ function CookieBanner() {
               to="/privacy"
               className="text-sm text-gray-600 hover:text-gray-800 underline transition-colors duration-200"
             >
-              Detaylı Bilgi
+              Detaillierte Informationen
             </Link>
             
             {/* Reddet */}
@@ -84,7 +84,7 @@ function CookieBanner() {
               onClick={decline}
               className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 cursor-pointer"
             >
-              Reddet
+              Ablehnen
             </button>
             
             {/* Sadece Gerekli */}
@@ -92,7 +92,7 @@ function CookieBanner() {
               onClick={acceptNecessary}
               className="px-4 py-2 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg transition-colors duration-200 cursor-pointer"
             >
-              Sadece Gerekli
+              Nur erforderlich
             </button>
             
             {/* Tümünü Kabul Et */}
@@ -100,7 +100,7 @@ function CookieBanner() {
               onClick={acceptAll}
               className="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-200 shadow-sm cursor-pointer"
             >
-              Tümünü Kabul Et
+              Alle akzeptieren
             </button>
           </div>
         </div>
@@ -108,11 +108,11 @@ function CookieBanner() {
         {/* Alt Bilgi */}
         <div className="mt-4 pt-4 border-t border-gray-200">
           <p className="text-xs text-gray-500">
-            Çerez tercihlerinizi istediğiniz zaman{' '}
+            Sie können Ihre Cookie-Einstellungen jederzeit{' '}
             <Link to="/privacy" className="text-green-600 hover:text-green-700 underline">
-              Gizlilik Politikası
+              Datenschutzrichtlinie
             </Link>{' '}
-            sayfamızdan değiştirebilirsiniz.
+            unserer Website ändern.
           </p>
         </div>
       </div>

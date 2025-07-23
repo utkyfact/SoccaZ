@@ -24,11 +24,11 @@ function MatchDetail() {
       if (matchDoc.exists()) {
         setMatch({ id: matchDoc.id, ...matchDoc.data() });
       } else {
-        setError('Maç bulunamadı.');
+        setError('Spiel nicht gefunden.');
       }
     } catch (error) {
-      console.error('Maç getirilirken hata:', error);
-      setError('Maç yüklenirken hata oluştu.');
+      console.error('Fehler beim Abrufen des Spiels:', error);
+      setError('Fehler beim Laden des Spiels.');
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,7 @@ function MatchDetail() {
   // Maça katıl
   const joinMatch = async () => {
     if (!user) {
-      toast.info('Maça katılmak için giriş yapmalısınız.');
+      toast.info('Um Maßnahmen zu treffen, müssen Sie sich anmelden.');
       navigate('/login');
       return;
     }
@@ -85,23 +85,23 @@ function MatchDetail() {
     const userData = userDoc.exists() ? userDoc.data() : null;
     
     if (!userData?.phone) {
-      toast.error('Maça katılmak için telefon numaranızı profil sayfasından eklemelisiniz.');
+      toast.error('Um am Spiel teilzunehmen, müssen Sie Ihre Telefonnummer auf der Profilseite hinzufügen.');
       navigate('/profile');
       return;
     }
 
     if (isUserParticipant()) {
-      toast.warning('Bu maça zaten katıldınız.');
+      toast.warning('Sie haben bereits an diesem Spiel teilgenommen.');
       return;
     }
 
     if (isMatchFull()) {
-      toast.warning('Bu maç dolu.');
+      toast.warning('Das Spiel ist voll.');
       return;
     }
 
     if (isMatchPast()) {
-      toast.warning('Bu maç için katılım süresi geçmiş.');
+      toast.warning('Die Teilnahmezeit für dieses Spiel ist abgelaufen.');
       return;
     }
 
@@ -124,10 +124,10 @@ function MatchDetail() {
         participants: [...(prev.participants || []), participantData]
       }));
 
-      toast.success('Maça başarıyla katıldınız!');
+      toast.success('Sie haben das Spiel erfolgreich beigetreten!');
     } catch (error) {
-      console.error('Maça katılırken hata:', error);
-      toast.error('Maça katılırken hata oluştu.');
+      console.error('Fehler beim Teilnehmen am Spiel:', error);
+      toast.error('Fehler beim Teilnehmen am Spiel.');
     } finally {
       setJoining(false);
     }
@@ -156,10 +156,10 @@ function MatchDetail() {
         )
       }));
 
-      toast.success('Maçtan ayrıldınız.');
+      toast.success('Sie haben das Spiel verlassen.');
     } catch (error) {
-      console.error('Maçtan ayrılırken hata:', error);
-      toast.error('Maçtan ayrılırken hata oluştu.');
+      console.error('Fehler beim Verlassen des Spiels:', error);
+      toast.error('Fehler beim Verlassen des Spiels.');
     } finally {
       setJoining(false);
     }
@@ -177,7 +177,7 @@ function MatchDetail() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Maç detayları yükleniyor...</p>
+            <p className="mt-4 text-gray-600">Spieldetails werden geladen...</p>
           </div>
         </div>
       </Layout>
@@ -190,13 +190,13 @@ function MatchDetail() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="text-red-500 text-6xl mb-4">⚠️</div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Hata</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Fehler</h2>
             <p className="text-gray-600 mb-4">{error}</p>
             <button
               onClick={() => navigate('/')}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
-              Ana Sayfaya Dön
+              Zur Startseite
             </button>
           </div>
         </div>
@@ -210,13 +210,13 @@ function MatchDetail() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="text-gray-400 text-6xl mb-4">⚽</div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Maç Bulunamadı</h2>
-            <p className="text-gray-600 mb-4">Aradığınız maç mevcut değil veya silinmiş olabilir.</p>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Spiel nicht gefunden</h2>
+            <p className="text-gray-600 mb-4">Das gesuchte Spiel ist nicht vorhanden oder wurde gelöscht.</p>
             <button
               onClick={() => navigate('/')}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
-              Ana Sayfaya Dön
+              Zur Startseite
             </button>
           </div>
         </div>
@@ -243,15 +243,15 @@ function MatchDetail() {
               <div className="flex justify-center mb-4">
                 {isPast ? (
                   <span className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">
-                    📅 Geçmiş Maç
+                    📅 Vergangenes Spiel
                   </span>
                 ) : isFull ? (
                   <span className="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                    🚫 Dolu
+                    🚫 Voll
                   </span>
                 ) : (
                   <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                    ✅ Katılım Açık
+                    ✅ Teilnahme offen
                   </span>
                 )}
               </div>
@@ -260,13 +260,13 @@ function MatchDetail() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 <div className="text-center">
                   <div className="text-3xl mb-2">🏟️</div>
-                  <h3 className="font-semibold text-gray-800">Saha</h3>
+                  <h3 className="font-semibold text-gray-800">Feld</h3>
                   <p className="text-gray-600">{match.fieldName}</p>
                 </div>
                 
                 <div className="text-center">
                   <div className="text-3xl mb-2">📅</div>
-                  <h3 className="font-semibold text-gray-800">Tarih & Saat</h3>
+                  <h3 className="font-semibold text-gray-800">Datum & Uhrzeit</h3>
                   <p className="text-gray-600">
                     {matchDate.toLocaleDateString('tr-TR')}<br />
                     {matchDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}
@@ -275,7 +275,7 @@ function MatchDetail() {
                 
                 <div className="text-center">
                   <div className="text-3xl mb-2">👥</div>
-                  <h3 className="font-semibold text-gray-800">Katılımcılar</h3>
+                  <h3 className="font-semibold text-gray-800">Teilnehmer</h3>
                   <p className="text-gray-600">
                     {match.participants?.length || 0} / {match.maxParticipants}
                   </p>
@@ -285,7 +285,7 @@ function MatchDetail() {
               {/* Açıklama */}
               {match.description && (
                 <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-                  <h3 className="font-semibold text-gray-800 mb-2">Açıklama</h3>
+                  <h3 className="font-semibold text-gray-800 mb-2">Beschreibung</h3>
                   <p className="text-gray-600 whitespace-pre-line">{match.description}</p>
                 </div>
               )}
@@ -297,38 +297,38 @@ function MatchDetail() {
             <div className="text-center">
               {!user ? (
                 <div>
-                  <p className="text-gray-600 mb-4">Maça katılmak için giriş yapmalısınız.</p>
+                  <p className="text-gray-600 mb-4">Um am Spiel teilzunehmen, müssen Sie sich anmelden.</p>
                   <button
                     onClick={() => navigate('/login')}
                     className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200"
                   >
-                    🔑 Giriş Yap
+                    🔑 Anmelden
                   </button>
                 </div>
               ) : isPast ? (
-                <p className="text-gray-500">Bu maç için katılım süresi geçmiş.</p>
+                <p className="text-gray-500">Die Teilnahmezeit für dieses Spiel ist abgelaufen.</p>
               ) : isParticipant ? (
                 <div>
-                  <p className="text-green-600 mb-4 font-medium">✅ Bu maça katıldınız!</p>
+                  <p className="text-green-600 mb-4 font-medium">✅ Sie haben das Spiel erfolgreich beigetreten!</p>
                   <button
                     onClick={leaveMatch}
                     disabled={joining}
                     className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer"
                   >
-                    {joining ? '⏳ İşleniyor...' : '❌ Maçtan Ayrıl'}
+                    {joining ? '⏳ Verarbeitet...' : '❌ Spiel verlassen'}
                   </button>
                 </div>
               ) : isFull ? (
-                <p className="text-red-500">Bu maç dolu. Katılım mümkün değil.</p>
+                <p className="text-red-500">Das Spiel ist voll. Die Teilnahme ist nicht möglich.</p>
               ) : (
                 <div>
-                  <p className="text-gray-600 mb-4">Bu maça katılmak ister misiniz?</p>
+                  <p className="text-gray-600 mb-4">Möchten Sie an diesem Spiel teilnehmen?</p>
                   <button
                     onClick={joinMatch}
                     disabled={joining}
                     className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer"
                   >
-                    {joining ? '⏳ Katılıyor...' : '⚽ Maça Katıl'}
+                    {joining ? '⏳ Teilnahme wird verarbeitet...' : '⚽ Spiel teilnehmen'}
                   </button>
                 </div>
               )}

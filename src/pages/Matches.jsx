@@ -70,8 +70,8 @@ function Matches() {
       setMatches(upcomingMatches);
       setError(null);
     } catch (error) {
-      console.error('Maçlar getirilirken hata:', error);
-      setError('Maçlar yüklenirken bir hata oluştu.');
+      console.error('Beim Laden der Spiele ist ein Fehler aufgetreten:', error);
+      setError('Beim Laden der Spiele ist ein Fehler aufgetreten.');
     } finally {
       setLoading(false);
     }
@@ -84,7 +84,7 @@ function Matches() {
   // Maça katılma/ayrılma modal açma fonksiyonu
   const handleJoinMatch = async (matchId) => {
     if (!user) {
-      toast.error('Maça katılmak için giriş yapmanız gerekiyor.');
+      toast.error('Um Maßnahmen zu ergreifen, müssen Sie sich anmelden.');
       return;
     }
 
@@ -93,7 +93,7 @@ function Matches() {
     const userData = userDoc.exists() ? userDoc.data() : null;
 
     if (!userData?.phone) {
-      toast.error('Maça katılmak için telefon numaranızı profil sayfasından eklemelisiniz.');
+      toast.error('Um Maßnahmen zu ergreifen, müssen Sie Ihre Telefonnummer in Ihrem Profil hinzufügen.');
       return;
     }
 
@@ -104,7 +104,7 @@ function Matches() {
 
     // Kapasite kontrolü (sadece katılım için)
     if (!isUserJoined && match.participants?.length >= match.maxParticipants) {
-      toast.warning('Bu maç dolu. Katılamazsınız.');
+      toast.warning('Dieses Spiel ist voll. Sie können nicht teilnehmen.');
       return;
     }
 
@@ -124,7 +124,7 @@ function Matches() {
       
       const now = new Date();
       if (matchDate < now) {
-        toast.warning('Bu maç için katılım süresi geçmiş.');
+        toast.warning('Die Teilnahmezeit für dieses Spiel ist abgelaufen.');
         return;
       }
     }
@@ -151,7 +151,7 @@ function Matches() {
           ),
           updatedAt: new Date()
         });
-        toast.success(`${selectedMatch.title} maçından ayrıldınız.`);
+        toast.success(`Sie haben ${selectedMatch.title} verlassen.`);
       } else {
         // Maça katıl
         const participantData = {
@@ -165,15 +165,15 @@ function Matches() {
           participants: [...(selectedMatch.participants || []), participantData],
           updatedAt: new Date()
         });
-        toast.success(`${selectedMatch.title} maçına katıldınız!`);
+        toast.success(`Sie haben ${selectedMatch.title} beigetreten!`);
       }
 
       // Maçları yeniden getir
       await fetchMatches();
 
     } catch (error) {
-      console.error('Maça katılım güncellenirken hata:', error);
-      toast.error('Maça katılım güncellenirken bir hata oluştu.');
+      console.error('Beim Aktualisieren der Teilnahme ist ein Fehler aufgetreten:', error);
+      toast.error('Beim Aktualisieren der Teilnahme ist ein Fehler aufgetreten.');
     }
   };
 
@@ -188,7 +188,7 @@ function Matches() {
       const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.location)}`;
       window.open(mapsUrl, '_blank');
     } else {
-      toast.info('Bu maç için konum bilgisi bulunmuyor.');
+      toast.info('Für dieses Spiel ist keine Standortinformation verfügbar.');
     }
   };
 
@@ -213,7 +213,7 @@ function Matches() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Yükleniyor...</p>
+            <p className="mt-4 text-gray-600">Lädt...</p>
           </div>
         </div>
       </Layout>
@@ -226,7 +226,7 @@ function Matches() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Maçlar yükleniyor...</p>
+            <p className="mt-4 text-gray-600">Lädt Spiele...</p>
           </div>
         </div>
       </Layout>
@@ -239,13 +239,13 @@ function Matches() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="text-red-500 text-6xl mb-4">⚠️</div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Hata Oluştu</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Fehler aufgetreten</h2>
             <p className="text-gray-600 mb-4">{error}</p>
             <button
               onClick={fetchMatches}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
-              Tekrar Dene
+              Erneut versuchen
             </button>
           </div>
         </div>
@@ -259,15 +259,15 @@ function Matches() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">Organize Edilen Maçlar</h1>
-            <p className="text-gray-600 text-center">Yaklaşan maçlara katılın ve futbol keyfi yaşayın</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">Organisierte Spiele</h1>
+            <p className="text-gray-600 text-center">Treten Sie den kommenden Spielen bei und genießen Sie den Fußball</p>
           </div>
 
           {matches.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-gray-400 text-6xl mb-4">⚽</div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Henüz Maç Bulunmuyor</h2>
-              <p className="text-gray-600">Şu anda yaklaşan organize edilmiş maç bulunmamaktadır. Lütfen daha sonra tekrar kontrol edin.</p>
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">Noch keine Spiele gefunden</h2>
+              <p className="text-gray-600">Derzeit gibt es keine kommenden organisierten Spiele. Bitte überprüfen Sie später erneut.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -298,7 +298,7 @@ function Matches() {
                       {isUserJoined && (
                         <div className="absolute top-2 left-2">
                           <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                            Katıldınız
+                            Teilgenommen
                           </span>
                         </div>
                       )}
@@ -312,8 +312,8 @@ function Matches() {
                           <FaCalendarAlt className="mr-2" />
                           <span className="mr-4">
                             {typeof match.date === 'string'
-                              ? new Date(match.date).toLocaleDateString('tr-TR')
-                              : match.date?.toDate?.()?.toLocaleDateString('tr-TR') || 'Tarih yok'
+                              ? new Date(match.date).toLocaleDateString('de-DE')
+                              : match.date?.toDate?.()?.toLocaleDateString('de-DE') || 'Datum fehlt'
                             }
                           </span>
                           <FaClock className="mr-2" />
@@ -322,7 +322,7 @@ function Matches() {
 
                         {/* Saha */}
                         <div className="flex items-center justify-between">
-                          <span className="text-gray-600 text-sm">Saha:</span>
+                          <span className="text-gray-600 text-sm">Feld:</span>
                           <span className="font-semibold text-gray-900">{match.fieldName}</span>
                         </div>
 
@@ -330,7 +330,7 @@ function Matches() {
                         <div className="flex items-center justify-between">
                           <span className="text-gray-600 text-sm flex items-center">
                             <FaUsers className="mr-1" />
-                            Katılımcılar:
+                            Teilnehmer:
                           </span>
                           <span className={`font-semibold ${isFull ? 'text-red-600' : 'text-green-600'}`}>
                             {participantCount} / {match.maxParticipants}
@@ -340,14 +340,14 @@ function Matches() {
                         {/* Konum */}
                         {match.location && (
                           <div className="flex items-center justify-between">
-                            <span className="text-gray-600 text-sm">Konum:</span>
+                            <span className="text-gray-600 text-sm">Standort:</span>
                             <button
                               onClick={() => openLocation(match)}
                               className="flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer"
-                              title={match.locationCoords ? 'GPS koordinatları ile açılacak' : 'Adres ile arama yapılacak'}
+                              title={match.locationCoords ? 'Öffnen mit GPS-Koordinaten' : 'Öffnen mit Adresse'}
                             >
                               <FaMapMarkerAlt className="mr-1" />
-                              {match.locationCoords ? 'Konum' : '🔍 Arama'}
+                              {match.locationCoords ? 'Standort' : '🔍 Suchen'}
                             </button>
                           </div>
                         )}
@@ -373,16 +373,16 @@ function Matches() {
                                   : 'bg-green-600 text-white hover:bg-green-700'
                               }`}
                           >
-                            {isUserJoined ? 'Maçtan Ayrıl' : isFull ? 'Dolu' : 'Maça Katıl'}
+                            {isUserJoined ? 'Spiel verlassen' : isFull ? 'Voll' : 'Spiel beitreten'}
                           </button>
                         ) : (
                           <div className="text-center">
-                            <p className="text-gray-500 text-sm mb-2">Maça katılmak için giriş yapın</p>
+                            <p className="text-gray-500 text-sm mb-2">Melden Sie sich an, um an dem Spiel teilzunehmen</p>
                             <button
                               onClick={() => window.location.href = '/login'}
                               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm cursor-pointer"
                             >
-                              Giriş Yap
+                              Anmelden
                             </button>
                           </div>
                         )}
@@ -397,19 +397,19 @@ function Matches() {
           {/* Bilgi Kartı */}
           {matches.length > 0 && (
             <div className="mt-12 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Maç Katılım Bilgileri</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Teilnahmeinformationen</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
                 <div className="flex items-center">
                   <span className="text-green-600 mr-2">✓</span>
-                  Ücretsiz katılım
+                  Kostenlose Teilnahme
                 </div>
                 <div className="flex items-center">
                   <span className="text-green-600 mr-2">✓</span>
-                  Önceden katılım gerekli
+                  Vorherige Teilnahme erforderlich
                 </div>
                 <div className="flex items-center">
                   <span className="text-green-600 mr-2">✓</span>
-                  Kendi ekipmanınızı getirin
+                  Bringen Sie Ihr eigenes Equipment
                 </div>
               </div>
             </div>
@@ -427,23 +427,23 @@ function Matches() {
         onConfirm={confirmJoinMatch}
         title={selectedMatch && selectedMatch.participants?.some(p => 
           typeof p === 'string' ? p === user.uid : p.userId === user.uid
-        ) ? "Maçtan Ayrıl" : "Maça Katıl"}
+        ) ? "Spiel verlassen" : "Spiel beitreten"}
         message={selectedMatch && selectedMatch.participants?.some(p => 
           typeof p === 'string' ? p === user.uid : p.userId === user.uid
         ) 
-          ? `${selectedMatch?.title} maçından ayrılmak istediğinizden emin misiniz?`
-          : `${selectedMatch?.title} maçına katılmak istediğinizden emin misiniz?\n\nTarih: ${
+          ? `${selectedMatch?.title} Sind Sie sicher, dass Sie das Spiel verlassen möchten?`
+          : `${selectedMatch?.title} Sind Sie sicher, dass Sie dem Spiel beitreten möchten?\n\nDatum: ${
               selectedMatch?.date 
                 ? (typeof selectedMatch.date === 'string'
-                    ? new Date(selectedMatch.date).toLocaleDateString('tr-TR')
-                    : selectedMatch.date?.toDate?.()?.toLocaleDateString('tr-TR'))
-                : 'Tarih yok'
-            }\nSaat: ${selectedMatch?.time || 'Belirtilmemiş'}\nSaha: ${selectedMatch?.fieldName || 'Belirtilmemiş'}`
+                    ? new Date(selectedMatch.date).toLocaleDateString('de-DE')
+                    : selectedMatch.date?.toDate?.()?.toLocaleDateString('de-DE'))
+                : 'Datum fehlt'
+            }\nUhrzeit: ${selectedMatch?.time || 'Nicht angegeben'}\nScha: ${selectedMatch?.fieldName || 'Nicht angegeben'}`
         }
         confirmText={selectedMatch && selectedMatch.participants?.some(p => 
           typeof p === 'string' ? p === user.uid : p.userId === user.uid
-        ) ? "Ayrıl" : "Katıl"}
-        cancelText="İptal"
+        ) ? "Verlassen" : "Beitreten"}
+        cancelText="Abbrechen"
         type={selectedMatch && selectedMatch.participants?.some(p => 
           typeof p === 'string' ? p === user.uid : p.userId === user.uid
         ) ? "warning" : "success"}

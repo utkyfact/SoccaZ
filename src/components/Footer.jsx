@@ -28,13 +28,13 @@ function Footer() {
                                 <img src="/SoccaZ.png" alt="logo" className="w-16 h-16 object-cover" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold">Halı Saha Rezervasyon</h3>
-                                <p className="text-green-200 text-sm">Profesyonel Futbol Sahaları</p>
+                                <h3 className="text-xl font-bold">Kleinfeld buchen</h3>
+                                <p className="text-green-200 text-sm">Professionelle Fußballplätze</p>
                             </div>
                         </div>
                         <p className="text-green-100 mb-6 leading-relaxed">
-                            Profesyonel halı sahalarımızda unutulmaz futbol deneyimleri yaşayın.
-                            Modern tesislerimiz ve uygun fiyatlarımızla sizleri bekliyoruz.
+                            Erleben Sie unvergessliche Fußballmomente auf unseren professionellen Kunstrasenplätzen.
+                            Unsere modernen Anlagen und fairen Preise warten auf Sie!
                         </p>
                         <div className="flex space-x-4">
                             <a href="#" className="text-green-200 hover:text-white transition-colors duration-200 group">
@@ -73,25 +73,25 @@ function Footer() {
 
                     {/* Hızlı Linkler */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">Hızlı Linkler</h3>
+                        <h3 className="text-lg font-semibold mb-4">Schnelle Links</h3>
                         <ul className="space-y-2">
                             <li>
                                 <Link to="/" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
                                     <span className="mr-2">🏠</span>
-                                    Ana Sayfa
+                                    Startseite
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/matches" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
                                     <span className="mr-2">⚽</span>
-                                    Maçlar
+                                    Spiele
                                 </Link>
                             </li>
 
                             <li>
                                 <Link to="/contact" className="text-green-200 hover:text-white transition-colors duration-200 flex items-center">
                                     <span className="mr-2">📞</span>
-                                    İletişim
+                                    Kontakt
                                 </Link>
                             </li>
                         </ul>
@@ -99,12 +99,12 @@ function Footer() {
 
                     {/* İletişim Bilgileri */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">İletişim</h3>
+                        <h3 className="text-lg font-semibold mb-4">Kontakt</h3>
                         <ul className="space-y-3">
                             <li className="flex items-start">
                                 <span className="text-green-300 mr-3 mt-1">📍</span>
                                 <span className="text-green-100">
-                                    Futbol Caddesi No:123<br />
+                                    Fußballstraße 123<br />
                                     Spor Mahallesi, İzmir
                                 </span>
                             </li>
@@ -130,29 +130,29 @@ function Footer() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="text-green-200 text-sm">
-                            © {currentYear} SoccaZ. Tüm hakları saklıdır.
+                            © {currentYear} SoccaZ. Alle Rechte vorbehalten.
                         </div>
                         <div className="flex space-x-6 mt-4 md:mt-0">
                             <Link to="/privacy" className="text-green-200 hover:text-white text-sm transition-colors duration-200">
-                                Gizlilik Politikası
+                                Datenschutz
                             </Link>
                             <Link to="/terms" className="text-green-200 hover:text-white text-sm transition-colors duration-200">
-                                Kullanım Şartları
+                                Nutzungsbedingungen
                             </Link>
                             <Link to="/cookies" className="text-green-200 hover:text-white text-sm transition-colors duration-200">
-                                Çerez Tercihleri
+                                Cookie Einstellungen
                             </Link>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
 
             {/* Scroll to Top Button */}
             {showScrollTop && (
                 <button
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50 opacity-100 cursor-pointer"
-                    aria-label="Yukarı çık"
+                    aria-label="Nach oben scrollen"
                     style={{
                         animation: 'fadeIn 0.3s ease-in-out'
                     }}

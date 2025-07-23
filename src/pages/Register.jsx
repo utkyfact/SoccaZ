@@ -42,40 +42,40 @@ function Register() {
         
         // Form validasyonu
         if (!registerObj.email || !registerObj.password || !registerObj.confirmPassword || !registerObj.displayName) {
-            toast.error("Lütfen tüm alanları doldurun!")
+            toast.error("Bitte füllen Sie alle Felder aus!")
             return
         }
 
         if (registerObj.password.length < 6) {
-            toast.error("Şifre en az 6 karakter olmalıdır!")
+            toast.error("Das Passwort muss mindestens 6 Zeichen lang sein!")
             return
         }
 
         if (registerObj.password !== registerObj.confirmPassword) {
-            toast.error("Şifreler eşleşmiyor!")
+            toast.error("Passwörter stimmen nicht überein!")
             return
         }
 
         if (!validateEmail(registerObj.email)) {
-            toast.error("Geçerli bir email adresi girin!")
+            toast.error("Bitte geben Sie eine gültige E-Mail-Adresse ein!")
             return
         }
 
         setLoading(true)
         try {
             await register(registerObj)
-            toast.success("Başarı ile kayıt oldunuz! Email adresinizi doğrulayın.")
+            toast.success("Erfolgreich registriert! Bitte bestätigen Sie Ihre E-Mail-Adresse.")
             navigate("/")
         } catch (error) {
             console.error('Register error:', error)
             if (error.code === 'auth/email-already-in-use') {
-                toast.error("Bu email adresi zaten kullanılıyor!")
+                toast.error("Diese E-Mail-Adresse ist bereits in Verwendung!")
             } else if (error.code === 'auth/invalid-email') {
-                toast.error("Geçersiz email adresi!")
+                toast.error("Ungültige E-Mail-Adresse!")
             } else if (error.code === 'auth/weak-password') {
-                toast.error("Şifre çok zayıf! Daha güçlü bir şifre seçin.")
+                toast.error("Passwort zu schwach! Bitte wählen Sie ein stärkeres Passwort.")
             } else {
-                toast.error("Kayıt olurken bir hata oluştu!")
+                toast.error("Beim Registrieren ist ein Fehler aufgetreten!")
             }
         } finally {
             setLoading(false)
@@ -86,11 +86,11 @@ function Register() {
         setLoading(true)
         try {
             await googleLogin()
-            toast.success("Başarı ile giriş yaptınız!")
+            toast.success("Erfolgreich eingeloggt!")
             navigate("/")
         } catch (error) {
             console.error('Google login error:', error)
-            toast.error("Google ile giriş yapılırken bir hata oluştu!")
+            toast.error("Beim Anmelden mit Google ist ein Fehler aufgetreten!")
         } finally {
             setLoading(false)
         }
@@ -108,10 +108,10 @@ function Register() {
                             </div>
                         </div>
                         <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                            Hesap Oluşturun! 🚀
+                            Erstellen Sie ein Konto! 🚀
                         </h2>
                         <p className="text-gray-600">
-                            Ücretsiz hesap oluşturun ve halı saha rezervasyonlarınızı yönetmeye başlayın
+                            Erstellen Sie ein kostenloses Konto und beginnen Sie mit der Verwaltung Ihrer Fußballplatzreservierungen
                         </p>
                     </div>
 
@@ -121,7 +121,7 @@ function Register() {
                             {/* Ad Soyad Input */}
                             <div>
                                 <label htmlFor="displayName" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Ad Soyad
+                                    Name und Nachname
                                 </label>
                                 <div className="relative">
                                     <input
@@ -132,7 +132,7 @@ function Register() {
                                         value={registerObj.displayName}
                                         onChange={updateValue}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400"
-                                        placeholder="Adınız ve soyadınız"
+                                        placeholder="Ihr Name und Nachname"
                                     />
                                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,7 +145,7 @@ function Register() {
                             {/* Email Input */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                    E-posta Adresi
+                                    E-Mail-Adresse
                                 </label>
                                 <div className="relative">
                                     <input
@@ -156,7 +156,7 @@ function Register() {
                                         value={registerObj.email}
                                         onChange={updateValue}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400"
-                                        placeholder="ornek@email.com"
+                                        placeholder="Beispiel@email.com"
                                     />
                                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,7 +169,7 @@ function Register() {
                             {/* Password Input */}
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Şifre
+                                    Passwort
                                 </label>
                                 <div className="relative">
                                     <input
@@ -199,13 +199,13 @@ function Register() {
                                         )}
                                     </button>
                                 </div>
-                                <p className="text-xs text-gray-500 mt-1">En az 6 karakter olmalıdır</p>
+                                <p className="text-xs text-gray-500 mt-1">Mindestens 6 Zeichen</p>
                             </div>
 
                             {/* Confirm Password Input */}
                             <div>
                                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Şifre Tekrarı
+                                    Passwort wiederholen
                                 </label>
                                 <div className="relative">
                                     <input
@@ -246,10 +246,10 @@ function Register() {
                                 {loading ? (
                                     <div className="flex items-center justify-center space-x-2">
                                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                        <span>Kayıt olunuyor...</span>
+                                        <span>Registrieren...</span>
                                     </div>
                                 ) : (
-                                    'Hesap Oluştur'
+                                    'Konto erstellen'
                                 )}
                             </button>
                 </form>
@@ -261,7 +261,7 @@ function Register() {
                                     <div className="w-full border-t border-gray-300"></div>
                                 </div>
                                 <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-white text-gray-500">veya</span>
+                                    <span className="px-2 bg-white text-gray-500">oder</span>
                                 </div>
                             </div>
                         </div>
@@ -273,15 +273,15 @@ function Register() {
                             className="mt-6 w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md flex items-center justify-center space-x-3 cursor-pointer"
                         >
                             <FcGoogle size={20} />
-                            <span>Google ile Kayıt Ol</span>
+                            <span>Mit Google registrieren</span>
                         </button>
 
                         {/* Giriş Yap Linki */}
                         <div className="mt-8 text-center">
                             <p className="text-sm text-gray-600">
-                                Zaten hesabınız var mı?{' '}
+                                Haben Sie bereits ein Konto?{' '}
                                 <Link to="/login" className="font-medium text-green-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
-                                    Giriş yapın
+                                    Anmelden
                                 </Link>
                             </p>
                         </div>
@@ -290,15 +290,15 @@ function Register() {
                     {/* Alt Bilgi */}
                     <div className="text-center">
                         <p className="text-xs text-gray-500">
-                            Kayıt olarak{' '}
+                            Durch die Registrierung{' '}
                             <Link to="/terms" className="text-green-600 hover:text-green-700">
-                                Kullanım Şartları
+                                Nutzungsbedingungen
                             </Link>
                             {' '}ve{' '}
                             <Link to="/privacy" className="text-green-600 hover:text-green-700">
-                                Gizlilik Politikası
+                                Datenschutz
                             </Link>
-                            'nı kabul etmiş olursunuz.
+                            'n akzeptieren Sie.
                         </p>
                     </div>
                 </div>

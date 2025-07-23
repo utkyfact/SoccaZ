@@ -36,25 +36,25 @@ function Login() {
         }
         
         if (!loginObj.email || !loginObj.password) {
-            toast.error("Lütfen tüm alanları doldurun!")
+            toast.error("Bitte füllen Sie alle Felder aus!")
             return
         }
 
         setLoading(true)
         try {
             await login(loginObj)
-            toast.success("Başarı ile giriş yaptınız!")
+            toast.success("Erfolgreich eingeloggt!")
             navigate("/")
         } catch (error) {
             console.error('Login error:', error)
             if (error.code === 'auth/user-not-found') {
-                toast.error("Bu email adresi ile kayıtlı kullanıcı bulunamadı!")
+                toast.error("Kein Benutzer mit dieser E-Mail-Adresse gefunden!")
             } else if (error.code === 'auth/wrong-password') {
-                toast.error("Şifre yanlış!")
+                toast.error("Falsches Passwort!")
             } else if (error.code === 'auth/invalid-email') {
-                toast.error("Geçersiz email adresi!")
+                toast.error("Ungültige E-Mail-Adresse!")
             } else {
-                toast.error("Giriş yapılırken bir hata oluştu!")
+                toast.error("Beim Anmelden ist ein Fehler aufgetreten!")
             }
         } finally {
             setLoading(false)
@@ -65,11 +65,11 @@ function Login() {
         setLoading(true)
         try {
             await googleLogin()
-            toast.success("Başarı ile giriş yaptınız!")
+            toast.success("Erfolgreich eingeloggt!")
             navigate("/")
         } catch (error) {
             console.error('Google login error:', error)
-            toast.error("Google ile giriş yapılırken bir hata oluştu!")
+            toast.error("Beim Anmelden mit Google ist ein Fehler aufgetreten!")
         } finally {
             setLoading(false)
         }
@@ -87,10 +87,10 @@ function Login() {
                             </div>
                         </div>
                         <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                            Hoş Geldiniz! 👋
+                            Willkommen! 👋
                         </h2>
                         <p className="text-gray-600">
-                            Hesabınıza giriş yapın ve halı saha rezervasyonlarınızı yönetin
+                            Melden Sie sich mit Ihrem Konto an und verwalten Sie Ihre Fußballplatzreservierungen
                         </p>
                     </div>
 
@@ -100,7 +100,7 @@ function Login() {
                             {/* Email Input */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                    E-posta Adresi
+                                    E-Mail-Adresse
                                 </label>
                                 <div className="relative">
                                     <input
@@ -111,7 +111,7 @@ function Login() {
                                         value={loginObj.email}
                                         onChange={updateValue}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400"
-                                        placeholder="ornek@email.com"
+                                        placeholder="Beispiel@email.com"
                                     />
                                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +124,7 @@ function Login() {
                             {/* Password Input */}
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Şifre
+                                    Passwort
                                 </label>
                                 <div className="relative">
                                     <input
@@ -159,7 +159,7 @@ function Login() {
                             {/* Şifremi Unuttum Linki */}
                             <div className="flex items-center justify-end">
                                 <Link to="/forgot-password" className="text-sm text-green-600 hover:text-green-700 font-medium transition-colors duration-200">
-                                    Şifremi unuttum
+                                    Passwort vergessen
                                 </Link>
                             </div>
 
@@ -172,10 +172,10 @@ function Login() {
                                 {loading ? (
                                     <div className="flex items-center justify-center space-x-2">
                                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                        <span>Giriş yapılıyor...</span>
+                                        <span>Anmelden...</span>
                                     </div>
                                 ) : (
-                                    'Giriş Yap'
+                                    'Anmelden'
                                 )}
                             </button>
                         </form>
@@ -187,7 +187,7 @@ function Login() {
                                     <div className="w-full border-t border-gray-300"></div>
                                 </div>
                                 <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-white text-gray-500">veya</span>
+                                    <span className="px-2 bg-white text-gray-500">oder</span>
                                 </div>
                             </div>
                         </div>
@@ -199,15 +199,15 @@ function Login() {
                             className="mt-6 w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md flex items-center justify-center space-x-3 cursor-pointer"
                         >
                             <FcGoogle size={20} />
-                            <span>Google ile Giriş Yap</span>
+                            <span>Mit Google anmelden</span>
                         </button>
 
                         {/* Kayıt Ol Linki */}
                         <div className="mt-8 text-center">
                             <p className="text-sm text-gray-600">
-                                Hesabınız yok mu?{' '}
+                                Kein Konto?{' '}
                                 <Link to="/register" className="font-medium text-green-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
-                                    Hemen kayıt olun
+                                    Jetzt registrieren
                                 </Link>
                             </p>
                         </div>
@@ -216,15 +216,15 @@ function Login() {
                     {/* Alt Bilgi */}
                     <div className="text-center">
                         <p className="text-xs text-gray-500">
-                            Giriş yaparak{' '}
+                            Durch die Anmeldung{' '}
                             <Link to="/terms" className="text-green-600 hover:text-green-700">
-                                Kullanım Şartları
+                                Nutzungsbedingungen
                             </Link>
                             {' '}ve{' '}
                             <Link to="/privacy" className="text-green-600 hover:text-green-700">
-                                Gizlilik Politikası
+                                Datenschutz
                             </Link>
-                            'nı kabul etmiş olursunuz.
+                            'n kaufen.
                         </p>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import ContactContentManagement from './ContactContentManagement';
 import MessagesManagement from './MessagesManagement';
 import MatchOrganization from './MatchOrganization';
 import DDoSMonitoring from './DDoSMonitoring';
+import SiteSettings from './SiteSettings';
 
 function ContentArea({ activeTab }) {
   const [stats, setStats] = useState({
@@ -83,7 +84,7 @@ function ContentArea({ activeTab }) {
   const getContentTitle = () => {
     switch (activeTab) {
       case 'dashboard':
-        return 'Hoş geldiniz! 🎉';
+        return 'Hoş geldiniz!';
       case 'users':
         return 'Kullanıcı Listesi';
       case 'content':
@@ -91,9 +92,9 @@ function ContentArea({ activeTab }) {
       case 'contact':
         return 'İletişim Sayfası';
       case 'settings':
-        return 'Sistem Ayarları';
+        return 'Site Ayarları';
       default:
-        return 'Hoş geldiniz! 🎉';
+        return 'Hoş geldiniz!';
     }
   };
 
@@ -108,7 +109,7 @@ function ContentArea({ activeTab }) {
       case 'contact':
         return 'İletişim sayfasını buradan yönetebilirsiniz.';
       case 'settings':
-        return 'Sistem ayarlarını buradan yapılandırabilirsiniz.';
+        return 'Site genelinde yapılabilecek tüm ayarları buradan yönetebilirsiniz.';
       default:
         return 'Bu bölümde genel istatistikleri ve özet bilgileri görebilirsiniz.';
     }
@@ -164,6 +165,15 @@ function ContentArea({ activeTab }) {
     return (
       <main className='flex-1 p-4 lg:p-6 bg-gray-50'>
         <DDoSMonitoring />
+      </main>
+    );
+  }
+
+  // Site Ayarları
+  if (activeTab === 'settings') {
+    return (
+      <main className='flex-1 p-4 lg:p-6 bg-gray-50'>
+        <SiteSettings />
       </main>
     );
   }

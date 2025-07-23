@@ -14,13 +14,13 @@ function CookieSettings() {
     const handleSave = () => {
         if (preferences.analytics && preferences.functional && preferences.marketing) {
             updateCookieConsent('all');
-            toast.success('Tüm çerez tercihleri kaydedildi!');
+            toast.success('Alle Cookie-Einstellungen wurden gespeichert!');
         } else if (preferences.necessary) {
             updateCookieConsent('necessary');
-            toast.success('Sadece gerekli çerezler kaydedildi!');
+            toast.success('Nur notwendige Cookies gespeichert!');
         } else {
             updateCookieConsent('declined');
-            toast.success('Çerez tercihleri güncellendi!');
+            toast.success('Cookie-Einstellungen aktualisiert!');
         }
     };
 
@@ -32,7 +32,7 @@ function CookieSettings() {
             functional: false,
             marketing: false
         });
-        toast.info('Çerez tercihleri sıfırlandı!');
+        toast.info('Cookie-Einstellungen zurückgesetzt!');
     };
 
     const exportPreferences = () => {
@@ -44,7 +44,7 @@ function CookieSettings() {
         a.download = 'cookie-preferences.json';
         a.click();
         URL.revokeObjectURL(url);
-        toast.success('Çerez tercihleri dışa aktarıldı!');
+        toast.success('Cookie-Einstellungen exportiert!');
     };
 
     return (
@@ -59,34 +59,34 @@ function CookieSettings() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </div>
-                        <h1 className="text-3xl font-bold text-gray-900">Çerez Tercihleri 🍪</h1>
+                        <h1 className="text-3xl font-bold text-gray-900">Cookie-Einstellungen 🍪</h1>
                     </div>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Web sitemizde kullanılan çerezler hakkında bilgi alın ve tercihlerinizi yönetin.
+                        Erfahren Sie mehr über die auf unserer Website verwendeten Cookies und verwalten Sie Ihre Einstellungen.
                     </p>
                 </div>
 
                 {/* Mevcut Durum */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">Mevcut Durum</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-4">Aktueller Status</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                            <span className="text-gray-700">Çerez Onayı:</span>
+                            <span className="text-gray-700">Cookie-Zustimmung:</span>
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                                 cookieConsent === 'all' ? 'bg-green-100 text-green-800' :
                                 cookieConsent === 'necessary' ? 'bg-yellow-100 text-yellow-800' :
                                 cookieConsent === 'declined' ? 'bg-red-100 text-red-800' :
                                 'bg-gray-100 text-gray-800'
                             }`}>
-                                {cookieConsent === 'all' ? 'Tümü Kabul Edildi' :
-                                 cookieConsent === 'necessary' ? 'Sadece Gerekli' :
-                                 cookieConsent === 'declined' ? 'Reddedildi' : 'Belirlenmedi'}
+                                {cookieConsent === 'all' ? 'Alle akzeptiert' :
+                                 cookieConsent === 'necessary' ? 'Nur notwendig' :
+                                 cookieConsent === 'declined' ? 'Abgelehnt' : 'Nicht festgelegt'}
                             </span>
                         </div>
                         <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                             <span className="text-gray-700">Son Güncelleme:</span>
                             <span className="text-sm text-gray-600">
-                                {cookieConsent ? new Date(localStorage.getItem('cookieConsentDate')).toLocaleDateString('tr-TR') : 'Yok'}
+                                {cookieConsent ? new Date(localStorage.getItem('cookieConsentDate')).toLocaleDateString('de-DE') : 'Nicht festgelegt'}
                             </span>
                         </div>
                     </div>
@@ -94,24 +94,24 @@ function CookieSettings() {
 
                 {/* Çerez Kategorileri */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Çerez Kategorileri</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Cookie-Kategorien</h2>
                     
                     {/* Zorunlu Çerezler */}
                     <div className="border-b border-gray-200 pb-6 mb-6">
                         <div className="flex items-start justify-between">
                             <div className="flex-1">
                                 <div className="flex items-center mb-2">
-                                    <h3 className="text-lg font-medium text-gray-900">Zorunlu Çerezler</h3>
-                                    <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Her Zaman Aktif</span>
+                                    <h3 className="text-lg font-medium text-gray-900">Erforderliche Cookies</h3>
+                                    <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">Immer aktiv</span>
                                 </div>
                                 <p className="text-gray-600 mb-3">
-                                    Web sitesinin temel işlevlerini sağlamak için gerekli olan çerezlerdir. 
-                                    Bu çerezler olmadan site düzgün çalışamaz.
+                                    Diese Cookies sind für die Grundfunktionen unserer Website erforderlich. 
+                                    Ohne diese Cookies funktioniert die Website nicht ordnungsgemäß.
                                 </p>
                                 <ul className="text-sm text-gray-500 space-y-1">
-                                    <li>• Oturum yönetimi ve güvenlik</li>
-                                    <li>• Dil ve bölge tercihleri</li>
-                                    <li>• Form verilerinin geçici saklanması</li>
+                                    <li>• Sitzungsverwaltung und Sicherheit</li>
+                                    <li>• Sprache und Regionseinstellungen</li>
+                                    <li>• Temporäre Speicherung von Formulardaten</li>
                                 </ul>
                             </div>
                             <div className="ml-6">
@@ -129,16 +129,16 @@ function CookieSettings() {
                         <div className="flex items-start justify-between">
                             <div className="flex-1">
                                 <div className="flex items-center mb-2">
-                                    <h3 className="text-lg font-medium text-gray-900">Analitik Çerezler</h3>
-                                    <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">İsteğe Bağlı</span>
+                                    <h3 className="text-lg font-medium text-gray-900">Analytische Cookies</h3>
+                                    <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Optional</span>
                                 </div>
                                 <p className="text-gray-600 mb-3">
-                                    Site kullanımını analiz etmek ve performansı iyileştirmek için kullanılır.
+                                    Diese Cookies werden verwendet, um die Nutzung der Website zu analysieren und die Leistung zu verbessern.
                                 </p>
                                 <ul className="text-sm text-gray-500 space-y-1">
-                                    <li>• Sayfa görüntüleme istatistikleri</li>
-                                    <li>• Kullanıcı davranış analizi</li>
-                                    <li>• Site performans metrikleri</li>
+                                    <li>• Seitenansicht-Statistiken</li>
+                                    <li>• Nutzerverhalten-Analyse</li>
+                                    <li>• Website-Leistungsmetriken</li>
                                 </ul>
                             </div>
                             <div className="ml-6">
@@ -160,16 +160,16 @@ function CookieSettings() {
                         <div className="flex items-start justify-between">
                             <div className="flex-1">
                                 <div className="flex items-center mb-2">
-                                    <h3 className="text-lg font-medium text-gray-900">Fonksiyonel Çerezler</h3>
-                                    <span className="ml-2 px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">İsteğe Bağlı</span>
+                                    <h3 className="text-lg font-medium text-gray-900">Funktionale Cookies</h3>
+                                    <span className="ml-2 px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Optional</span>
                                 </div>
                                 <p className="text-gray-600 mb-3">
-                                    Kullanıcı deneyimini geliştirmek için kişiselleştirme özellikleri sağlar.
+                                    Diese Cookies ermöglichen die Verbesserung des Benutzererlebnisses durch persönliche Einstellungen.
                                 </p>
                                 <ul className="text-sm text-gray-500 space-y-1">
-                                    <li>• Tema ve görünüm tercihleri</li>
-                                    <li>• Bildirim ayarları</li>
-                                    <li>• Sosyal medya entegrasyonu</li>
+                                    <li>• Design- und Ansichtseinstellungen</li>
+                                    <li>• Benachrichtigungseinstellungen</li>
+                                    <li>• Social-Media-Integration</li>
                                 </ul>
                             </div>
                             <div className="ml-6">
@@ -191,16 +191,16 @@ function CookieSettings() {
                         <div className="flex items-start justify-between">
                             <div className="flex-1">
                                 <div className="flex items-center mb-2">
-                                    <h3 className="text-lg font-medium text-gray-900">Pazarlama Çerezleri</h3>
-                                    <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">İsteğe Bağlı</span>
+                                    <h3 className="text-lg font-medium text-gray-900">Marketing-Cookies</h3>
+                                    <span className="ml-2 px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">Optional</span>
                                 </div>
                                 <p className="text-gray-600 mb-3">
-                                    Reklam ve pazarlama amaçlı kullanılan çerezlerdir.
+                                    Diese Cookies werden für Werbung und Marketingzwecke verwendet.
                                 </p>
                                 <ul className="text-sm text-gray-500 space-y-1">
-                                    <li>• Hedefli reklamlar</li>
-                                    <li>• Sosyal medya reklamları</li>
-                                    <li>• Kampanya takibi</li>
+                                    <li>• Zielgerichtete Werbung</li>
+                                    <li>• Social-Media-Werbung</li>
+                                    <li>• Kampagnenverfolgung</li>
                                 </ul>
                             </div>
                             <div className="ml-6">
@@ -220,7 +220,7 @@ function CookieSettings() {
 
                 {/* Aksiyon Butonları */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Tercihleri Yönet</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Einstellungen verwalten</h2>
                     <div className="flex flex-col sm:flex-row gap-4">
                         <button
                             onClick={handleSave}
@@ -229,7 +229,7 @@ function CookieSettings() {
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
-                            Tercihleri Kaydet
+                            Einstellungen speichern
                         </button>
                         
                         <button
@@ -239,7 +239,7 @@ function CookieSettings() {
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                             </svg>
-                            Sıfırla
+                            Zurücksetzen
                         </button>
                         
                         <button
@@ -249,7 +249,7 @@ function CookieSettings() {
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
-                            Dışa Aktar
+                            Exportieren
                         </button>
                     </div>
                 </div>
@@ -261,11 +261,11 @@ function CookieSettings() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         <div>
-                            <h3 className="text-lg font-medium text-blue-900 mb-2">Önemli Bilgi</h3>
+                            <h3 className="text-lg font-medium text-blue-900 mb-2">Wichtige Information</h3>
                             <p className="text-blue-800 text-sm leading-relaxed">
-                                Çerez tercihlerinizi istediğiniz zaman değiştirebilirsiniz. Değişiklikler anında uygulanır ve 
-                                tarayıcınızda saklanır. Daha detaylı bilgi için{' '}
-                                <a href="/privacy" className="underline font-medium">Gizlilik Politikamızı</a> inceleyebilirsiniz.
+                                Sie können Ihre Cookie-Einstellungen jederzeit ändern. Die Änderungen werden sofort angewendet und in Ihrem Browser gespeichert. 
+                                Weitere Informationen finden Sie in unserer{' '}
+                                <a href="/privacy" className="underline font-medium">Datenschutzrichtlinie</a>.
                             </p>
                         </div>
                     </div>

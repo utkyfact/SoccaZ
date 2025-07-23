@@ -71,7 +71,7 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    
+
     // DDoS Protection kontrolü
     const ddosCheck = checkDDoSProtection('contact');
     if (!ddosCheck.allowed) {
@@ -79,37 +79,37 @@ function Contact() {
       setSubmitting(false);
       return;
     }
-    
+
     // Rate limiting check
     if (checkFormRateLimit('contact', formData.email)) {
       toast.error('Çok fazla mesaj gönderdiniz. Lütfen 5 dakika bekleyin.');
       setSubmitting(false);
       return;
     }
-    
+
     // Input validation
     if (!validateEmail(formData.email)) {
       toast.error('Geçerli bir email adresi girin!');
       setSubmitting(false);
       return;
     }
-    
+
     if (formData.message.length < 10) {
       toast.error('Mesaj en az 10 karakter olmalıdır!');
       setSubmitting(false);
       return;
     }
-    
+
     if (formData.message.length > 1000) {
       toast.error('Mesaj 1000 karakterden uzun olamaz!');
       setSubmitting(false);
       return;
     }
-    
+
     try {
       // Sanitize form data
       const sanitizedData = sanitizeFormData(formData);
-      
+
       // Mesajı Firestore'a kaydet
       await addDoc(collection(db, 'messages'), {
         name: sanitizedData.name,
@@ -124,7 +124,7 @@ function Contact() {
 
       toast.success('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
       setFormData({ name: '', email: '', subject: '', message: '' });
-      
+
       // Admin panelindeki badge'i güncelle için custom event gönder
       window.dispatchEvent(new CustomEvent('messageStatusChanged'));
     } catch (error) {
@@ -153,7 +153,7 @@ function Contact() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Sayfa yükleniyor...</p>
+            <p className="mt-4 text-gray-600">Seite lädt...</p>
           </div>
         </div>
       </Layout>
@@ -166,10 +166,10 @@ function Contact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">İletişim</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Kontakt</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Sorularınız, önerileriniz veya rezervasyon talepleriniz için bizimle iletişime geçin.
-              Size en kısa sürede dönüş yapacağız.
+              Kontaktieren Sie uns bei Fragen, Anregungen oder Reservierungsanfragen.
+              Wir werden uns so schnell wie möglich bei Ihnen melden.
             </p>
           </div>
 
@@ -177,7 +177,7 @@ function Contact() {
             {/* İletişim Bilgileri */}
             <div className="space-y-8">
               <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">İletişim Bilgileri</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Kontakt Informationen</h2>
                 <div className="space-y-6">
                   {/* Adres */}
                   <div className="flex items-start space-x-4">
@@ -185,9 +185,9 @@ function Contact() {
                       <span className="text-2xl">📍</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Adres</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">Adresse</h3>
                       <p className="text-gray-600">
-                        {contentData?.contactInfo?.address || 'Adres bilgisi eklenmedi.'}
+                        {contentData?.contactInfo?.address || 'Adresse nicht hinzugefügt.'}
                       </p>
                     </div>
                   </div>
@@ -197,13 +197,13 @@ function Contact() {
                       <span className="text-2xl">📞</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Telefon</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">Telefonnummer</h3>
                       <p className="text-gray-600">
                         {contentData?.contactInfo?.phone ? (
                           <a href={`tel:${contentData.contactInfo.phone}`} className="hover:text-green-600 transition-colors">
                             {contentData.contactInfo.phone}
                           </a>
-                        ) : 'Telefon bilgisi eklenmedi.'}
+                        ) : 'Telefonnummer nicht hinzugefügt.'}
                       </p>
                     </div>
                   </div>
@@ -213,13 +213,13 @@ function Contact() {
                       <span className="text-2xl">✉️</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">E-posta</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">E-Mail</h3>
                       <p className="text-gray-600">
                         {contentData?.contactInfo?.email ? (
                           <a href={`mailto:${contentData.contactInfo.email}`} className="hover:text-green-600 transition-colors">
                             {contentData.contactInfo.email}
                           </a>
-                        ) : 'E-posta bilgisi eklenmedi.'}
+                        ) : 'E-Mail nicht hinzugefügt.'}
                       </p>
                     </div>
                   </div>
@@ -229,9 +229,9 @@ function Contact() {
                       <span className="text-2xl">🕒</span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-800 mb-1">Çalışma Saatleri</h3>
+                      <h3 className="font-semibold text-gray-800 mb-1">Öffnungszeiten</h3>
                       <p className="text-gray-600">
-                        {contentData?.contactInfo?.workingHours || 'Çalışma saatleri eklenmedi.'}
+                        {contentData?.contactInfo?.workingHours || 'Öffnungszeiten nicht hinzugefügt.'}
                       </p>
                     </div>
                   </div>
@@ -240,7 +240,7 @@ function Contact() {
 
               {/* Sosyal Medya */}
               <div className="bg-white rounded-lg shadow-sm p-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Sosyal Medya</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Soziale Medien</h2>
                 <div className="flex space-x-4">
                   {contentData?.socialMedia?.length > 0 ? (
                     contentData.socialMedia.map((item, idx) => (
@@ -251,7 +251,7 @@ function Contact() {
                       </a>
                     ))
                   ) : (
-                    <span className="text-gray-400">Sosyal medya eklenmedi.</span>
+                    <span className="text-gray-400">Soziale Medien nicht hinzugefügt.</span>
                   )}
                 </div>
               </div>
@@ -259,11 +259,11 @@ function Contact() {
 
             {/* İletişim Formu */}
             <div className="bg-white rounded-lg shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Mesaj Gönderin</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Nachricht senden</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Ad Soyad *
+                    Name und Nachname *
                   </label>
                   <input
                     type="text"
@@ -273,12 +273,12 @@ function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="Adınız ve soyadınız"
+                    placeholder="Ihr Name und Nachname"
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    E-posta *
+                    E-Mail *
                   </label>
                   <input
                     type="email"
@@ -288,12 +288,12 @@ function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="ornek@email.com"
+                    placeholder="Beispiel@email.com"
                   />
                 </div>
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Konu *
+                    Betreff *
                   </label>
                   <input
                     type="text"
@@ -303,12 +303,12 @@ function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="Mesajınızın konusu"
+                    placeholder="Betreff Ihrer Nachricht"
                   />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Mesaj *
+                    Nachricht *
                   </label>
                   <textarea
                     id="message"
@@ -318,7 +318,7 @@ function Contact() {
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                    placeholder="Mesajınızı buraya yazın..."
+                    placeholder="Ihre Nachricht hier..."
                   />
                 </div>
                 <button
@@ -326,7 +326,7 @@ function Contact() {
                   disabled={submitting}
                   className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {submitting ? '📤 Gönderiliyor...' : '📤 Mesaj Gönder'}
+                  {submitting ? '📤 Senden...' : '📤 Nachricht senden'}
                 </button>
               </form>
             </div>
@@ -335,7 +335,7 @@ function Contact() {
           {/* Harita */}
           <div className="mt-12">
             <div className="bg-white rounded-lg shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Konum</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Standort</h2>
               <div className="rounded-lg overflow-hidden">
                 {contentData?.location?.mapEmbed ? (
                   <iframe
@@ -346,15 +346,15 @@ function Contact() {
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="SoccaZ Halı Saha Konumu"
+                    title="SoccaZ Fußballplatz Standort"
                   ></iframe>
                 ) : (
-                  <div className="text-gray-400 text-center py-12">Konum eklenmedi.</div>
+                  <div className="text-gray-400 text-center py-12">Standort nicht hinzugefügt.</div>
                 )}
               </div>
               <div className="mt-4 text-center">
                 <p className="text-gray-600">
-                  <strong>Adres:</strong> {contentData?.location?.address || 'Adres eklenmedi.'}
+                  <strong>Adresse:</strong> {contentData?.location?.address || 'Adresse nicht hinzugefügt.'}
                 </p>
                 {contentData?.location?.mapEmbed && contentData?.location?.address && (
                   <a
@@ -363,7 +363,7 @@ function Contact() {
                     rel="noopener noreferrer"
                     className="inline-block mt-2 text-green-600 hover:text-green-700 font-medium"
                   >
-                    📍 Haritada Aç
+                    📍 In Karte öffnen
                   </a>
                 )}
               </div>
@@ -373,7 +373,7 @@ function Contact() {
           {/* SSS */}
           <div className="mt-12">
             <div className="bg-white rounded-lg shadow-sm p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Sıkça Sorulan Sorular</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Häufig gestellte Fragen</h2>
               <div className="border border-gray-200 rounded-lg overflow-hidden">
                 {contentData?.faq?.length > 0 ? (
                   contentData.faq.map((item, idx) => (
@@ -384,19 +384,17 @@ function Contact() {
                         className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                       >
                         <h3 className="font-semibold text-gray-800 pr-4 flex-1 text-left whitespace-normal break-words">{item.question}</h3>
-                        <div className={`text-green-600 transform transition-transform duration-200 flex-shrink-0 ${
-                          openFaqIndex === idx ? 'rotate-180' : ''
-                        }`}>
+                        <div className={`text-green-600 transform transition-transform duration-200 flex-shrink-0 ${openFaqIndex === idx ? 'rotate-180' : ''
+                          }`}>
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
                       </button>
-                      
+
                       {/* Cevap - Accordion içerik */}
-                      <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                        openFaqIndex === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                      }`}>
+                      <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqIndex === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                        }`}>
                         <div className="px-4 pb-4 pt-2 bg-gray-50">
                           <div className="text-gray-600 leading-relaxed whitespace-pre-line break-words text-sm">
                             {item.answer}
@@ -406,7 +404,7 @@ function Contact() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-gray-400 text-center py-8">Sıkça sorulan soru eklenmedi.</div>
+                  <div className="text-gray-400 text-center py-8">Häufig gestellte Frage nicht hinzugefügt.</div>
                 )}
               </div>
             </div>

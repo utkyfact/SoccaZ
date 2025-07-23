@@ -10,13 +10,13 @@ function Privacy() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Gizlilik Politikası 🔒
+              Datenschutzrichtlinie 🔒
             </h1>
             <p className="text-lg text-gray-600">
-              SoccaZ halı saha rezervasyon sistemi gizlilik politikası
+              Datenschutzrichtlinie für SoccaZ halı saha rezervasyonssystem
             </p>
             <p className="text-sm text-gray-500 mt-2">
-              Son güncelleme: {new Date().toLocaleDateString('tr-TR')}
+              Letzte Aktualisierung: {new Date().toLocaleDateString('de-DE')}
             </p>
           </div>
 
@@ -26,63 +26,61 @@ function Privacy() {
               
               {/* Giriş */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Giriş</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Einführung</h2>
                 <p className="text-gray-700 mb-4">
-                  SoccaZ olarak, kişisel verilerinizin gizliliğini korumayı taahhüt ediyoruz. 
-                  Bu gizlilik politikası, hangi bilgileri topladığımızı, nasıl kullandığımızı ve 
-                  koruduğumuzu açıklar.
+                  Als SoccaZ verpflichten wir uns, die Privatsphäre Ihrer persönlichen Daten zu schützen. 
+                  Diese Datenschutzrichtlinie erklärt, welche Daten wir sammeln, wie wir sie verwenden und wie wir sie schützen.
                 </p>
                 <p className="text-gray-700">
-                  Bu politika, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) ve 
-                  Avrupa Birliği Genel Veri Koruma Yönetmeliği (GDPR) uyumlu olarak hazırlanmıştır.
+                  Diese Datenschutzrichtlinie wurde im Einklang mit dem Gesetz über die Schutz von personenbezogenen Daten und der Datenschutzverordnung erstellt.
                 </p>
               </section>
 
               {/* Toplanan Veriler */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Topladığımız Veriler</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Gathered Data</h2>
                 <div className="space-y-6 text-gray-700">
                   
                   <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-blue-900 mb-2">👤 Kişisel Bilgiler:</h3>
+                    <h3 className="font-semibold text-blue-900 mb-2">👤 Persönliche Daten:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Ad ve soyad</li>
-                      <li>E-posta adresi</li>
-                      <li>Telefon numarası</li>
-                      <li>Doğum tarihi (opsiyonel)</li>
-                      <li>Profil fotoğrafı (opsiyonel)</li>
+                      <li>Vor- und Nachname</li>
+                      <li>E-Mail-Adresse</li>
+                      <li>Telefonnummer</li>
+                      <li>Geburtsdatum (optional)</li>
+                      <li>Profilbild (optional)</li>
                     </ul>
                   </div>
 
                   <div className="bg-green-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-green-900 mb-2">📅 Rezervasyon Verileri:</h3>
+                    <h3 className="font-semibold text-green-900 mb-2">📅 Reservierungsdaten:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Rezervasyon tarihi ve saati</li>
-                      <li>Seçilen saha bilgileri</li>
-                      <li>Ödeme bilgileri</li>
-                      <li>Rezervasyon geçmişi</li>
-                      <li>Favori sahalar</li>
+                      <li>Reservierungsdatum und -zeit</li>
+                      <li>Ausgewählte Platzinformationen</li>
+                      <li>Zahlungsinformationen</li>
+                      <li>Reservierungsverlauf</li>
+                      <li>Favorisierte Plätze</li>
                     </ul>
                   </div>
 
                   <div className="bg-purple-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-purple-900 mb-2">🌐 Teknik Veriler:</h3>
+                    <h3 className="font-semibold text-purple-900 mb-2">🌐 Technische Daten:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>IP adresi</li>
-                      <li>Tarayıcı bilgileri</li>
-                      <li>Cihaz bilgileri</li>
-                      <li>Kullanım istatistikleri</li>
-                      <li>Çerezler (cookies)</li>
+                      <li>IP-Adresse</li>
+                      <li>Browserinformationen</li>
+                      <li>Geräteinformationen</li>
+                      <li>Nutzungsstatistiken</li>
+                      <li>Cookies</li>
                     </ul>
                   </div>
 
                   <div className="bg-yellow-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-yellow-900 mb-2">📱 Mobil Veriler:</h3>
+                    <h3 className="font-semibold text-yellow-900 mb-2">📱 Mobil Daten:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Konum bilgileri (izin verilirse)</li>
-                      <li>Push notification tercihleri</li>
-                      <li>Uygulama kullanım verileri</li>
-                      <li>Cihaz kimliği</li>
+                      <li>Standortinformationen (wenn erlaubt)</li>
+                      <li>Push-Benachrichtigungseinstellungen</li>
+                      <li>App-Nutzungsdaten</li>
+                      <li>Geräte-ID</li>
                     </ul>
                   </div>
 
@@ -91,30 +89,30 @@ function Privacy() {
 
               {/* Veri Kullanım Amaçları */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Verilerin Kullanım Amaçları</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Verwendungszwecke</h2>
                 <div className="space-y-4 text-gray-700">
-                  <p>Kişisel verilerinizi aşağıdaki amaçlarla kullanırız:</p>
+                  <p>Wir verwenden Ihre persönlichen Daten für folgende Zwecke:</p>
                   
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-gray-900 mb-2">🎯 Temel Hizmetler:</h3>
+                      <h3 className="font-semibold text-gray-900 mb-2">🎯 Grundlegende Dienste:</h3>
                       <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Hesap oluşturma ve yönetimi</li>
-                        <li>Rezervasyon işlemleri</li>
-                        <li>Ödeme işlemleri</li>
-                        <li>Müşteri hizmetleri</li>
-                        <li>Bildirim gönderimi</li>
+                        <li>Kontoerstellung und -verwaltung</li>
+                        <li>Reservierungsprozesse</li>
+                        <li>Zahlungsverarbeitung</li>
+                        <li>Kundenbetreuung</li>
+                        <li>Benachrichtigungen</li>
                       </ul>
                     </div>
 
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-gray-900 mb-2">📊 İyileştirme:</h3>
+                      <h3 className="font-semibold text-gray-900 mb-2">📊 Verbesserung:</h3>
                       <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Hizmet kalitesini artırma</li>
-                        <li>Kullanıcı deneyimini iyileştirme</li>
-                        <li>Yeni özellikler geliştirme</li>
-                        <li>Güvenlik önlemleri</li>
-                        <li>Analiz ve raporlama</li>
+                        <li>Verbesserung der Dienstleistung</li>
+                        <li>Verbesserung der Benutzeroberfläche</li>
+                        <li>Entwicklung neuer Funktionen</li>
+                        <li>Sicherheitsmaßnahmen</li>
+                        <li>Analyse und Berichterstattung</li>
                       </ul>
                     </div>
                   </div>
@@ -123,38 +121,38 @@ function Privacy() {
 
               {/* Veri Paylaşımı */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Veri Paylaşımı</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Datenfreigabe</h2>
                 <div className="space-y-4 text-gray-700">
-                  <p>Kişisel verilerinizi aşağıdaki durumlarda paylaşabiliriz:</p>
+                  <p>Wir teilen Ihre persönlichen Daten mit folgenden Partnern:</p>
                   
                   <div className="bg-red-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-red-900 mb-2">⚠️ Zorunlu Paylaşımlar:</h3>
+                    <h3 className="font-semibold text-red-900 mb-2">⚠️ Pflichtige Freigaben:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Yasal zorunluluklar</li>
-                      <li>Mahkeme kararları</li>
-                      <li>Güvenlik tehditleri</li>
-                      <li>Hukuki uyuşmazlıklar</li>
+                      <li>Rechtliche Verpflichtungen</li>
+                      <li>Gerichtliche Entscheidungen</li>
+                      <li>Gefahren für die Sicherheit</li>
+                      <li>Rechtsstreitigkeiten</li>
                     </ul>
                   </div>
 
                   <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-blue-900 mb-2">🤝 Hizmet Sağlayıcılar:</h3>
+                    <h3 className="font-semibold text-blue-900 mb-2">🤝 Dienstleister:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Ödeme işlemcileri (güvenli ödeme)</li>
-                      <li>E-posta servisleri (bildirimler)</li>
-                      <li>Analitik servisleri (kullanım analizi)</li>
-                      <li>Bulut depolama (veri yedekleme)</li>
-                      <li>Müşteri hizmetleri platformları</li>
+                      <li>Zahlungsverarbeitung (sichere Zahlung)</li>
+                      <li>E-Mail-Dienste (Benachrichtigungen)</li>
+                      <li>Analyse-Dienste (Nutzungsanalyse)</li>
+                      <li>Cloud-Speicherung (Datensicherung)</li>
+                      <li>Kundenbetreuungsplattformen</li>
                     </ul>
                   </div>
 
                   <div className="bg-green-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-green-900 mb-2">✅ Güvenli Paylaşım:</h3>
+                    <h3 className="font-semibold text-green-900 mb-2">✅ Sichere Freigabe:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Veri işleme anlaşmaları (DPA)</li>
-                      <li>Şifreleme ve güvenlik önlemleri</li>
-                      <li>Minimum veri prensibi</li>
-                      <li>Düzenli güvenlik denetimleri</li>
+                      <li>Verarbeitungsverträge (DPA)</li>
+                      <li>Verschlüsselung und Sicherheitsmaßnahmen</li>
+                      <li>Minimum-Datenprinzip</li>
+                      <li>Regelmäßige Sicherheitsüberprüfungen</li>
                     </ul>
                   </div>
                 </div>
@@ -162,30 +160,30 @@ function Privacy() {
 
               {/* Veri Güvenliği */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Veri Güvenliği</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Datensicherheit</h2>
                 <div className="space-y-4 text-gray-700">
-                  <p>Verilerinizi korumak için aşağıdaki önlemleri alırız:</p>
+                  <p>Um Ihre Daten zu schützen, treffen wir folgende Maßnahmen:</p>
                   
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-green-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-green-900 mb-2">🔐 Teknik Önlemler:</h3>
+                      <h3 className="font-semibold text-green-900 mb-2">🔐 Technische Maßnahmen:</h3>
                       <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>SSL/TLS şifreleme</li>
-                        <li>Güvenli veri depolama</li>
-                        <li>Düzenli güvenlik güncellemeleri</li>
-                        <li>Firewall koruması</li>
-                        <li>DDoS koruması</li>
+                        <li>SSL/TLS-Verschlüsselung</li>
+                        <li>Sichere Datenspeicherung</li>
+                        <li>Regelmäßige Sicherheitsupdates</li>
+                        <li>Firewall-Schutz</li>
+                        <li>DDoS-Schutz</li>
                       </ul>
                     </div>
 
                     <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-blue-900 mb-2">👥 Organizasyonel Önlemler:</h3>
+                      <h3 className="font-semibold text-blue-900 mb-2">👥 Organisatorische Maßnahmen:</h3>
                       <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Personel eğitimleri</li>
-                        <li>Erişim kontrolü</li>
-                        <li>Veri işleme politikaları</li>
-                        <li>Düzenli denetimler</li>
-                        <li>Olay müdahale planları</li>
+                        <li>Mitarbeiter-Ausbildung</li>
+                        <li>Zugriffskontrolle</li>
+                        <li>Datenverarbeitungsrichtlinien</li>
+                        <li>Regelmäßige Überprüfungen</li>
+                        <li>Vorfallintervention Pläne</li>
                       </ul>
                     </div>
                   </div>
@@ -194,38 +192,37 @@ function Privacy() {
 
               {/* Çerezler */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Çerezler (Cookies)</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Cookies</h2>
                 <div className="space-y-4 text-gray-700">
-                  <p>Web sitemizde aşağıdaki çerez türlerini kullanırız:</p>
+                  <p>Wir verwenden auf unserer Website die folgenden Cookie-Typen:</p>
                   
                   <div className="bg-yellow-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-yellow-900 mb-2">🍪 Çerez Türleri:</h3>
+                    <h3 className="font-semibold text-yellow-900 mb-2">🍪 Cookie-Typen:</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <h4 className="font-medium text-yellow-800 mb-2">Zorunlu Çerezler:</h4>
+                        <h4 className="font-medium text-yellow-800 mb-2">Erforderliche Cookies:</h4>
                         <ul className="list-disc pl-6 space-y-1 text-sm">
-                          <li>Oturum yönetimi</li>
-                          <li>Güvenlik</li>
-                          <li>Temel işlevsellik</li>
+                          <li>Sitzungsverwaltung</li>
+                          <li>Sicherheit</li>
+                          <li>Grundfunktionen</li>
                         </ul>
                       </div>
                       <div>
-                        <h4 className="font-medium text-yellow-800 mb-2">Analitik Çerezler:</h4>
+                        <h4 className="font-medium text-yellow-800 mb-2">Analyse-Cookies:</h4>
                         <ul className="list-disc pl-6 space-y-1 text-sm">
-                          <li>Kullanım analizi</li>
-                          <li>Performans ölçümü</li>
-                          <li>Hata takibi</li>
+                          <li>Nutzungsanalyse</li>
+                          <li>Leistungsmessung</li>
+                          <li>Fehlerverfolgung</li>
                         </ul>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-blue-900 mb-2">⚙️ Çerez Yönetimi:</h3>
+                    <h3 className="font-semibold text-blue-900 mb-2">⚙️ Cookie-Verwaltung:</h3>
                     <p className="text-sm">
-                      Tarayıcı ayarlarınızdan çerezleri yönetebilir veya silebilirsiniz. 
-                      Ancak bazı çerezlerin devre dışı bırakılması, hizmetlerimizin düzgün 
-                      çalışmamasına neden olabilir.
+                      Sie können Cookies in den Browsereinstellungen verwalten und löschen. 
+                      Allerdings kann das Deaktivieren bestimmter Cookies dazu führen, dass unsere Dienste nicht ordnungsgemäß funktionieren.
                     </p>
                   </div>
                 </div>
@@ -233,42 +230,42 @@ function Privacy() {
 
               {/* Kullanıcı Hakları */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Kullanıcı Hakları</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Nutzerrechte</h2>
                 <div className="space-y-4 text-gray-700">
-                  <p>KVKK kapsamında aşağıdaki haklara sahipsiniz:</p>
+                  <p>Sie haben unter KVKK folgende Rechte:</p>
                   
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-green-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-green-900 mb-2">📋 Bilgi Hakları:</h3>
+                      <h3 className="font-semibold text-green-900 mb-2">📋 Informationsrechte:</h3>
                       <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Verilerinizin işlenip işlenmediğini öğrenme</li>
-                        <li>Hangi verilerin işlendiğini öğrenme</li>
-                        <li>Verilerin işlenme amacını öğrenme</li>
-                        <li>Verilerin aktarıldığı üçüncü kişileri öğrenme</li>
+                        <li>Wissen, ob Ihre Daten verarbeitet werden</li>
+                        <li>Wissen, welche Daten verarbeitet werden</li>
+                        <li>Wissen, für welche Zwecke Ihre Daten verarbeitet werden</li>
+                        <li>Wissen, an welche Dritten Ihre Daten übertragen werden</li>
                       </ul>
                     </div>
 
                     <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="font-semibold text-blue-900 mb-2">✏️ Müdahale Hakları:</h3>
+                      <h3 className="font-semibold text-blue-900 mb-2">✏️ Eingriffsrechte:</h3>
                       <ul className="list-disc pl-6 space-y-1 text-sm">
-                        <li>Yanlış verilerin düzeltilmesini isteme</li>
-                        <li>Verilerin silinmesini isteme</li>
-                        <li>İşlemeyi sınırlandırma</li>
-                        <li>Veri taşınabilirliği</li>
+                        <li>Wunsch nach Korrektur falscher Daten</li>
+                        <li>Wunsch nach Löschung von Daten</li>
+                        <li>Einschränkung der Verarbeitung</li>
+                        <li>Datenübertragbarkeit</li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="bg-purple-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-purple-900 mb-2">📧 Haklarınızı Kullanma:</h3>
+                    <h3 className="font-semibold text-purple-900 mb-2">📧 Ausübung Ihrer Rechte:</h3>
                     <p className="text-sm mb-2">
-                      Haklarınızı kullanmak için aşağıdaki kanallardan bizimle iletişime geçebilirsiniz:
+                      Um Ihre Rechte auszuüben, kontaktieren Sie uns über folgende Kanäle:
                     </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>E-posta:</strong> privacy@soccaz.com</li>
+                      <li><strong>E-Mail:</strong> privacy@soccaz.com</li>
                       <li><strong>Telefon:</strong> +90 (212) 555 0123</li>
-                      <li><strong>Adres:</strong> İstanbul, Türkiye</li>
-                      <li><strong>Online Form:</strong> Profil sayfasından</li>
+                      <li><strong>Adresse:</strong> İstanbul, Türkiye</li>
+                      <li><strong>Online Form:</strong> Profilseite von</li>
                     </ul>
                   </div>
                 </div>
@@ -276,18 +273,18 @@ function Privacy() {
 
               {/* Veri Saklama */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Veri Saklama Süreleri</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Datenspeicherungsdauer</h2>
                 <div className="space-y-4 text-gray-700">
-                  <p>Verilerinizi aşağıdaki süreler boyunca saklarız:</p>
+                  <p>Wir halten Ihre Daten für folgende Zeiträume:</p>
                   
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <ul className="list-disc pl-6 space-y-2 text-sm">
-                      <li><strong>Hesap verileri:</strong> Hesap aktif olduğu sürece</li>
-                      <li><strong>Rezervasyon verileri:</strong> 5 yıl (yasal zorunluluk)</li>
-                      <li><strong>Ödeme verileri:</strong> 10 yıl (mali mevzuat)</li>
-                      <li><strong>İletişim verileri:</strong> 3 yıl</li>
-                      <li><strong>Analitik veriler:</strong> 2 yıl</li>
-                      <li><strong>Çerezler:</strong> 1 yıl (maksimum)</li>
+                      <li><strong>Kontodaten:</strong> Solange das Konto aktiv ist</li>
+                      <li><strong>Reservierungsdaten:</strong> 5 Jahre (rechtliche Verpflichtung)</li>
+                      <li><strong>Zahlungsdaten:</strong> 10 Jahre (finanzielle Vorschriften)</li>
+                      <li><strong>Kontaktinformationen:</strong> 3 Jahre</li>
+                      <li><strong>Analyse-Daten:</strong> 2 Jahre</li>
+                      <li><strong>Cookies:</strong> 1 Jahr (maximal)</li>
                     </ul>
                   </div>
                 </div>
@@ -295,18 +292,17 @@ function Privacy() {
 
               {/* Çocukların Gizliliği */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Çocukların Gizliliği</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Schutz von Kindern</h2>
                 <div className="space-y-4 text-gray-700">
                   <p>
-                    Hizmetlerimiz 18 yaş ve üzeri kullanıcılar için tasarlanmıştır. 
-                    18 yaş altı kullanıcılar için veli izni gereklidir.
+                    Unsere Dienste sind für 18 Jahre und ältere Personen konzipiert. 
+                    Für 18 Jahre und jüngere Personen ist die Zustimmung der Eltern erforderlich.
                   </p>
                   <div className="bg-orange-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-orange-900 mb-2">⚠️ Önemli Not:</h3>
+                    <h3 className="font-semibold text-orange-900 mb-2">⚠️ Wichtige Hinweise:</h3>
                     <p className="text-sm">
-                      18 yaş altı kullanıcıların kişisel verilerini bilerek toplamayız. 
-                      Eğer 18 yaş altı bir kullanıcının verisi toplandığını fark edersek, 
-                      bu verileri derhal sileriz.
+                      Wir sammeln keine personenbezogenen Daten von 18 Jahre und jüngeren Personen. 
+                      Wenn wir feststellen, dass personenbezogene Daten von 18 Jahre und jüngeren Personen erhoben werden, löschen wir diese Daten sofort.
                     </p>
                   </div>
                 </div>
@@ -314,19 +310,19 @@ function Privacy() {
 
               {/* Değişiklikler */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Politika Değişiklikleri</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Änderungen der Datenschutzrichtlinie</h2>
                 <div className="space-y-4 text-gray-700">
                   <p>
-                    Bu gizlilik politikasını zaman zaman güncelleyebiliriz. 
-                    Önemli değişiklikler olduğunda sizi bilgilendireceğiz.
+                    Wir aktualisieren diese Datenschutzrichtlinie gelegentlich. 
+                    Wir werden Sie informieren, wenn wichtige Änderungen vorgenommen werden.
                   </p>
                   <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-blue-900 mb-2">📢 Bildirim Yöntemleri:</h3>
+                    <h3 className="font-semibold text-blue-900 mb-2">📢 Benachrichtigungsmethoden:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>E-posta bildirimi</li>
-                      <li>Platform içi duyuru</li>
-                      <li>Web sitesi güncellemesi</li>
-                      <li>Push notification</li>
+                      <li>E-Mail-Benachrichtigung</li>
+                      <li>Plattform-interner Hinweis</li>
+                      <li>Webseitenaktualisierung</li>
+                      <li>Push-Benachrichtigung</li>
                     </ul>
                   </div>
                 </div>
@@ -334,17 +330,16 @@ function Privacy() {
 
               {/* İletişim */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">11. İletişim</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Kontakt</h2>
                 <div className="bg-blue-50 p-6 rounded-lg">
                   <p className="text-gray-700 mb-4">
-                    Gizlilik politikamız hakkında sorularınız için:
+                    Für Fragen zur Datenschutzrichtlinie:
                   </p>
                   <div className="space-y-2 text-sm">
-                    <p><strong>Veri Sorumlusu:</strong> SoccaZ Teknoloji A.Ş.</p>
-                    <p><strong>E-posta:</strong> privacy@soccaz.com</p>
+                    <p><strong>Datenschutzbeauftragter:</strong> SoccaZ Teknoloji A.Ş.</p>
+                    <p><strong>E-Mail:</strong> privacy@soccaz.com</p>
                     <p><strong>Telefon:</strong> +90 (212) 555 0123</p>
-                    <p><strong>Adres:</strong> İstanbul, Türkiye</p>
-                    <p><strong>Çalışma Saatleri:</strong> Pazartesi - Cuma, 09:00 - 18:00</p>
+                    <p><strong>Adresse:</strong> İstanbul, Türkiye</p>
                   </div>
                 </div>
               </section>
@@ -353,12 +348,11 @@ function Privacy() {
               <div className="border-t border-gray-200 pt-8 mt-8">
                 <div className="text-center text-gray-500 text-sm">
                   <p>
-                    Bu gizlilik politikası {new Date().getFullYear()} yılında yayınlanmıştır ve 
-                    SoccaZ halı saha rezervasyon sistemi için geçerlidir.
+                    Diese Datenschutzrichtlinie wurde im Jahr {new Date().getFullYear()} veröffentlicht und gilt für das SoccaZ-Fußballplatzreservierungssystem.
                   </p>
                   <p className="mt-2">
                     <Link to="/" className="text-green-600 hover:text-green-700 underline">
-                      Ana Sayfaya Dön
+                      Zur Startseite
                     </Link>
                   </p>
                 </div>

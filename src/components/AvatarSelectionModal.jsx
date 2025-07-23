@@ -19,7 +19,7 @@ function AvatarSelectionModal({ isOpen, onClose, onSelect, currentAvatarId = 'de
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-gray-900">Profil Resmi Seç</h2>
+            <h2 className="text-xl font-bold text-gray-900">Profilbild auswählen</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
@@ -30,7 +30,7 @@ function AvatarSelectionModal({ isOpen, onClose, onSelect, currentAvatarId = 'de
             </button>
           </div>
           <p className="text-gray-600 mt-2">
-            Futbolcu cartoon tiplemelerinden birini seçin veya varsayılan harf avatarını kullanın.
+            Wählen Sie einen der Fußball-Cartoon-Avatare aus oder verwenden Sie den Standard-Avatar.
           </p>
         </div>
 
@@ -98,13 +98,13 @@ function AvatarSelectionModal({ isOpen, onClose, onSelect, currentAvatarId = 'de
               onClick={onClose}
               className="flex-1 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
-              İptal
+              Abbrechen
             </button>
             <button
               onClick={handleSelect}
               className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
-              Seç
+              Auswählen
             </button>
           </div>
         </div>

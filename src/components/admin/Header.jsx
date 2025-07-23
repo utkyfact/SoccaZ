@@ -88,7 +88,7 @@ function Header({ activeTab, onMenuClick, sidebarOpen }) {
 
         <div className='flex items-center space-x-2 lg:space-x-4'>
           <button className='bg-green-600 text-white px-3 lg:px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm lg:text-base'>
-            <span className='hidden sm:inline'>🔔 Bildirimler</span>
+            <span className='hidden sm:inline'>🔔 Benachrichtigungen</span>
             <span className='sm:hidden'>🔔</span>
           </button>
         </div>

@@ -168,7 +168,7 @@ function Homepage() {
                 </div>
                 
                 <p className='text-green-100 text-sm mb-6 leading-relaxed'>
-                  📱 SoccaZ'ı telefonuna yükle! Tek tıkla maçlara katıl, bildirim al ve çevrimdışı erişim sağla.
+                  📱 Lade SoccaZ auf dein Handy herunter! Nimm mit einem Klick an Fußballspielen teil, erhalte Benachrichtigungen und greife offline darauf zu.
                 </p>
                 
                 <div className='flex space-x-3'>
@@ -179,13 +179,13 @@ function Homepage() {
                     <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                       <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
                     </svg>
-                    <span>Yükle</span>
+                    <span>Installieren</span>
                   </button>
                   <button
                     onClick={dismissInstallBanner}
                     className='px-4 py-3 border-2 border-green-300 text-green-100 rounded-lg font-medium text-sm hover:bg-green-400 hover:bg-opacity-20 transition-all duration-200 cursor-pointer'
                   >
-                    Daha Sonra
+                    Später
                   </button>
                 </div>
               </div>
@@ -199,7 +199,7 @@ function Homepage() {
             to="/matches"
             className='bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 transition-colors duration-200 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1'
           >
-            ⚽ Maçlara Katıl
+            ⚽ Nimm an den Spielen teil
           </Link>
         </div>
 

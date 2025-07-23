@@ -55,7 +55,7 @@ export const NotificationProvider = ({ children }) => {
             setUnreadCount(unread);
             setLoading(false);
         }, (error) => {
-            console.error('Bildirimler yüklenirken hata:', error);
+            console.error('Fehler beim Laden der Benachrichtigungen:', error);
             setLoading(false);
         });
 
@@ -73,7 +73,7 @@ export const NotificationProvider = ({ children }) => {
                 readAt: serverTimestamp()
             });
         } catch (error) {
-            console.error('Bildirim okundu işaretlenirken hata:', error);
+            console.error('Fehler beim Markieren der Benachrichtigung als gelesen:', error);
         }
     };
 
@@ -93,7 +93,7 @@ export const NotificationProvider = ({ children }) => {
 
             await Promise.all(updatePromises);
         } catch (error) {
-            console.error('Tüm bildirimler okundu işaretlenirken hata:', error);
+            console.error('Fehler beim Markieren aller Benachrichtigungen als gelesen:', error);
         }
     };
 
@@ -108,7 +108,7 @@ export const NotificationProvider = ({ children }) => {
                 deletedAt: serverTimestamp()
             });
         } catch (error) {
-            console.error('Bildirim silinirken hata:', error);
+            console.error('Fehler beim Löschen der Benachrichtigung:', error);
         }
     };
 
@@ -126,7 +126,7 @@ export const NotificationProvider = ({ children }) => {
                 createdAt: serverTimestamp()
             });
         } catch (error) {
-            console.error('Bildirim oluşturulurken hata:', error);
+            console.error('Fehler beim Erstellen der Benachrichtigung:', error);
         }
     };
 

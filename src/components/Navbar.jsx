@@ -18,12 +18,12 @@ function Navbar() {
     const handleLogout = async () => {
         try {
             await logout();
-            toast.success("Başarıyla çıkış yaptınız!")
+            toast.success("Erfolgreich abgemeldet!")
             setIsMobileMenuOpen(false);
             setIsUserDropdownOpen(false);
         } catch (error) {
-            console.error('Çıkış yapılırken hata:', error);
-            toast.error("Çıkış yapılırken bir hata oluştu!")
+            console.error('Beim Abmelden ist ein Fehler aufgetreten:', error);
+            toast.error("Beim Abmelden ist ein Fehler aufgetreten!")
         }
     };
 
@@ -83,7 +83,7 @@ function Navbar() {
                         <img src="/SoccaZ.png" alt="SoccaZ Logo" className='w-18 h-18 object-cover' />
                         <div className='hidden sm:block'>
                             <h1 className='text-xl font-bold text-white'>SoccaZ</h1>
-                            <p className='text-xs text-green-200'>Halı Saha Rezervasyon</p>
+                            <p className='text-xs text-green-200'>Kleinfeld buchen</p>
                         </div>
                     </Link>
                     {/* Orta: Navigasyon Linkleri (sadece desktop) */}
@@ -94,7 +94,7 @@ function Navbar() {
                             style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
                         >
                             <span className='text-xl'>🏠</span>
-                            <span className='hidden lg:inline'>Ana Sayfa</span>
+                            <span className='hidden lg:inline'>Startseite</span>
                         </Link>
                         <Link
                             to="/matches"
@@ -102,7 +102,7 @@ function Navbar() {
                             style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
                         >
                             <span className='text-xl'>⚽</span>
-                            <span className='hidden lg:inline'>Maçlar</span>
+                            <span className='hidden lg:inline'>Spiele</span>
                         </Link>
                         <Link
                             to="/contact"
@@ -110,7 +110,7 @@ function Navbar() {
                             style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
                         >
                             <span className='text-xl'>📞</span>
-                            <span className='hidden lg:inline'>İletişim</span>
+                            <span className='hidden lg:inline'>Kontakt</span>
                         </Link>
 
                     </div>
@@ -139,13 +139,13 @@ function Navbar() {
                                         {/* Header */}
                                         <div className='px-4 py-2 border-b border-gray-200'>
                                             <div className='flex items-center justify-between mb-1'>
-                                                <h3 className='font-semibold text-gray-900'>Bildirimler</h3>
+                                                <h3 className='font-semibold text-gray-900'>Benachrichtigungen</h3>
                                                 {unreadCount > 0 && (
                                                     <button
                                                         onClick={markAllAsRead}
                                                         className='text-sm text-green-600 hover:text-green-700 font-medium'
                                                     >
-                                                        Tümünü okundu işaretle
+                                                        Alle als gelesen markieren
                                                     </button>
                                                 )}
                                             </div>
@@ -158,7 +158,7 @@ function Navbar() {
                                                     <svg className='w-12 h-12 mx-auto mb-3 text-gray-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 17h5l-5 5v-5zM10.5 3.75a6 6 0 0 1 6 6v3.75l2.25 2.25V12a8.25 8.25 0 0 0-16.5 0v3.75l2.25-2.25V9.75a6 6 0 0 1 6-6z' />
                                                     </svg>
-                                                    <p>Henüz bildiriminiz yok</p>
+                                                    <p>Noch keine Benachrichtigungen</p>
                                                 </div>
                                             ) : (
                                                 notifications.slice(0, 5).map((notification) => (
@@ -228,7 +228,7 @@ function Navbar() {
                                                     }}
                                                     className='text-sm text-green-600 hover:text-green-700 font-medium w-full text-center cursor-pointer'
                                                 >
-                                                    Tüm bildirimleri görüntüle
+                                                    Alle Benachrichtigungen anzeigen
                                                 </button>
                                             </div>
                                         )}
@@ -259,7 +259,7 @@ function Navbar() {
                             {authLoading ? (
                                 <div className='flex items-center space-x-2 text-white'>
                                     <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-white'></div>
-                                    <span className='text-sm'>Yükleniyor...</span>
+                                    <span className='text-sm'>Lädt...</span>
                                 </div>
                             ) : user ? (
                                 // Giriş yapmış kullanıcı için dropdown
@@ -291,7 +291,7 @@ function Navbar() {
                                                         className='flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200'
                                                     >
                                                         <span>👑</span>
-                                                        <span>Admin Paneli</span>
+                                                        <span>Admin Panel</span>
                                                     </Link>
                                                 )}
 
@@ -302,7 +302,7 @@ function Navbar() {
                                                     className='flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors duration-200'
                                                 >
                                                     <span>👤</span>
-                                                    <span>Profil</span>
+                                                    <span>Mein Profil</span>
                                                 </Link>
 
                                                 {/* Ayırıcı */}
@@ -314,7 +314,7 @@ function Navbar() {
                                                     className='w-full flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors duration-200 cursor-pointer'
                                                 >
                                                     <span>🚪</span>
-                                                    <span>Çıkış Yap</span>
+                                                    <span>Abmelden</span>
                                                 </button>
                                             </div>
                                         )}
@@ -327,13 +327,13 @@ function Navbar() {
                                         to="/login"
                                         className='bg-white text-green-600 px-3 py-1 rounded text-sm font-medium hover:bg-green-50 transition-colors duration-200 shadow-md'
                                     >
-                                        Giriş
+                                        Anmelden
                                     </Link>
                                     <Link
                                         to="/register"
                                         className='bg-green-500 text-white px-3 py-1 rounded text-sm font-medium hover:bg-green-400 transition-colors duration-200 shadow-md'
                                     >
-                                        Kayıt
+                                        Registrieren
                                     </Link>
                                 </div>
                             )}
@@ -354,7 +354,7 @@ function Navbar() {
                             >
                                 <span className='flex items-center space-x-3'>
                                     <span className='text-2xl'>🏠</span>
-                                    <span>Ana Sayfa</span>
+                                    <span>Startseite</span>
                                 </span>
                             </Link>
                             <Link
@@ -365,7 +365,7 @@ function Navbar() {
                             >
                                 <span className='flex items-center space-x-3'>
                                     <span className='text-2xl'>⚽</span>
-                                    <span>Maçlar</span>
+                                    <span>Spiele</span>
                                 </span>
                             </Link>
 
@@ -377,7 +377,7 @@ function Navbar() {
                             >
                                 <span className='flex items-center space-x-3'>
                                     <span className='text-2xl'>📞</span>
-                                    <span>İletişim</span>
+                                    <span>Kontakt</span>
                                 </span>
                             </Link>
 
@@ -387,14 +387,14 @@ function Navbar() {
                                     <div className='text-white text-sm bg-green-800 bg-opacity-50 px-3 py-2 rounded-lg text-center'>
                                         <div className='flex items-center justify-center space-x-2'>
                                             <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-white'></div>
-                                            <span>Yükleniyor...</span>
+                                            <span>Lädt...</span>
                                         </div>
                                     </div>
                                 ) : user ? (
                                     <div className='space-y-2'>
                                         {/* Mobil Bildirim Göstergesi */}
                                         <div className='text-white text-sm bg-green-800 bg-opacity-50 px-3 py-2 rounded-lg'>
-                                            <span className='font-medium'>Hoş geldin, </span>
+                                            <span className='font-medium'>Willkommen, </span>
                                             <span className='text-green-200 font-semibold'>{user.displayName || user.email}</span>
                                             {isAdmin && <span className='ml-2 text-yellow-300'>👑</span>}
                                         </div>
@@ -421,7 +421,7 @@ function Navbar() {
                                         >
                                             <span className='flex items-center space-x-2'>
                                                 <span>👤</span>
-                                                <span>Profil</span>
+                                                <span>Mein Profil</span>
                                             </span>
                                         </Link>
 
@@ -429,7 +429,7 @@ function Navbar() {
                                             onClick={handleLogout}
                                             className='w-full bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-all duration-200 shadow-md cursor-pointer'
                                         >
-                                            Çıkış Yap
+                                            Abmelden
                                         </button>
                                     </div>
                                 ) : (
@@ -439,14 +439,14 @@ function Navbar() {
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             className='w-full bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-green-50 transition-colors duration-200 shadow-md block text-center'
                                         >
-                                            Giriş
+                                            Anmelden
                                         </Link>
                                         <Link
                                             to="/register"
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             className='w-full bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-400 transition-colors duration-200 shadow-md block text-center'
                                         >
-                                            Kayıt
+                                            Registrieren
                                         </Link>
                                     </div>
                                 )}

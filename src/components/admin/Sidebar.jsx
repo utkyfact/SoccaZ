@@ -179,7 +179,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
             </button>
           </li>
 
-          {/* Ayarlar */}
+          {/* Site Ayarları */}
           <li>
             <button
               onClick={() => handleTabClick('settings')}
@@ -189,7 +189,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>⚙️</span>
-              <span className='font-medium'>Ayarlar</span>
+              <span className='font-medium'>Site Ayarları</span>
             </button>
           </li>
         </ul>

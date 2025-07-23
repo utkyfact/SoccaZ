@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
                 setUserProfile(newUserData);
             }
         } catch (error) {
-            console.error("Admin kontrolü hatası:", error);
+            console.error("Admin-Kontrol-Fehler:", error);
             setIsAdmin(false);
         }
     };
@@ -58,13 +58,13 @@ export function AuthProvider({ children }) {
                 emailVerified: user.emailVerified
             }, { merge: true });
         } catch (error) {
-            console.error("Son giriş tarihi güncellenirken hata:", error);
+            console.error("Fehler beim Aktualisieren des letzten Anmelde-Datums:", error);
         }
     };
 
     const updateAvatar = async (avatarId) => {
         if (!user) {
-            throw new Error("Kullanıcı giriş yapmamış");
+            throw new Error("Der Benutzer ist nicht eingeloggt");
         }
         
         try {
@@ -79,14 +79,14 @@ export function AuthProvider({ children }) {
             
             return true;
         } catch (error) {
-            console.error("Avatar güncellenirken hata:", error);
+            console.error("Fehler beim Aktualisieren des Avatars:", error);
             throw error;
         }
     };
 
     const updateUserProfile = async (profileData) => {
         if (!user) {
-            throw new Error("Kullanıcı giriş yapmamış");
+            throw new Error("Der Benutzer ist nicht eingeloggt");
         }
         
         try {
@@ -102,7 +102,7 @@ export function AuthProvider({ children }) {
             
             return true;
         } catch (error) {
-            console.error("Profil güncellenirken hata:", error);
+            console.error("Fehler beim Aktualisieren des Profils:", error);
             throw error;
         }
     };
@@ -111,7 +111,7 @@ export function AuthProvider({ children }) {
         const user = auth.currentUser;
 
         if (!user) {
-            throw new Error("Kullanıcı bulunamadı.");
+            throw new Error("Der Benutzer wurde nicht gefunden.");
         }
 
         try {
@@ -119,11 +119,11 @@ export function AuthProvider({ children }) {
             await reauthenticateWithCredential(user, credential);
             await deleteUser(user);
         } catch (error) {
-            console.error("Hesap silinirken Firebase hatası:", error);
+            console.error("Fehler beim Löschen des Kontos:", error);
             if (error.code === 'auth/wrong-password') {
-                throw new Error("Şifre yanlış. Lütfen tekrar deneyin.");
+                throw new Error("Falsches Passwort. Bitte versuchen Sie es erneut.");
             }
-            throw new Error("Hesap silinirken bir hata oluştu.");
+            throw new Error("Fehler beim Löschen des Kontos.");
         }
     };
 
@@ -169,7 +169,7 @@ export function AuthProvider({ children }) {
 
     const makeAdmin = async (userId) => {
         if (!isAdmin) {
-            throw new Error("Bu işlem için admin yetkisi gereklidir");
+            throw new Error("Admin-Rechte sind erforderlich");
         }
         
         try {
@@ -178,7 +178,7 @@ export function AuthProvider({ children }) {
             }, { merge: true });
             return true;
         } catch (error) {
-            console.error("Admin yapma hatası:", error);
+            console.error("Fehler beim Machen des Admins:", error);
             throw error;
         }
     };

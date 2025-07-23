@@ -3,32 +3,32 @@ export const profilePictures = {
   ronaldo: {
     name: 'Cristiano Ronaldo',
     image: '/profile-pictures/ronaldo-cartoon.png',
-    description: 'CR7 - Portekizli yıldız'
+    description: 'CR7 - Portugiesischer Star'
   },
   messi: {
     name: 'Lionel Messi',
     image: '/profile-pictures/messi-cartoon.png',
-    description: 'La Pulga - Arjantinli efsane'
+    description: 'La Pulga - Argentinischer Star'
   },
   neymar: {
     name: 'Neymar Jr.',
     image: '/profile-pictures/neymar-cartoon.png',
-    description: 'Ney - Brezilyalı samba ustası'
+    description: 'Ney - Brasilianischer Samba-Meister'
   },
   mbappe: {
     name: 'Kylian Mbappé',
     image: '/profile-pictures/mbappe-cartoon.png',
-    description: 'KM7 - Fransız hız ustası'
+    description: 'KM7 - Französischer Geschwindigkeitsmeister'
   },
   haaland: {
     name: 'Erling Haaland',
     image: '/profile-pictures/haaland-cartoon.png',
-    description: 'Viking - Norveçli gol makinesi'
+    description: 'Viking - Norwegischer Tormeister'
   },
   benzema: {
     name: 'Karim Benzema',
     image: '/profile-pictures/benzema-cartoon.png',
-    description: 'Big Benz - Fransız teknik ustası'
+    description: 'Big Benz - Französischer Technikmeister'
   }
 };
 
@@ -87,5 +87,5 @@ export const getProfilePictureInfo = (profilePictureId) => {
 
 // Varsayılan profil resmi
 export const getDefaultProfilePicture = () => {
-  return 'ronaldo';
+  return '';
 }; 

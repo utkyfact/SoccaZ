@@ -28,7 +28,7 @@ function Profile() {
       await updateAvatar(avatarId);
       // Başarı mesajı göster
     } catch (error) {
-      console.error('Avatar güncellenirken hata:', error);
+      console.error('Beim Aktualisieren des Avatars ist ein Fehler aufgetreten:', error);
     }
   };
 
@@ -64,7 +64,7 @@ function Profile() {
 
         setUserStats(stats);
       } catch (error) {
-        console.error('Kullanıcı istatistikleri getirilirken hata:', error);
+        console.error('Beim Abrufen der Benutzerstatistiken ist ein Fehler aufgetreten:', error);
       } finally {
         setLoading(false);
       }
@@ -77,27 +77,27 @@ function Profile() {
   const sidebarItems = [
     {
       id: 'overview',
-      title: 'Genel Bakış',
+      title: 'Überblick',
       icon: '📊',
-      description: 'Profil özeti ve istatistikler'
+      description: 'Profilübersicht und Statistiken'
     },
     {
       id: 'personal',
-      title: 'Kişisel Bilgiler',
+      title: 'Persönliche Informationen',
       icon: '👤',
-      description: 'Ad, email ve telefon numarası değişiklikleri'
+      description: 'Name, E-Mail und Telefonnummernänderungen'
     },
     {
       id: 'notifications',
-      title: 'Bildirimler',
+      title: 'Benachrichtigungen',
       icon: '🔔',
-      description: 'Bildirim ayarları'
+      description: 'Benachrichtigungseinstellungen'
     },
     {
       id: 'security',
-      title: 'Güvenlik',
+      title: 'Sicherheit',
       icon: '🔒',
-      description: 'Hesap güvenlik ayarları'
+      description: 'Kontosicherheitseinstellungen'
     }
   ];
 
@@ -125,7 +125,7 @@ function Profile() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Yükleniyor...</p>
+            <p className="mt-4 text-gray-600">Lädt...</p>
           </div>
         </div>
       </Layout>
@@ -138,7 +138,7 @@ function Profile() {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Yönlendiriliyor...</p>
+            <p className="mt-4 text-gray-600">Weiterleitung...</p>
           </div>
         </div>
       </Layout>
@@ -151,9 +151,9 @@ function Profile() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Profil</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Profilübersicht</h1>
             <p className="text-gray-600">
-              Hesap bilgilerinizi yönetin ve rezervasyon geçmişinizi görüntüleyin.
+              Verwalten Sie Ihre Kontoinformationen und sehen Sie Ihren Reservierungsverlauf.
             </p>
           </div>
 
@@ -167,13 +167,13 @@ function Profile() {
                     <div
                       className="cursor-pointer hover:opacity-80 transition-opacity duration-200"
                       onClick={() => setShowAvatarModal(true)}
-                      title="Profil resmini değiştir"
+                      title="Profilbild ändern"
                     >
                       <UserAvatar user={user} userProfile={userProfile} size="lg" showBorder={true} />
                     </div>
                     <div>
                       <h2 className="text-xl font-bold">
-                        {user.displayName || 'Kullanıcı'}
+                        {user.displayName || 'Benutzer'}
                       </h2>
                       <p className="text-green-100 text-sm">
                         {user.email}
@@ -217,7 +217,7 @@ function Profile() {
                 {loading ? (
                   <div className="p-12 text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Yükleniyor...</p>
+                    <p className="mt-4 text-gray-600">Lädt...</p>
                   </div>
                 ) : (
                   renderContent()
@@ -244,9 +244,9 @@ function OverviewTab({ user, stats }) {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Hoş Geldiniz! 👋</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Willkommen! 👋</h2>
         <p className="text-gray-600">
-          Profil özetiniz ve aktivite istatistikleriniz aşağıda yer almaktadır.
+          Ihre Profilübersicht und Ihre Aktivitätssstatistiken sind unten zu sehen.
         </p>
       </div>
 
@@ -255,7 +255,7 @@ function OverviewTab({ user, stats }) {
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm">Katıldığım Maçlar</p>
+              <p className="text-blue-100 text-sm">Teilgenommene Spiele</p>
               <p className="text-3xl font-bold">{stats.totalMatches}</p>
             </div>
             <div className="text-3xl">⚽</div>
@@ -265,7 +265,7 @@ function OverviewTab({ user, stats }) {
         <div className="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm">Aktif Maçlar</p>
+              <p className="text-green-100 text-sm">Aktive Spiele</p>
               <p className="text-3xl font-bold">{stats.activeMatches}</p>
             </div>
             <div className="text-3xl">🟢</div>
@@ -277,19 +277,19 @@ function OverviewTab({ user, stats }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Son Aktiviteler</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Letzte Aktivitäten</h3>
           <div className="space-y-3 text-sm text-gray-600">
             <div className="flex items-center space-x-2">
               <span>✅</span>
-              <span>Profil sayfasına giriş yapıldı</span>
+              <span>Profilseite besucht</span>
             </div>
             <div className="flex items-center space-x-2">
               <span>📊</span>
-              <span>İstatistikler güncellendi</span>
+              <span>Statistiken aktualisiert</span>
             </div>
             <div className="flex items-center space-x-2">
               <span>🔔</span>
-              <span>Bildirimler aktif</span>
+              <span>Benachrichtigungen aktiv</span>
             </div>
           </div>
         </div>
@@ -316,7 +316,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
   const handleUpdateName = async () => {
     if (!newName.trim()) {
-      setMessage({ type: 'error', text: 'Ad soyad boş olamaz!' });
+      setMessage({ type: 'error', text: 'Name und Nachname dürfen nicht leer sein!' });
       return;
     }
 
@@ -328,7 +328,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
         displayName: newName.trim()
       });
 
-      setMessage({ type: 'success', text: 'Ad soyad başarıyla güncellendi!' });
+      setMessage({ type: 'success', text: 'Name und Nachname erfolgreich aktualisiert!' });
       setIsEditingName(false);
 
       // 3 saniye sonra mesajı otomatik temizle
@@ -336,8 +336,8 @@ function PersonalTab({ user, userProfile, isAdmin }) {
         setMessage({ type: '', text: '' });
       }, 3000);
     } catch (error) {
-      console.error('Ad soyad güncellenirken hata:', error);
-      setMessage({ type: 'error', text: 'Ad soyad güncellenirken bir hata oluştu.' });
+      console.error('Beim Aktualisieren des Namens und Nachnames ist ein Fehler aufgetreten:', error);
+      setMessage({ type: 'error', text: 'Beim Aktualisieren des Namens und Nachnames ist ein Fehler aufgetreten.' });
     } finally {
       setLoading(false);
     }
@@ -345,12 +345,12 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
   const handleUpdateEmail = async () => {
     if (!newEmail.trim() || !newEmail.includes('@')) {
-      setMessage({ type: 'error', text: 'Geçerli bir email adresi girin!' });
+      setMessage({ type: 'error', text: 'Geben Sie eine gültige E-Mail-Adresse ein!' });
       return;
     }
 
     if (!password.trim()) {
-      setPasswordError('Şifre gereklidir!');
+      setPasswordError('Passwort ist erforderlich!');
       return;
     }
 
@@ -368,7 +368,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
       setMessage({ 
         type: 'success', 
-        text: `${newEmail} adresine doğrulama maili gönderildi. Mailinizi kontrol edip bağlantıya tıklayarak email adresinizi güncelleyin.` 
+        text: `${newEmail} E-Mail-Adresse wurde erfolgreich aktualisiert. Bitte überprüfen Sie Ihre E-Mail und klicken Sie auf den Link, um Ihre E-Mail-Adresse zu aktualisieren.` 
       });
       setIsEditingEmail(false);
       setShowPasswordModal(false);
@@ -380,17 +380,17 @@ function PersonalTab({ user, userProfile, isAdmin }) {
         setMessage({ type: '', text: '' });
       }, 5000);
     } catch (error) {
-      console.error('Email güncellenirken hata:', error);
+      console.error('Beim Aktualisieren der E-Mail-Adresse ist ein Fehler aufgetreten:', error);
       if (error.code === 'auth/wrong-password') {
-        setPasswordError('Şifre yanlış!');
+        setPasswordError('Falsches Passwort!');
       } else if (error.code === 'auth/email-already-in-use') {
-        setMessage({ type: 'error', text: 'Bu email adresi zaten kullanılıyor!' });
+        setMessage({ type: 'error', text: 'Diese E-Mail-Adresse ist bereits in Verwendung!' });
       } else if (error.code === 'auth/invalid-email') {
-        setMessage({ type: 'error', text: 'Geçerli bir email adresi girin!' });
+        setMessage({ type: 'error', text: 'Geben Sie eine gültige E-Mail-Adresse ein!' });
       } else if (error.code === 'auth/operation-not-allowed') {
-        setMessage({ type: 'error', text: 'Email güncelleme şu anda devre dışı.' });
+        setMessage({ type: 'error', text: 'Die E-Mail-Adresse kann derzeit nicht aktualisiert werden.' });
       } else {
-        setMessage({ type: 'error', text: 'Email doğrulama maili gönderilirken bir hata oluştu.' });
+        setMessage({ type: 'error', text: 'Beim Aktualisieren der E-Mail-Adresse ist ein Fehler aufgetreten.' });
       }
     } finally {
       setLoading(false);
@@ -399,13 +399,13 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
   const handleUpdatePhone = async () => {
     if (!newPhone.trim()) {
-      setMessage({ type: 'error', text: 'Telefon numarası boş olamaz!' });
+      setMessage({ type: 'error', text: 'Die Telefonnummer darf nicht leer sein!' });
       return;
     }
 
     // Güçlü telefon validation
     if (!validatePhone(newPhone.trim())) {
-      setMessage({ type: 'error', text: 'Geçerli bir telefon numarası girin!' });
+      setMessage({ type: 'error', text: 'Geben Sie eine gültige Telefonnummer ein!' });
       return;
     }
 
@@ -417,7 +417,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
         phone: newPhone.trim()
       });
 
-      setMessage({ type: 'success', text: 'Telefon numarası başarıyla güncellendi!' });
+      setMessage({ type: 'success', text: 'Die Telefonnummer wurde erfolgreich aktualisiert!' });
       setIsEditingPhone(false);
 
       // 3 saniye sonra mesajı otomatik temizle
@@ -425,8 +425,8 @@ function PersonalTab({ user, userProfile, isAdmin }) {
         setMessage({ type: '', text: '' });
       }, 3000);
     } catch (error) {
-      console.error('Telefon numarası güncellenirken hata:', error);
-      setMessage({ type: 'error', text: 'Telefon numarası güncellenirken bir hata oluştu.' });
+      console.error('Beim Aktualisieren der Telefonnummer ist ein Fehler aufgetreten:', error);
+      setMessage({ type: 'error', text: 'Beim Aktualisieren der Telefonnummer ist ein Fehler aufgetreten.' });
     } finally {
       setLoading(false);
     }
@@ -460,10 +460,10 @@ function PersonalTab({ user, userProfile, isAdmin }) {
       });
 
       setEmailVerificationSent(true);
-      setMessage({ type: 'success', text: 'Doğrulama emaili gönderildi! Email kutunuzu kontrol edin.' });
+      setMessage({ type: 'success', text: 'E-Mail-Bestätigung gesendet! Bitte überprüfen Sie Ihre E-Mail und klicken Sie auf den Link, um Ihre E-Mail-Adresse zu aktualisieren.' });
     } catch (error) {
-      console.error('Email doğrulama gönderilirken hata:', error);
-      setMessage({ type: 'error', text: 'Email doğrulama gönderilirken bir hata oluştu.' });
+      console.error('Beim Senden der E-Mail-Bestätigung ist ein Fehler aufgetreten:', error);
+      setMessage({ type: 'error', text: 'Beim Senden der E-Mail-Bestätigung ist ein Fehler aufgetreten.' });
     } finally {
       setLoading(false);
     }
@@ -472,9 +472,9 @@ function PersonalTab({ user, userProfile, isAdmin }) {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Kişisel Bilgiler</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Persönliche Informationen</h2>
         <p className="text-gray-600">
-          Hesap bilgilerinizi güncelleyin ve yönetin.
+          Aktualisieren und verwalten Sie Ihre Kontoinformationen.
         </p>
       </div>
 
@@ -506,18 +506,18 @@ function PersonalTab({ user, userProfile, isAdmin }) {
       <div className="space-y-6">
         {/* Ad Soyad Güncelleme */}
         <div className="bg-white border border-gray-200 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Ad Soyad</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Name und Nachname</h3>
           <div className="space-y-4">
             {isEditingName ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Yeni Ad Soyad</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Neuer Name und Nachname</label>
                   <input
                     type="text"
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Ad soyadınızı girin"
+                    placeholder="Geben Sie Ihren Namen und Nachnamen ein"
                   />
                 </div>
                 <div className="flex space-x-3">
@@ -526,21 +526,21 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     disabled={loading}
                     className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {loading ? 'Güncelleniyor...' : 'Güncelle'}
+                    {loading ? 'Aktualisieren...' : 'Aktualisieren'}
                   </button>
                   <button
                     onClick={() => cancelEdit('name')}
                     disabled={loading}
                     className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    İptal
+                    Abbrechen
                   </button>
                 </div>
               </div>
             ) : (
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Mevcut Ad Soyad</p>
+                  <p className="text-sm text-gray-600 mb-1">Aktueller Name und Nachname</p>
                   <p className="text-lg font-medium text-gray-900">
                     {user?.displayName || 'Belirtilmemiş'}
                   </p>
@@ -549,7 +549,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   onClick={() => setIsEditingName(true)}
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
                 >
-                  Düzenle
+                  Bearbeiten
                 </button>
               </div>
             )}
@@ -558,31 +558,31 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
         {/* Email Güncelleme */}
         <div className="bg-white border border-gray-200 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">E-posta Adresi</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">E-Mail-Adresse</h3>
           <div className="space-y-4">
             {isEditingEmail ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Yeni E-posta</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Neue E-Mail-Adresse</label>
                   <input
                     type="email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(sanitizeInput(e.target.value))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Email adresinizi girin"
+                    placeholder="Geben Sie Ihre E-Mail-Adresse ein"
                   />
                 </div>
 
                 {/* Şifre Modal */}
                 {showPasswordModal && (
                   <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
-                    <h4 className="text-sm font-medium text-gray-900 mb-3">Güvenlik Doğrulaması</h4>
+                    <h4 className="text-sm font-medium text-gray-900 mb-3">Sicherheitsbestätigung</h4>
                     <p className="text-sm text-gray-600 mb-3">
-                      Email adresinizi değiştirmek için mevcut şifrenizi girin.
+                      Um Ihre E-Mail-Adresse zu ändern, geben Sie Ihr aktuelles Passwort ein.
                     </p>
                     <div className="space-y-3">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Mevcut Şifre</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Aktuelles Passwort</label>
                         <input
                           type="password"
                           value={password}
@@ -592,7 +592,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                           }}
                           className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ${passwordError ? 'border-red-300' : 'border-gray-300'
                             }`}
-                          placeholder="Şifrenizi girin"
+                          placeholder="Geben Sie Ihr Passwort ein"
                         />
                         {passwordError && (
                           <p className="text-red-600 text-sm mt-1">{passwordError}</p>
@@ -608,21 +608,21 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     disabled={loading || !password.trim()}
                     className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {loading ? 'Güncelleniyor...' : 'Güncelle'}
+                    {loading ? 'Aktualisieren...' : 'Aktualisieren'}
                   </button>
                   <button
                     onClick={() => cancelEdit('email')}
                     disabled={loading}
                     className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    İptal
+                    Abbrechen
                   </button>
                 </div>
               </div>
             ) : (
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Mevcut E-posta</p>
+                  <p className="text-sm text-gray-600 mb-1">Aktuelle E-Mail-Adresse</p>
                   <p className="text-lg font-medium text-gray-900">
                     {user?.email}
                   </p>
@@ -636,7 +636,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   }}
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
                 >
-                  Düzenle
+                  Bearbeiten
                 </button>
               </div>
             )}
@@ -645,18 +645,18 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 
         {/* Telefon Numarası Güncelleme */}
         <div className="bg-white border border-gray-200 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Telefon Numarası</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Telefonnummer</h3>
           <div className="space-y-4">
             {isEditingPhone ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Yeni Telefon Numarası</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Neue Telefonnummer</label>
                   <input
                     type="tel"
                     value={newPhone}
                     onChange={(e) => setNewPhone(sanitizeInput(e.target.value))}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Telefon numaranızı girin"
+                    placeholder="Geben Sie Ihre Telefonnummer ein"
                   />
                 </div>
                 <div className="flex space-x-3">
@@ -665,27 +665,27 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     disabled={loading}
                     className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {loading ? 'Güncelleniyor...' : 'Güncelle'}
+                    {loading ? 'Aktualisieren...' : 'Aktualisieren'}
                   </button>
                   <button
                     onClick={() => cancelEdit('phone')}
                     disabled={loading}
                     className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    İptal
+                    Abbrechen
                   </button>
                 </div>
               </div>
             ) : (
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Mevcut Telefon</p>
+                  <p className="text-sm text-gray-600 mb-1">Aktuelle Telefonnummer</p>
                   <p className="text-lg font-medium text-gray-900">
                     {userProfile?.phone || 'Belirtilmemiş'}
                   </p>
                   {!userProfile?.phone && (
                     <p className="text-sm text-red-600 mt-1">
-                      ⚠️ Maça katılabilmek için telefon numarası gereklidir
+                      ⚠️ Um an einem Spiel teilzunehmen, ist eine Telefonnummer erforderlich
                     </p>
                   )}
                 </div>
@@ -693,7 +693,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   onClick={() => setIsEditingPhone(true)}
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
                 >
-                  {userProfile?.phone ? 'Düzenle' : 'Ekle'}
+                  {userProfile?.phone ? 'Bearbeiten' : 'Hinzufügen'}
                 </button>
               </div>
             )}
@@ -706,10 +706,10 @@ function PersonalTab({ user, userProfile, isAdmin }) {
             <div className="flex items-start space-x-3">
               <span className="text-blue-600 text-xl mt-1">ℹ️</span>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-blue-800 mb-2">Email Doğrulama</h3>
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">E-Mail-Bestätigung</h3>
                 <p className="text-blue-700 text-sm mb-4">
-                  Email adresinizi doğrulamak için aşağıdaki butona tıklayın.
-                  Doğrulama emaili gönderilecek ve email adresinizi doğruladıktan sonra tüm özellikleri kullanabilirsiniz.
+                  Um Ihre E-Mail-Adresse zu bestätigen, klicken Sie auf den folgenden Button.
+                  Eine Bestätigungs-E-Mail wird gesendet, und Sie können alle Funktionen nutzen, nachdem Sie Ihre E-Mail-Adresse bestätigt haben.
                 </p>
                 <div className="flex items-center space-x-3">
                   <button
@@ -717,10 +717,10 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     disabled={loading || emailVerificationSent}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {loading ? 'Gönderiliyor...' : emailVerificationSent ? 'Email Gönderildi' : 'Email Doğrula'}
+                    {loading ? 'Senden...' : emailVerificationSent ? 'E-Mail gesendet' : 'E-Mail bestätigen'}
                   </button>
                   {emailVerificationSent && (
-                    <span className="text-green-600 text-sm font-medium">✅ Doğrulama emaili gönderildi</span>
+                    <span className="text-green-600 text-sm font-medium">✅ E-Mail-Bestätigung gesendet</span>
                   )}
                 </div>
               </div>
@@ -734,9 +734,9 @@ function PersonalTab({ user, userProfile, isAdmin }) {
             <div className="flex items-start space-x-3">
               <span className="text-green-600 text-xl mt-1">✅</span>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-green-800 mb-2">Email Doğrulandı</h3>
+                <h3 className="text-lg font-semibold text-green-800 mb-2">E-Mail bestätigt</h3>
                 <p className="text-green-700 text-sm">
-                  Email adresiniz başarıyla doğrulanmıştır. Tüm özellikleri kullanabilirsiniz.
+                  Ihre E-Mail-Adresse wurde erfolgreich bestätigt. Sie können alle Funktionen nutzen.
                 </p>
               </div>
             </div>
@@ -752,20 +752,20 @@ function NotificationsTab() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Bildirim Ayarları</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Benachrichtigungseinstellungen</h2>
         <p className="text-gray-600">
-          Bildirim tercihlerinizi yönetin ve güncel kalın.
+          Verwalten und aktualisieren Sie Ihre Benachrichtigungseinstellungen.
         </p>
       </div>
 
       <div className="space-y-6">
         <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Bildirim Türleri</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Benachrichtigungstypen</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium text-gray-900">Maç Onayları</h4>
-                <p className="text-sm text-gray-600">Maçlarınız onaylandığında bildirim alın</p>
+                <h4 className="font-medium text-gray-900">Spielbestätigungen</h4>
+                <p className="text-sm text-gray-600">Sie erhalten eine Benachrichtigung, wenn Ihr Spiel bestätigt wird</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" defaultChecked className="sr-only peer" />
@@ -775,8 +775,8 @@ function NotificationsTab() {
 
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium text-gray-900">Hatırlatmalar</h4>
-                <p className="text-sm text-gray-600">Maçlarınızdan önce hatırlatma alın</p>
+                <h4 className="font-medium text-gray-900">Erinnerungen</h4>
+                <p className="text-sm text-gray-600">Sie erhalten eine Erinnerung, bevor Ihr Spiel beginnt</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" defaultChecked className="sr-only peer" />
@@ -786,8 +786,8 @@ function NotificationsTab() {
 
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-medium text-gray-900">Özel Teklifler</h4>
-                <p className="text-sm text-gray-600">Özel fırsatlar ve indirimler hakkında bilgilendiril</p>
+                <h4 className="font-medium text-gray-900">Spezielle Angebote</h4>
+                <p className="text-sm text-gray-600">Sie erhalten Informationen zu speziellen Angeboten und Rabatten</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" />
@@ -818,27 +818,27 @@ function SecurityTab() {
   const handleLogout = async () => {
     try {
       await logout();
-      toast.success("Başarıyla çıkış yaptınız!")
+      toast.success("Erfolgreich abgemeldet!")
     } catch (error) {
-      console.error('Çıkış yapılırken hata:', error);
-      toast.error("Çıkış yapılırken bir hata oluştu!")
+      console.error('Beim Abmelden ist ein Fehler aufgetreten:', error);
+      toast.error("Beim Abmelden ist ein Fehler aufgetreten!")
     }
   };
 
   const handleDeleteUser = async () => {
     if (!password) {
-      setMessage({ type: 'error', text: 'Hesabınızı silmek için şifrenizi girmelisiniz.' });
+      setMessage({ type: 'error', text: 'Um Ihr Konto zu löschen, müssen Sie Ihr Passwort eingeben.' });
       return;
     }
     try {
       setLoading(true);
       setMessage({ type: '', text: '' });
       await deletedUser(password);
-      toast.success('Hesabınız başarıyla silindi.');
+      toast.success('Ihr Konto wurde erfolgreich gelöscht.');
       navigate('/login');
     } catch (error) {
-      console.error('Hesap silinirken hata:', error);
-      setMessage({ type: 'error', text: error.message || 'Hesap silinirken bir hata oluştu.' });
+      console.error('Beim Löschen des Kontos ist ein Fehler aufgetreten:', error);
+      setMessage({ type: 'error', text: error.message || 'Beim Löschen des Kontos ist ein Fehler aufgetreten.' });
     } finally {
       setLoading(false);
       setShowDeleteModal(false);
@@ -850,15 +850,15 @@ function SecurityTab() {
   const handlePasswordChange = async () => {
     setMessage({ type: '', text: '' });
     if (!currentPassword || !newPassword || !newPasswordRepeat) {
-      setMessage({ type: 'error', text: 'Tüm alanları doldurun.' });
+      setMessage({ type: 'error', text: 'Bitte füllen Sie alle Felder aus.' });
       return;
     }
     if (newPassword.length < 6) {
-      setMessage({ type: 'error', text: 'Yeni şifre en az 6 karakter olmalı.' });
+      setMessage({ type: 'error', text: 'Das neue Passwort muss mindestens 6 Zeichen lang sein.' });
       return;
     }
     if (newPassword !== newPasswordRepeat) {
-      setMessage({ type: 'error', text: 'Yeni şifreler eşleşmiyor.' });
+      setMessage({ type: 'error', text: 'Die neuen Passwörter stimmen nicht überein.' });
       return;
     }
     try {
@@ -866,7 +866,7 @@ function SecurityTab() {
       const credential = EmailAuthProvider.credential(user.email, currentPassword);
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
-      toast.success('Şifre başarıyla değiştirildi! Güvenlik nedeniyle çıkış yapılıyor.');
+      toast.success('Passwort erfolgreich geändert! Aus Sicherheitsgründen wird abgemeldet.');
       handleLogout();
       // setCurrentPassword('');
       // setNewPassword('');
@@ -874,11 +874,11 @@ function SecurityTab() {
       // setShowPasswordAccordion(false);
     } catch (error) {
       if (error.code === 'auth/wrong-password') {
-        setMessage({ type: 'error', text: 'Mevcut şifre yanlış.' });
+        setMessage({ type: 'error', text: 'Das aktuelle Passwort ist falsch.' });
       } else if (error.code === 'auth/weak-password') {
-        setMessage({ type: 'error', text: 'Yeni şifre çok zayıf.' });
+        setMessage({ type: 'error', text: 'Das neue Passwort ist zu schwach.' });
       } else {
-        setMessage({ type: 'error', text: 'Şifre değiştirilirken hata oluştu.' });
+        setMessage({ type: 'error', text: 'Beim Ändern des Passworts ist ein Fehler aufgetreten.' });
       }
     } finally {
       setLoading(false);
@@ -888,9 +888,9 @@ function SecurityTab() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Güvenlik Ayarları</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Sicherheitseinstellungen</h2>
         <p className="text-gray-600">
-          Hesap güvenliğinizi artırın ve koruyun.
+          Erhöhen und schützen Sie die Sicherheit Ihres Kontos.
         </p>
       </div>
 
@@ -920,51 +920,51 @@ function SecurityTab() {
 
       <div className="space-y-6">
         <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Hesap Güvenliği</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Kontosicherheit</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
               <div>
-                <h4 className="font-medium text-gray-900">Şifre Değiştir</h4>
-                <p className="text-sm text-gray-600">Hesap şifrenizi güvenli bir şekilde güncelleyin</p>
+                <h4 className="font-medium text-gray-900">Passwort ändern</h4>
+                <p className="text-sm text-gray-600">Aktualisieren Sie Ihr Passwort sicher und sicher</p>
               </div>
               <button
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium cursor-pointer"
                 onClick={() => setShowPasswordAccordion(!showPasswordAccordion)}
               >
-                {showPasswordAccordion ? 'Kapat' : 'Değiştir'}
+                {showPasswordAccordion ? 'Schließen' : 'Ändern'}
               </button>
             </div>
             {/* Accordion İçeriği */}
             {showPasswordAccordion && (
               <div className="mt-4 p-4 bg-white rounded-lg border border-blue-200 animate-fade-in">
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Mevcut Şifre</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Aktuelles Passwort</label>
                   <input
                     type="password"
                     value={currentPassword}
                     onChange={e => setCurrentPassword(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Mevcut şifrenizi girin"
+                    placeholder="Geben Sie Ihr aktuelles Passwort ein"
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Neues Passwort</label>
                   <input
                     type="password"
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Yeni şifrenizi girin"
+                    placeholder="Geben Sie Ihr neues Passwort ein"
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Yeni Şifre (Tekrar)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Neues Passwort (Wiederholen)</label>
                   <input
                     type="password"
                     value={newPasswordRepeat}
                     onChange={e => setNewPasswordRepeat(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Yeni şifrenizi tekrar girin"
+                    placeholder="Geben Sie Ihr neues Passwort erneut ein"
                   />
                 </div>
                 <div className="flex space-x-3">
@@ -973,7 +973,7 @@ function SecurityTab() {
                     disabled={loading}
                     className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {loading ? 'Kaydediliyor...' : 'Şifreyi Güncelle'}
+                    {loading ? 'Speichern...' : 'Passwort aktualisieren'}
                   </button>
                   <button
                     onClick={() => {
@@ -986,7 +986,7 @@ function SecurityTab() {
                     disabled={loading}
                     className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    İptal
+                    Abbrechen
                   </button>
                 </div>
               </div>
@@ -1008,30 +1008,30 @@ function SecurityTab() {
         </div> */}
 
         <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Oturum Geçmişi</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Sitzungsverlauf</h3>
           <div className="flex items-center justify-between p-4 bg-white rounded-lg border">
             <div>
-              <h4 className="font-medium text-gray-900">Oturum Geçmişi</h4>
-              <p className="text-sm text-gray-600">Aktif oturumlarınızı görüntüleyin</p>
+              <h4 className="font-medium text-gray-900">Sitzungsverlauf</h4>
+              <p className="text-sm text-gray-600">Sehen Sie sich Ihre aktiven Sitzungen an</p>
             </div>
             <button
               onClick={() => setShowSessionHistory(!showSessionHistory)}
               className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium cursor-pointer"
             >
-              {showSessionHistory ? 'Kapat' : 'Görüntüle'}
+              {showSessionHistory ? 'Schließen' : 'Anzeigen'}
             </button>
           </div>
           {showSessionHistory && (
             <div className="mt-4 p-4 bg-white rounded-lg border border-gray-200 animate-fade-in">
-              <h4 className="text-md font-semibold text-gray-800 mb-3">Oturum Bilgileri</h4>
+              <h4 className="text-md font-semibold text-gray-800 mb-3">Sitzungsinformationen</h4>
               <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex justify-between">
-                  <span className="font-medium">Son Giriş:</span>
-                  <span>{new Date(user.metadata.lastSignInTime).toLocaleString('tr-TR')}</span>
+                  <span className="font-medium">Letzte Anmeldung:</span>
+                  <span>{new Date(user.metadata.lastSignInTime).toLocaleString('de-DE')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-medium">Hesap Oluşturma:</span>
-                  <span>{new Date(user.metadata.creationTime).toLocaleString('tr-TR')}</span>
+                  <span className="font-medium">Konto erstellt:</span>
+                  <span>{new Date(user.metadata.creationTime).toLocaleString('de-DE')}</span>
                 </div>
               </div>
             </div>
@@ -1043,7 +1043,7 @@ function SecurityTab() {
             onClick={() => setShowDeleteModal(true)}
             className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm font-medium cursor-pointer"
           >
-            Hesabı Sil
+            Konto löschen
           </button>
         </div>
       </div>
@@ -1051,18 +1051,18 @@ function SecurityTab() {
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in">
           <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Hesabı Sil</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Konto löschen</h2>
             <p className="text-gray-600 mb-6">
-              Bu işlem geri alınamaz. Hesabınızı kalıcı olarak silmek istediğinizden emin misiniz? Devam etmek için lütfen şifrenizi girin.
+              Dieser Vorgang kann nicht rückgängig gemacht werden. Sind Sie sicher, dass Sie Ihr Konto dauerhaft löschen möchten? Geben Sie bitte Ihr Passwort ein, um fortzufahren.
             </p>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Şifreniz</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Ihr Passwort</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                placeholder="Şifrenizi girin"
+                placeholder="Geben Sie Ihr Passwort ein"
               />
             </div>
             <div className="flex justify-end space-x-4">
@@ -1075,14 +1075,14 @@ function SecurityTab() {
                 disabled={loading}
                 className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium cursor-pointer"
               >
-                İptal
+                Abbrechen
               </button>
               <button
                 onClick={handleDeleteUser}
                 disabled={loading}
                 className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium disabled:opacity-50 cursor-pointer"
               >
-                {loading ? 'Siliniyor...' : 'Hesabı Kalıcı Olarak Sil'}
+                {loading ? 'Löschen...' : 'Konto dauerhaft löschen'}
               </button>
             </div>
           </div>

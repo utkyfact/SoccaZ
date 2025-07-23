@@ -11,30 +11,30 @@ function NotificationsModal({ isOpen, onClose }) {
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold focus:outline-none cursor-pointer"
-          aria-label="Kapat"
+          aria-label="Schließen"
         >
           ×
         </button>
-        <h2 className="text-2xl font-bold mb-4 text-green-800">Bildirimler</h2>
+        <h2 className="text-2xl font-bold mb-4 text-green-800">Benachrichtigungen</h2>
         <div className="flex justify-between items-center mb-4">
-          <span className="text-gray-600 text-sm">Toplam: {notifications.length}</span>
+          <span className="text-gray-600 text-sm">Gesamt: {notifications.length}</span>
           <button
             onClick={markAllAsRead}
             className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm disabled:opacity-50 cursor-pointer"
             disabled={notifications.every(n => n.read) || loading}
           >
-            Tümünü Okundu Yap
+            Alle als gelesen markieren
           </button>
         </div>
         {loading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Bildirimler yükleniyor...</p>
+            <p className="mt-4 text-gray-600">Benachrichtigungen werden geladen...</p>
           </div>
         ) : notifications.length === 0 ? (
           <div className="text-center text-gray-500 py-12">
             <div className="text-4xl mb-2">🔔</div>
-            <p>Henüz bildiriminiz yok</p>
+            <p>Sie haben noch keine Benachrichtigungen</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -64,7 +64,7 @@ function NotificationsModal({ isOpen, onClose }) {
                   <div className="text-xs text-gray-400 mt-1">{notification.createdAt?.toDate().toLocaleString('tr-TR')}</div>
                   {notification.link && (
                     <div className="mt-1">
-                      <span className="inline-block text-green-700 text-xs bg-green-100 px-2 py-0.5 rounded">Bağlantılı</span>
+                      <span className="inline-block text-green-700 text-xs bg-green-100 px-2 py-0.5 rounded">Verlinkt</span>
                     </div>
                   )}
                 </div>
@@ -73,7 +73,7 @@ function NotificationsModal({ isOpen, onClose }) {
                     onClick={e => { e.stopPropagation(); markAsRead(notification.id); }}
                     className="text-xs text-green-700 border border-green-300 rounded px-2 py-1 hover:bg-green-100"
                   >
-                    Okundu Yap
+                    Als gelesen markieren
                   </button>
                 )}
               </div>

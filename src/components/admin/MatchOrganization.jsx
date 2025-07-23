@@ -257,7 +257,41 @@ function MatchOrganization() {
     if (!selectedMatch) return {};
 
     const matchUrl = `${window.location.origin}/match/${selectedMatch.id}`;
-    const text = `⚽ ${selectedMatch.title} - ${selectedMatch.date?.toDate?.()?.toLocaleDateString('tr-TR')} ${selectedMatch.date?.toDate?.()?.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })} - ${selectedMatch.fieldName}`;
+
+    // Tarih ve saat formatını düzelt
+    const formatDateTime = (dateString, timeString) => {
+      try {
+        // Eğer date string formatında geliyorsa
+        if (typeof dateString === 'string' && timeString) {
+          // Tarih formatı: "2025-07-23" -> "23.07.2025"
+          const [year, month, day] = dateString.split('-');
+          const formattedDate = `${day}.${month}.${year}`;
+
+          // Saat formatı zaten doğru: "18:30"
+          return { date: formattedDate, time: timeString };
+        }
+
+        // Eğer Firestore Timestamp formatında geliyorsa (fallback)
+        if (dateString?.toDate) {
+          const date = dateString.toDate();
+          return {
+            date: date.toLocaleDateString('de-DE'),
+            time: date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+          };
+        }
+
+        // Eğer hiçbiri değilse
+        return { date: 'Tarih belirsiz', time: 'Saat belirsiz' };
+
+      } catch (error) {
+        console.error('Tarih formatında hata:', error);
+        return { date: 'Tarih belirsiz', time: 'Saat belirsiz' };
+      }
+    };
+
+    // Formatlanmış tarih ve saati al
+    const { date: formattedDate, time: formattedTime } = formatDateTime(selectedMatch.date, selectedMatch.time);
+    const text = `⚽ ${selectedMatch.title} - ${formattedDate} ${formattedTime} - ${selectedMatch.fieldName}`;
 
     return {
       instagram: `https://www.instagram.com/`,
@@ -272,7 +306,6 @@ function MatchOrganization() {
     const links = getSocialShareLinks();
     if (links[platform]) {
       if (platform === 'instagram') {
-        // Instagram için özel mesaj
         toast.info('QR kodu indirip Instagram story\'nize ekleyebilirsiniz!');
         downloadQRCode();
       } else {
