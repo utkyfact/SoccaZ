@@ -1,9 +1,7 @@
 // SoccaZ Service Worker
-const CACHE_NAME = 'soccaz-v1.0.0';
+const CACHE_NAME = 'soccaz-v1.0.1';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
   '/SoccaZ.png',
   '/manifest.json'
 ];
@@ -38,16 +36,45 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - network first for development, cache for production
 self.addEventListener('fetch', (event) => {
+  // Skip non-http(s) requests
+  if (!event.request.url.startsWith('http')) {
+    return;
+  }
+
+  // For HTML documents, try network first
+  if (event.request.destination === 'document') {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => {
+          return caches.match('/') || caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // For other resources, use cache first for static assets
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
+        if (response) {
+          return response;
+        }
+        return fetch(event.request)
+          .then((response) => {
+            // Cache successful responses for static assets
+            if (response.status === 200 && event.request.method === 'GET') {
+              const responseClone = response.clone();
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(event.request, responseClone);
+              });
+            }
+            return response;
+          });
       })
       .catch(() => {
-        // If offline and no cache, return offline page
+        // Fallback for offline
         if (event.request.destination === 'document') {
           return caches.match('/');
         }
