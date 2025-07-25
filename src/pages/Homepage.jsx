@@ -218,30 +218,18 @@ function Homepage() {
 
         {/* Info Section */}
         {contentData?.info && (
-          <div className='bg-white p-8 rounded-lg shadow-sm max-w-4xl my-8'>
+          <div className='bg-white p-10 rounded-lg shadow-sm max-w-4xl my-8'>
             <h2 className='text-2xl font-bold text-gray-800 mb-4 text-center'>
               {contentData.info.title}
             </h2>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              {/* İlk yarı */}
               <div className='space-y-3'>
-                {contentData.info.items.slice(0, Math.ceil(contentData.info.items.length / 2)).map((item, index) => (
+                {contentData.info.items.map((item, index) => (
                   <div key={index} className='flex items-center'>
                     <span className='text-green-600 mr-3'>✓</span>
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
-              {/* İkinci yarı */}
-              <div className='space-y-3'>
-                {contentData.info.items.slice(Math.ceil(contentData.info.items.length / 2)).map((item, index) => (
-                  <div key={index} className='flex items-center'>
-                    <span className='text-green-600 mr-3'>✓</span>
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         )}
       </div>

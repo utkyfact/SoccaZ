@@ -68,7 +68,7 @@ function ContentArea({ activeTab }) {
       setRecentUsers(recentUsrs);
       
     } catch (error) {
-      console.error('Dashboard verileri getirilirken hata:', error);
+      console.error('Fehler beim Abrufen der Dashboard-Daten:', error);
     } finally {
       setLoading(false);
     }
@@ -84,34 +84,34 @@ function ContentArea({ activeTab }) {
   const getContentTitle = () => {
     switch (activeTab) {
       case 'dashboard':
-        return 'Hoş geldiniz!';
+        return 'Willkommen!';
       case 'users':
-        return 'Kullanıcı Listesi';
+        return 'Benutzerliste';
       case 'content':
-        return 'İçerik Yönetimi';
+        return 'Inhaltsverwaltung';
       case 'contact':
-        return 'İletişim Sayfası';
+        return 'Kontaktseite';
       case 'settings':
-        return 'Site Ayarları';
+        return 'Einstellungen';
       default:
-        return 'Hoş geldiniz!';
+        return 'Willkommen!';
     }
   };
 
   const getContentDescription = () => {
     switch (activeTab) {
       case 'dashboard':
-        return 'Bu bölümde genel istatistikleri ve özet bilgileri görebilirsiniz.';
+        return 'Hier können Sie allgemeine Statistiken und Zusammenfassungen sehen.';
       case 'users':
-        return 'Kayıtlı kullanıcıları buradan yönetebilirsiniz.';
+        return 'Hier können Sie registrierte Benutzer verwalten.';
       case 'content':
-        return 'İçerikleri buradan yönetebilirsiniz.';
+        return 'Hier können Sie Inhalte verwalten.';
       case 'contact':
-        return 'İletişim sayfasını buradan yönetebilirsiniz.';
+        return 'Hier können Sie die Kontaktseite verwalten.';
       case 'settings':
-        return 'Site genelinde yapılabilecek tüm ayarları buradan yönetebilirsiniz.';
+        return 'Hier können Sie alle Einstellungen für die Website verwalten.';
       default:
-        return 'Bu bölümde genel istatistikleri ve özet bilgileri görebilirsiniz.';
+        return 'Hier können Sie allgemeine Statistiken und Zusammenfassungen sehen.';
     }
   };
 
@@ -206,7 +206,7 @@ function ContentArea({ activeTab }) {
                     <span className='text-2xl'>⚽</span>
                   </div>
                   <div className='ml-4'>
-                    <p className='text-sm font-medium text-gray-600'>Toplam Maç</p>
+                    <p className='text-sm font-medium text-gray-600'>Gesamtspiele</p>
                     <p className='text-2xl font-bold text-gray-900'>{stats.totalMatches}</p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ function ContentArea({ activeTab }) {
                     <span className='text-2xl'>🟢</span>
                   </div>
                   <div className='ml-4'>
-                    <p className='text-sm font-medium text-gray-600'>Aktif Maç</p>
+                    <p className='text-sm font-medium text-gray-600'>Aktive Spiele</p>
                     <p className='text-2xl font-bold text-gray-900'>{stats.activeMatches}</p>
                   </div>
                 </div>
@@ -230,7 +230,7 @@ function ContentArea({ activeTab }) {
                     <span className='text-2xl'>👥</span>
                   </div>
                   <div className='ml-4'>
-                    <p className='text-sm font-medium text-gray-600'>Kayıtlı Kullanıcı</p>
+                    <p className='text-sm font-medium text-gray-600'>Registrierte Benutzer</p>
                     <p className='text-2xl font-bold text-gray-900'>{stats.totalUsers}</p>
                   </div>
                 </div>
@@ -242,7 +242,7 @@ function ContentArea({ activeTab }) {
                     <span className='text-2xl'>🎯</span>
                   </div>
                   <div className='ml-4'>
-                    <p className='text-sm font-medium text-gray-600'>Toplam Katılımcı</p>
+                    <p className='text-sm font-medium text-gray-600'>Gesamtteilnehmer</p>
                     <p className='text-2xl font-bold text-gray-900'>{stats.totalParticipants}</p>
                   </div>
                 </div>
@@ -252,11 +252,11 @@ function ContentArea({ activeTab }) {
             {/* Son Kullanıcılar */}
             <div className='bg-white rounded-lg shadow-sm border border-gray-200'>
               <div className='px-4 lg:px-6 py-4 border-b border-gray-200'>
-                <h3 className='text-base lg:text-lg font-medium text-gray-900'>Son Kayıt Olan Kullanıcılar</h3>
+                <h3 className='text-base lg:text-lg font-medium text-gray-900'>Zuletzt registrierte Benutzer</h3>
               </div>
               <div className='p-4 lg:p-6'>
                 {recentUsers.length === 0 ? (
-                  <p className='text-gray-500 text-center py-4'>Henüz kullanıcı kaydı bulunmuyor.</p>
+                  <p className='text-gray-500 text-center py-4'>Noch keine Benutzerregistrierungen vorhanden.</p>
                 ) : (
                   <div className='space-y-4'>
                     {recentUsers.map((user) => (
@@ -267,14 +267,14 @@ function ContentArea({ activeTab }) {
                           </div>
                           <div className='min-w-0 flex-1'>
                             <h4 className='font-medium text-gray-900 text-sm lg:text-base truncate'>
-                              {user.displayName || 'İsimsiz Kullanıcı'}
+                              {user.displayName || 'Unbenannter Benutzer'}
                             </h4>
                             <p className='text-xs lg:text-sm text-gray-600 truncate'>{user.email}</p>
                           </div>
                         </div>
                         <div className='text-right flex-shrink-0'>
                           <p className='text-xs lg:text-sm text-gray-500'>
-                            {user.createdAt?.toDate?.()?.toLocaleDateString('tr-TR') || 'Tarih yok'}
+                            {user.createdAt?.toDate?.()?.toLocaleDateString('de-DE') || 'Datum fehlt'}
                           </p>
                         </div>
                       </div>

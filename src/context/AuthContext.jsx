@@ -164,7 +164,11 @@ export function AuthProvider({ children }) {
     }
 
     const resetEmail = ({email}) => {
-        return sendPasswordResetEmail(auth,email)
+        const actionCodeSettings = {
+            url: window.location.origin + '/reset-password',
+            handleCodeInApp: true
+        };
+        return sendPasswordResetEmail(auth, email, actionCodeSettings)
     }
 
     const makeAdmin = async (userId) => {

@@ -8,8 +8,8 @@ function SiteSettings() {
   const [saving, setSaving] = useState(false);
   const [settings, setSettings] = useState({
     // Site Genel Ayarları
-    siteName: 'HalıSaha Rezervasyon',
-    siteDescription: 'Halı saha rezervasyon ve maç organizasyon platformu',
+    siteName: 'Turf Field',
+    siteDescription: 'Turf Field ist eine Plattform für die Organisation von Fußballspielen',
     siteLogo: '',
     siteFavicon: '',
     
@@ -48,13 +48,13 @@ function SiteSettings() {
     pwaBackgroundColor: '#ffffff',
     
     // SEO Ayarları
-    metaTitle: 'HalıSaha Rezervasyon - Maç Organizasyonu',
-    metaDescription: 'Halı saha rezervasyonu yapın, maç organize edin ve arkadaşlarınızla futbol oynayın.',
-    metaKeywords: 'halı saha, rezervasyon, futbol, maç organizasyonu',
+    metaTitle: 'Turf Field - Fußballspiel-Organisation',
+    metaDescription: 'Reservieren Sie einen Fußballplatz, organisieren Sie ein Spiel und spielen Sie mit Ihren Freunden.',
+    metaKeywords: 'Fußballplatz, Reservierung, Fußball, Spielorganisation',
     
     // Bakım Modu
     maintenanceMode: false,
-    maintenanceMessage: 'Site bakımda, lütfen daha sonra tekrar deneyin.',
+    maintenanceMessage: 'Website im Wartung, bitte später erneut versuchen.',
     
     // Analitik
     googleAnalyticsId: '',
@@ -62,11 +62,11 @@ function SiteSettings() {
     
     // Ödeme Ayarları (gelecekte)
     enablePayments: false,
-    currency: 'TRY',
+    currency: 'EUR',
     
     // Dil ve Bölge
-    defaultLanguage: 'tr',
-    timezone: 'Europe/Istanbul',
+    defaultLanguage: 'de',
+    timezone: 'Europe/Berlin',
     dateFormat: 'DD.MM.YYYY',
     timeFormat: '24'
   });
@@ -87,8 +87,8 @@ function SiteSettings() {
         await setDoc(doc(db, 'settings', 'site'), settings);
       }
     } catch (error) {
-      console.error('Ayarlar yüklenirken hata:', error);
-      toast.error('Ayarlar yüklenirken hata oluştu.');
+      console.error('Fehler beim Laden der Einstellungen:', error);
+      toast.error('Fehler beim Laden der Einstellungen.');
     } finally {
       setLoading(false);
     }
@@ -99,10 +99,10 @@ function SiteSettings() {
     try {
       setSaving(true);
       await updateDoc(doc(db, 'settings', 'site'), settings);
-      toast.success('Ayarlar başarıyla kaydedildi!');
+      toast.success('Einstellungen erfolgreich gespeichert!');
     } catch (error) {
-      console.error('Ayarlar kaydedilirken hata:', error);
-      toast.error('Ayarlar kaydedilirken hata oluştu.');
+      console.error('Fehler beim Speichern der Einstellungen:', error);
+      toast.error('Fehler beim Speichern der Einstellungen.');
     } finally {
       setSaving(false);
     }
@@ -132,14 +132,14 @@ function SiteSettings() {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Site Ayarları</h1>
-        <p className="text-gray-600">Site genelinde yapılabilecek tüm ayarları buradan yönetebilirsiniz.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Einstellungen</h1>
+        <p className="text-gray-600">Alle Einstellungen für die Website können hier verwaltet werden.</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
         <div className="p-6 border-b border-gray-200">
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-900">Genel Ayarlar</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Allgemeine Einstellungen</h2>
             <button
               onClick={saveSettings}
               disabled={saving}
@@ -148,12 +148,12 @@ function SiteSettings() {
               {saving ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Kaydediliyor...</span>
+                  <span>Speichern...</span>
                 </>
               ) : (
                 <>
                   <span>💾</span>
-                  <span>Kaydet</span>
+                  <span>Speichern</span>
                 </>
               )}
             </button>
@@ -165,10 +165,10 @@ function SiteSettings() {
             
             {/* Site Genel Ayarları */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Site Bilgileri</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Website-Informationen</h3>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Site Adı</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Website-Name</label>
                 <input
                   type="text"
                   value={settings.siteName}
@@ -178,7 +178,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Site Açıklaması</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Website-Beschreibung</label>
                 <textarea
                   value={settings.siteDescription}
                   onChange={(e) => handleInputChange('siteDescription', e.target.value)}
@@ -188,7 +188,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Logo URL</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Logo-URL</label>
                 <input
                   type="url"
                   value={settings.siteLogo}
@@ -201,10 +201,10 @@ function SiteSettings() {
 
             {/* İletişim Bilgileri */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">İletişim Bilgileri</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Kontaktinformationen</h3>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
                 <input
                   type="email"
                   value={settings.contactEmail}
@@ -214,7 +214,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Telefonnummer</label>
                 <input
                   type="tel"
                   value={settings.contactPhone}
@@ -224,18 +224,18 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp-Nummer</label>
                 <input
                   type="tel"
                   value={settings.contactWhatsapp}
                   onChange={(e) => handleInputChange('contactWhatsapp', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="905xxxxxxxxx"
+                  placeholder="017xxxxxxxx"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Adres</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
                 <textarea
                   value={settings.contactAddress}
                   onChange={(e) => handleInputChange('contactAddress', e.target.value)}
@@ -247,10 +247,10 @@ function SiteSettings() {
 
             {/* Sosyal Medya */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Sosyal Medya</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Sozial Media</h3>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Facebook URL</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Facebook-URL</label>
                 <input
                   type="url"
                   value={settings.facebookUrl}
@@ -260,7 +260,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Instagram URL</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Instagram-URL</label>
                 <input
                   type="url"
                   value={settings.instagramUrl}
@@ -270,7 +270,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Twitter URL</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Twitter-URL</label>
                 <input
                   type="url"
                   value={settings.twitterUrl}
@@ -280,7 +280,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">YouTube URL</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">YouTube-URL</label>
                 <input
                   type="url"
                   value={settings.youtubeUrl}
@@ -292,10 +292,10 @@ function SiteSettings() {
 
             {/* Maç Ayarları */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Maç Ayarları</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Spiel-Einstellungen</h3>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Varsayılan Maksimum Katılımcı</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Standard-Maximale Teilnehmer</label>
                 <input
                   type="number"
                   min="1"
@@ -307,7 +307,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Maç Süresi (dakika)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Spieldauer (Minuten)</label>
                 <input
                   type="number"
                   min="30"
@@ -327,7 +327,7 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="allowPublicMatches" className="text-sm font-medium text-gray-700">
-                  Herkese Açık Maçlara İzin Ver
+                  Öffentliche Spiele erlauben
                 </label>
               </div>
 
@@ -340,14 +340,14 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="requireApprovalForMatches" className="text-sm font-medium text-gray-700">
-                  Maçlar İçin Onay Gerekli
+                  Zustimmung für Spiele erforderlich
                 </label>
               </div>
             </div>
 
             {/* Bildirim Ayarları */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Bildirim Ayarları</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Benachrichtigungseinstellungen</h3>
               
               <div className="flex items-center space-x-3">
                 <input
@@ -358,7 +358,7 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="enableEmailNotifications" className="text-sm font-medium text-gray-700">
-                  E-posta Bildirimleri
+                  E-Mail-Benachrichtigungen
                 </label>
               </div>
 
@@ -371,7 +371,7 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="enablePushNotifications" className="text-sm font-medium text-gray-700">
-                  Push Bildirimleri
+                  Push-Benachrichtigungen
                 </label>
               </div>
 
@@ -384,14 +384,14 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="enableSMSNotifications" className="text-sm font-medium text-gray-700">
-                  SMS Bildirimleri
+                  SMS-Benachrichtigungen
                 </label>
               </div>
             </div>
 
             {/* Güvenlik Ayarları */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Güvenlik Ayarları</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Sicherheits-Einstellungen</h3>
               
               <div className="flex items-center space-x-3">
                 <input
@@ -402,7 +402,7 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="enableTwoFactorAuth" className="text-sm font-medium text-gray-700">
-                  İki Faktörlü Doğrulama
+                  Zwei-Faktor-Authentifizierung
                 </label>
               </div>
 
@@ -415,12 +415,12 @@ function SiteSettings() {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="requirePhoneVerification" className="text-sm font-medium text-gray-700">
-                  Telefon Doğrulaması Zorunlu
+                  Telefon-Authentifizierung erforderlich
                 </label>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Maksimum Giriş Denemesi</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Maximale Anmeldeversuche</label>
                 <input
                   type="number"
                   min="1"
@@ -432,7 +432,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Oturum Süresi (saat)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Sitzungsdauer (Stunden)</label>
                 <input
                   type="number"
                   min="1"
@@ -446,10 +446,10 @@ function SiteSettings() {
 
             {/* SEO Ayarları */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">SEO Ayarları</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">SEO-Einstellungen</h3>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Meta Başlık</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Meta-Titel</label>
                 <input
                   type="text"
                   value={settings.metaTitle}
@@ -459,7 +459,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Meta Açıklama</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Meta-Beschreibung</label>
                 <textarea
                   value={settings.metaDescription}
                   onChange={(e) => handleInputChange('metaDescription', e.target.value)}
@@ -469,7 +469,7 @@ function SiteSettings() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Google Analytics ID</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Google Analytics-ID</label>
                 <input
                   type="text"
                   value={settings.googleAnalyticsId}
@@ -482,7 +482,7 @@ function SiteSettings() {
 
             {/* Bakım Modu */}
             <div className="space-y-4">
-              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Bakım Modu</h3>
+              <h3 className="text-md font-semibold text-gray-800 border-b border-gray-200 pb-2">Wartungsmodus</h3>
               
               <div className="flex items-center space-x-3">
                 <input
@@ -493,12 +493,12 @@ function SiteSettings() {
                   className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
                 />
                 <label htmlFor="maintenanceMode" className="text-sm font-medium text-gray-700">
-                  Bakım Modunu Aktifleştir
+                  Wartungsmodus aktivieren
                 </label>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Bakım Mesajı</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Wartungsmeldung</label>
                 <textarea
                   value={settings.maintenanceMessage}
                   onChange={(e) => handleInputChange('maintenanceMessage', e.target.value)}

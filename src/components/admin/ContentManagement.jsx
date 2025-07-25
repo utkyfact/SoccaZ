@@ -37,8 +37,8 @@ function ContentManagement() {
         });
       }
     } catch (error) {
-      console.error('İçerik yüklenirken hata:', error);
-      toast.error('İçerik yüklenirken bir hata oluştu.');
+      console.error('Fehler beim Laden des Inhalts:', error);
+      toast.error('Fehler beim Laden des Inhalts.');
       setContentData({
         hero: { title: '', subtitle: '' },
         features: [],
@@ -57,10 +57,10 @@ function ContentManagement() {
         ...contentData,
         updatedAt: new Date()
       });
-      toast.success('İçerik başarıyla kaydedildi!');
+      toast.success('Inhalt erfolgreich gespeichert!');
     } catch (error) {
-      console.error('İçerik kaydedilirken hata:', error);
-      toast.error('İçerik kaydedilirken bir hata oluştu.');
+      console.error('Fehler beim Speichern des Inhalts:', error);
+      toast.error('Fehler beim Speichern des Inhalts.');
     } finally {
       setSaving(false);
     }
@@ -166,7 +166,7 @@ function ContentManagement() {
     return (
       <div className="text-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">İçerik yükleniyor...</p>
+        <p className="mt-4 text-gray-600">Inhalt wird geladen...</p>
       </div>
     );
   }
@@ -177,15 +177,15 @@ function ContentManagement() {
       <div className="border-b border-gray-200 p-4 lg:p-6">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
           <div>
-            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">İçerik Yönetimi</h2>
-            <p className="text-gray-600 mt-1 text-sm lg:text-base">Anasayfa içeriklerini düzenleyin</p>
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">Inhaltsverwaltung</h2>
+            <p className="text-gray-600 mt-1 text-sm lg:text-base">Bearbeiten Sie die Inhalte der Startseite</p>
           </div>
           <button
             onClick={saveContent}
             disabled={saving}
             className="bg-green-600 text-white px-4 lg:px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:opacity-50 cursor-pointer text-sm lg:text-base"
           >
-            {saving ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
+            {saving ? 'Speichern...' : 'Änderungen speichern'}
           </button>
         </div>
       </div>
@@ -194,9 +194,9 @@ function ContentManagement() {
       <div className="border-b border-gray-200">
         <div className="flex sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-8 px-4 lg:px-6">
           {[
-            { id: 'hero', label: 'Ana Başlık', icon: '🏠' },
-            { id: 'features', label: 'Özellikler', icon: '⭐' },
-            { id: 'info', label: 'Bilgi Bölümü', icon: 'ℹ️' }
+            { id: 'hero', label: 'Hauptüberschrift', icon: '🏠' },
+            { id: 'features', label: 'Funktionen', icon: '⭐' },
+            { id: 'info', label: 'Info-Bereich', icon: 'ℹ️' }
           ].map(section => (
             <button
               key={section.id}
@@ -219,11 +219,11 @@ function ContentManagement() {
       <div className="p-4 lg:p-6">
         {activeSection === 'hero' && (
           <div className="space-y-6">
-            <h3 className="text-lg font-medium text-gray-800">Ana Başlık Bölümü</h3>
+            <h3 className="text-lg font-medium text-gray-800">Hauptüberschrift-Bereich</h3>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Ana Başlık
+                Hauptüberschrift
               </label>
               <input
                 type="text"
@@ -235,7 +235,7 @@ function ContentManagement() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Alt Başlık
+                Unterüberschrift
               </label>
               <textarea
                 rows={3}
@@ -250,12 +250,12 @@ function ContentManagement() {
         {activeSection === 'features' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-medium text-gray-800">Özellikler Bölümü</h3>
+              <h3 className="text-lg font-medium text-gray-800">Funktionen-Bereich</h3>
               <button
                 onClick={addFeature}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm cursor-pointer"
               >
-                + Özellik Ekle
+                + Funktion hinzufügen
               </button>
             </div>
 
@@ -268,14 +268,14 @@ function ContentManagement() {
                       onClick={() => removeFeature(feature.id)}
                       className="text-red-500 hover:text-red-700 text-sm cursor-pointer"
                     >
-                      Sil
+                      Löschen
                     </button>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        İkon (Emoji)
+                        Symbol
                       </label>
                       <input
                         type="text"
@@ -288,7 +288,7 @@ function ContentManagement() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Başlık
+                        Titel
                       </label>
                       <input
                         type="text"
@@ -300,7 +300,7 @@ function ContentManagement() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Açıklama
+                        Beschreibung
                       </label>
                       <input
                         type="text"
@@ -318,11 +318,11 @@ function ContentManagement() {
 
         {activeSection === 'info' && (
           <div className="space-y-6">
-            <h3 className="text-lg font-medium text-gray-800">Bilgi Bölümü</h3>
+            <h3 className="text-lg font-medium text-gray-800">Info-Bereich</h3>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Bölüm Başlığı
+                Bereichsüberschrift
               </label>
               <input
                 type="text"
@@ -335,13 +335,13 @@ function ContentManagement() {
             <div>
               <div className="flex justify-between items-center mb-4">
                 <label className="block text-sm font-medium text-gray-700">
-                  Özellikler Listesi
+                  Funktionen-Liste
                 </label>
                 <button
                   onClick={addInfoItem}
                   className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm cursor-pointer"
                 >
-                  + Özellik Ekle
+                  + Funktion hinzufügen
                 </button>
               </div>
 
@@ -360,7 +360,7 @@ function ContentManagement() {
                       onClick={() => removeInfoItem(index)}
                       className="text-red-500 hover:text-red-700 px-3 py-2 cursor-pointer"
                     >
-                      Sil
+                      Löschen
                     </button>
                   </div>
                 ))}

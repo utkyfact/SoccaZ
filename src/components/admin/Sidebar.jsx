@@ -16,7 +16,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
       const querySnapshot = await getDocs(q);
       setUnreadCount(querySnapshot.size);
     } catch (error) {
-      console.error('Okunmamış mesaj sayısı alınırken hata:', error);
+      console.error('Fehler beim Abrufen der Anzahl ungelesener Nachrichten:', error);
       setUnreadCount(0);
     }
   };
@@ -56,15 +56,15 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
     }
   };
   return (
-    <div className='w-64 bg-gradient-to-b from-green-700 to-green-800 shadow-lg min-h-screen flex flex-col'>
+    <div className='w-64 bg-gradient-to-b from-green-700 to-green-800 shadow-lg h-screen sticky top-0 flex flex-col'>
       {/* Sidebar Header */}
       <div className='p-6 border-b border-green-600'>
         <div className='flex items-center space-x-3'>
           <span className='text-xl'>⚽</span>
           <div>
             <h2 className='text-white font-bold text-lg'>Admin Panel</h2>
-            <p className='text-green-200 text-sm'>HalıSaha Yönetimi</p>
-            <Link to="/" className='text-green-200 text-sm'>Siteyi Gör</Link>
+            <p className='text-green-200 text-sm'>Soccaz Management</p>
+            <Link to="/" className='text-green-200 text-sm'>Siehe Website</Link>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>📊</span>
-              <span className='font-medium'>Dashboard</span>
+              <span className='font-medium'>Übersicht</span>
             </button>
           </li>
 
@@ -98,7 +98,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>👥</span>
-              <span className='font-medium'>Kullanıcılar</span>
+              <span className='font-medium'>Benutzer</span>
             </button>
           </li>
 
@@ -112,7 +112,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>⚽</span>
-              <span className='font-medium'>Maç Organizasyonu</span>
+              <span className='font-medium'>Spiele</span>
             </button>
           </li>
 
@@ -126,7 +126,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>📝</span>
-              <span className='font-medium'>Anasayfa İçerikleri</span>
+              <span className='font-medium'>Inhalte</span>
             </button>
           </li>
 
@@ -141,7 +141,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
             >
               <span className='text-xl'>📨</span>
               <div className='flex items-center space-x-2 flex-1'>
-                <span className='font-medium'>Mesajlar</span>
+                <span className='font-medium'>Nachrichten</span>
                 {unreadCount > 0 && (
                   <span className='bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[20px] h-5 flex items-center justify-center animate-pulse'>
                     {unreadCount > 99 ? '99+' : unreadCount}
@@ -161,7 +161,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>📞</span>
-              <span className='font-medium'>İletişim İçeriği</span>
+              <span className='font-medium'>Kontakt</span>
             </button>
           </li>
 
@@ -175,7 +175,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>🛡️</span>
-              <span className='font-medium'>DDoS Koruması</span>
+              <span className='font-medium'>DDoS Schutz</span>
             </button>
           </li>
 
@@ -189,7 +189,7 @@ function Sidebar({ user, activeTab, setActiveTab, onMobileItemClick }) {
                 }`}
             >
               <span className='text-xl'>⚙️</span>
-              <span className='font-medium'>Site Ayarları</span>
+              <span className='font-medium'>Einstellungen</span>
             </button>
           </li>
         </ul>

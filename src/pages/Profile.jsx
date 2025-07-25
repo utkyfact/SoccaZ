@@ -520,34 +520,34 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     placeholder="Geben Sie Ihren Namen und Nachnamen ein"
                   />
                 </div>
-                <div className="flex space-x-3">
+                <div className="flex gap-2 flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0">
                   <button
                     onClick={handleUpdateName}
                     disabled={loading}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {loading ? 'Aktualisieren...' : 'Aktualisieren'}
                   </button>
                   <button
                     onClick={() => cancelEdit('name')}
                     disabled={loading}
-                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     Abbrechen
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Aktueller Name und Nachname</p>
-                  <p className="text-lg font-medium text-gray-900">
-                    {user?.displayName || 'Belirtilmemiş'}
+                  <p className="text-lg font-medium text-gray-900 break-words">
+                    {user?.displayName || user?.displayName.split(' ')[0]}
                   </p>
                 </div>
                 <button
                   onClick={() => setIsEditingName(true)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
+                  className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
                 >
                   Bearbeiten
                 </button>
@@ -602,11 +602,11 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                   </div>
                 )}
 
-                <div className="flex space-x-3">
+                <div className="flex gap-2 flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0">
                   <button
                     onClick={handleUpdateEmail}
                     disabled={loading || !password.trim()}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {loading ? 'Aktualisieren...' : 'Aktualisieren'}
                   </button>
@@ -620,10 +620,10 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0">
+                <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Aktuelle E-Mail-Adresse</p>
-                  <p className="text-lg font-medium text-gray-900">
+                  <p className="text-lg font-medium text-gray-900 break-all">
                     {user?.email}
                   </p>
                 </div>
@@ -634,7 +634,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     setPassword('');
                     setPasswordError('');
                   }}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
+                  className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
                 >
                   Bearbeiten
                 </button>
@@ -659,7 +659,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                     placeholder="Geben Sie Ihre Telefonnummer ein"
                   />
                 </div>
-                <div className="flex space-x-3">
+                <div className="flex gap-2 flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0">
                   <button
                     onClick={handleUpdatePhone}
                     disabled={loading}
@@ -677,10 +677,10 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Aktuelle Telefonnummer</p>
-                  <p className="text-lg font-medium text-gray-900">
+                  <p className="text-lg font-medium text-gray-900 break-words">
                     {userProfile?.phone || 'Belirtilmemiş'}
                   </p>
                   {!userProfile?.phone && (
@@ -691,7 +691,7 @@ function PersonalTab({ user, userProfile, isAdmin }) {
                 </div>
                 <button
                   onClick={() => setIsEditingPhone(true)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
+                  className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium cursor-pointer"
                 >
                   {userProfile?.phone ? 'Bearbeiten' : 'Hinzufügen'}
                 </button>
@@ -750,46 +750,46 @@ function PersonalTab({ user, userProfile, isAdmin }) {
 // Bildirimler Tab'ı
 function NotificationsTab() {
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Benachrichtigungseinstellungen</h2>
-        <p className="text-gray-600">
+    <div className="p-4 sm:p-8">
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Benachrichtigungseinstellungen</h2>
+        <p className="text-sm sm:text-base text-gray-600">
           Verwalten und aktualisieren Sie Ihre Benachrichtigungseinstellungen.
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Benachrichtigungstypen</h3>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium text-gray-900">Spielbestätigungen</h4>
-                <p className="text-sm text-gray-600">Sie erhalten eine Benachrichtigung, wenn Ihr Spiel bestätigt wird</p>
+      <div className="space-y-4 sm:space-y-6">
+        <div className="bg-gray-50 p-4 sm:p-6 rounded-xl">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Benachrichtigungstypen</h3>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+              <div className="flex-1">
+                <h4 className="font-medium text-gray-900 text-sm sm:text-base">Spielbestätigungen</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mt-1">Sie erhalten eine Benachrichtigung, wenn Ihr Spiel bestätigt wird</p>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
+              <label className="relative inline-flex items-center cursor-pointer self-start sm:self-center">
                 <input type="checkbox" defaultChecked className="sr-only peer" />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
               </label>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium text-gray-900">Erinnerungen</h4>
-                <p className="text-sm text-gray-600">Sie erhalten eine Erinnerung, bevor Ihr Spiel beginnt</p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+              <div className="flex-1">
+                <h4 className="font-medium text-gray-900 text-sm sm:text-base">Erinnerungen</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mt-1">Sie erhalten eine Erinnerung, bevor Ihr Spiel beginnt</p>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
+              <label className="relative inline-flex items-center cursor-pointer self-start sm:self-center">
                 <input type="checkbox" defaultChecked className="sr-only peer" />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
               </label>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium text-gray-900">Spezielle Angebote</h4>
-                <p className="text-sm text-gray-600">Sie erhalten Informationen zu speziellen Angeboten und Rabatten</p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+              <div className="flex-1">
+                <h4 className="font-medium text-gray-900 text-sm sm:text-base">Spezielle Angebote</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mt-1">Sie erhalten Informationen zu speziellen Angeboten und Rabatten</p>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
+              <label className="relative inline-flex items-center cursor-pointer self-start sm:self-center">
                 <input type="checkbox" className="sr-only peer" />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
               </label>

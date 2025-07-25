@@ -5,10 +5,34 @@ import { useNotifications } from '../context/NotificationContext';
 import { toast } from 'react-toastify';
 import UserAvatar from './UserAvatar';
 import NotificationsModal from './NotificationsModal';
+import { FaCheck } from "react-icons/fa6";
 
 function Navbar() {
     const { user, userProfile, logout, isAdmin, loading: authLoading } = useAuth();
     const { notifications, unreadCount, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
+
+    // Tüm bildirimleri okundu yapma fonksiyonu
+    const handleMarkAllAsRead = async () => {
+        try {
+            await markAllAsRead();
+            toast.success('Alle Benachrichtigungen als gelesen markiert!');
+        } catch (error) {
+            console.error('Error marking all notifications as read:', error);
+            toast.error('Fehler beim Markieren der Benachrichtigungen!');
+        }
+    };
+
+    // Bildirimi silme fonksiyonu
+    const handleDeleteNotification = async (notificationId) => {
+        try {
+            await deleteNotification(notificationId);
+            toast.success('Benachrichtigung erfolgreich gelöscht!');
+        } catch (error) {
+            console.error('Fehler beim Löschen der Benachrichtigung:', error);
+            toast.error('Fehler beim Löschen der Benachrichtigung!');
+        }
+    };
+
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
@@ -133,19 +157,19 @@ function Navbar() {
                                     )}
                                 </button>
 
-                                                                    {/* Bildirim Dropdown */}
+                                    {/* Bildirim Dropdown */}
                                     {isNotificationDropdownOpen && (
-                                        <div className='absolute right-2 lg:right-0 mt-2 w-72 lg:w-80 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 overflow-y-auto z-50'>
+                                        <div className='absolute right-0 lg:right-0 mt-2 w-72 lg:w-80 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 z-50'>
                                         {/* Header */}
                                         <div className='px-4 py-2 border-b border-gray-200'>
                                             <div className='flex items-center justify-between mb-1'>
                                                 <h3 className='font-semibold text-gray-900'>Benachrichtigungen</h3>
                                                 {unreadCount > 0 && (
                                                     <button
-                                                        onClick={markAllAsRead}
+                                                        onClick={handleMarkAllAsRead}
                                                         className='text-sm text-green-600 hover:text-green-700 font-medium'
                                                     >
-                                                        Alle als gelesen markieren
+                                                        <FaCheck className='w-4 h-4'/>
                                                     </button>
                                                 )}
                                             </div>
@@ -164,7 +188,7 @@ function Navbar() {
                                                 notifications.slice(0, 5).map((notification) => (
                                                     <div
                                                         key={notification.id}
-                                                        className={`px-4 py-3 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-l-4 ${notification.read ? 'border-transparent' : 'border-green-500'
+                                                        className={`px-4 py-3 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-l-4 ${notification.read ? 'border-transparent' : 'border-blue-500'
                                                             }`}
                                                         onClick={() => {
                                                             if (!notification.read) {
@@ -180,11 +204,7 @@ function Navbar() {
                                                         <div className='flex items-start justify-between'>
                                                             <div className='flex-1'>
                                                                 <div className='flex items-center space-x-2 mb-1'>
-                                                                    <span className={`inline-block w-2 h-2 rounded-full ${notification.type === 'success' ? 'bg-green-500' :
-                                                                            notification.type === 'warning' ? 'bg-yellow-500' :
-                                                                                notification.type === 'error' ? 'bg-red-500' :
-                                                                                    'bg-blue-500'
-                                                                        }`}></span>
+                                                                    <span className={`inline-block w-2 h-2 rounded-full ${notification.read ? 'bg-green-500' : 'bg-blue-500'}`}></span>
                                                                     <h4 className={`text-sm font-medium ${notification.read ? 'text-gray-600' : 'text-gray-900'
                                                                         }`}>
                                                                         {notification.title}

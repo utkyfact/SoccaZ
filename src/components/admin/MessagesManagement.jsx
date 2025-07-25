@@ -28,8 +28,8 @@ function MessagesManagement() {
       }));
       setMessages(messagesData);
     } catch (error) {
-      console.error('Mesajlar getirilirken hata:', error);
-      toast.error('Mesajlar yüklenirken hata oluştu.');
+      console.error('Fehler beim Abrufen der Nachrichten:', error);
+      toast.error('Fehler beim Laden der Nachrichten.');
     } finally {
       setLoading(false);
     }
@@ -48,12 +48,12 @@ function MessagesManagement() {
       if (selectedMessage && selectedMessage.id === messageId) {
         setSelectedMessage({ ...selectedMessage, status });
       }
-      toast.success('Mesaj durumu güncellendi.');
+      toast.success('Nachrichtenstatus aktualisiert.');
       
       // Sidebar'daki badge'i güncelle için custom event gönder
       window.dispatchEvent(new CustomEvent('messageStatusChanged'));
     } catch (error) {
-      toast.error('Durum güncellenirken hata oluştu.');
+      toast.error('Fehler beim Aktualisieren des Status.');
     }
   };
 
@@ -83,13 +83,13 @@ function MessagesManagement() {
       if (selectedMessage && selectedMessage.id === deleteModal.messageId) {
         setSelectedMessage(null);
       }
-      toast.success('Mesaj silindi.');
+      toast.success('Nachricht gelöscht.');
       closeDeleteModal();
       
       // Sidebar'daki badge'i güncelle için custom event gönder
       window.dispatchEvent(new CustomEvent('messageStatusChanged'));
     } catch (error) {
-      toast.error('Mesaj silinirken hata oluştu.');
+      toast.error('Fehler beim Löschen der Nachricht.');
     }
   };
 
@@ -120,7 +120,7 @@ function MessagesManagement() {
     return (
       <div className="text-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Mesajlar yükleniyor...</p>
+        <p className="mt-4 text-gray-600">Nachrichten werden geladen...</p>
       </div>
     );
   }
@@ -131,14 +131,14 @@ function MessagesManagement() {
       <div className="border-b border-gray-200 p-4 lg:p-6">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
           <div>
-            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">Mesajlar</h2>
-            <p className="text-gray-600 mt-1 text-sm lg:text-base">İletişim formundan gelen mesajları yönetin</p>
+            <h2 className="text-lg lg:text-xl font-semibold text-gray-800">Nachrichten</h2>
+            <p className="text-gray-600 mt-1 text-sm lg:text-base">Verwalten Sie Nachrichten aus dem Kontaktformular</p>
           </div>
           <button
             onClick={fetchMessages}
             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 cursor-pointer text-sm lg:text-base"
           >
-            🔄 Yenile
+            🔄 Aktualisieren
           </button>
         </div>
       </div>
@@ -148,25 +148,25 @@ function MessagesManagement() {
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Durum Filtresi */}
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Durum</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="all">Tümü ({messages.length})</option>
-              <option value="unread">Okunmamış ({messages.filter(m => m.status === 'unread').length})</option>
-              <option value="read">Okunmuş ({messages.filter(m => m.status === 'read').length})</option>
-              <option value="replied">Yanıtlanmış ({messages.filter(m => m.status === 'replied').length})</option>
+              <option value="all">Alle ({messages.length})</option>
+              <option value="unread">Ungelesen ({messages.filter(m => m.status === 'unread').length})</option>
+              <option value="read">Gelesen ({messages.filter(m => m.status === 'read').length})</option>
+              <option value="replied">Beantwortet ({messages.filter(m => m.status === 'replied').length})</option>
             </select>
           </div>
 
           {/* Arama */}
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Arama</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Suche</label>
             <input
               type="text"
-              placeholder="Ad, email, konu veya mesaj içeriğinde ara..."
+              placeholder="Suche nach Name, E-Mail, Betreff oder Nachricht..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -175,14 +175,14 @@ function MessagesManagement() {
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex flex-col lg:flex-row">
         {/* Mesaj Listesi */}
-        <div className="w-1/3 border-r border-gray-200">
+        <div className="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-gray-200">
           <div className="p-4">
             <h3 className="text-sm font-medium text-gray-600 mb-3">
-              {filteredMessages.length} mesaj bulundu
+              {filteredMessages.length} Nachrichten gefunden
             </h3>
-            <div className="space-y-2 max-h-96 overflow-y-auto">
+            <div className="space-y-2 max-h-64 lg:max-h-96 overflow-y-auto">
               {filteredMessages.map((message) => (
                 <div
                   key={message.id}
@@ -202,14 +202,14 @@ function MessagesManagement() {
                       message.status === 'read' ? 'bg-yellow-100 text-yellow-800' :
                       'bg-green-100 text-green-800'
                     }`}>
-                      {message.status === 'unread' ? 'Okunmamış' :
-                       message.status === 'read' ? 'Okunmuş' : 'Yanıtlandı'}
+                      {message.status === 'unread' ? 'Ungelesen' :
+                       message.status === 'read' ? 'Gelesen' : 'Beantwortet'}
                     </span>
                   </div>
                   <p className="text-xs text-gray-600 mb-1">{message.email}</p>
                   <p className="text-sm text-gray-700 truncate">{message.subject}</p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {message.createdAt?.toDate?.()?.toLocaleDateString('tr-TR') || 'Tarih yok'}
+                    {message.createdAt?.toDate?.()?.toLocaleDateString('de-DE') || 'Datum unbekannt'}
                   </p>
                 </div>
               ))}
@@ -218,38 +218,38 @@ function MessagesManagement() {
         </div>
 
         {/* Mesaj Detayı */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-4 lg:p-6">
           {selectedMessage ? (
             <div>
               {/* Mesaj Header */}
               <div className="border-b border-gray-200 pb-4 mb-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{selectedMessage.subject}</h3>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                  <div className="flex-1">
+                    <h3 className="text-base lg:text-lg font-semibold text-gray-900">{selectedMessage.subject}</h3>
                     <p className="text-sm text-gray-600 mt-1">
-                      <strong>Gönderen:</strong> {selectedMessage.name} ({selectedMessage.email})
+                      <strong>Von:</strong> {selectedMessage.name} ({selectedMessage.email})
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
-                      {selectedMessage.createdAt?.toDate?.()?.toLocaleString('tr-TR') || 'Tarih yok'}
+                      {selectedMessage.createdAt?.toDate?.()?.toLocaleString('de-DE') || 'Datum unbekannt'}
                     </p>
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     {/* Durum Değiştirme */}
                     <select
                       value={selectedMessage.status}
                       onChange={(e) => updateMessageStatus(selectedMessage.id, e.target.value)}
-                      className="text-xs px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500"
+                      className="text-xs px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500 cursor-pointer"
                     >
-                      <option value="unread">Okunmamış</option>
-                      <option value="read">Okunmuş</option>
-                      <option value="replied">Yanıtlandı</option>
+                      <option value="unread">Ungelesen</option>
+                      <option value="read">Gelesen</option>
+                      <option value="replied">Beantwortet</option>
                     </select>
                     {/* Sil */}
                     <button
                       onClick={() => openDeleteModal(selectedMessage.id, selectedMessage.name)}
                       className="text-red-600 hover:text-red-800 text-xs px-2 py-1 cursor-pointer"
                     >
-                      🗑️ Sil
+                      🗑️ Löschen
                     </button>
                   </div>
                 </div>
@@ -263,26 +263,26 @@ function MessagesManagement() {
               {/* Hızlı Yanıt */}
               <div className="bg-green-50 rounded-lg p-4">
                 <h4 className="text-sm font-medium text-gray-800 mb-2">Hızlı Yanıt</h4>
-                <div className="flex space-x-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <a
                     href={`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}&body=Sayın ${selectedMessage.name},%0D%0A%0D%0A`}
-                    className="bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors cursor-pointer"
+                    className="bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors cursor-pointer text-center"
                   >
-                    📧 Email Gönder
+                    📧 E-Mail senden
                   </a>
                   <button
                     onClick={() => updateMessageStatus(selectedMessage.id, 'replied')}
                     className="bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors cursor-pointer"
                   >
-                    ✅ Yanıtlandı Olarak İşaretle
+                    ✅ Als beantwortet markieren
                   </button>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="text-center text-gray-500 py-12">
-              <div className="text-4xl mb-4">📨</div>
-              <p>Detaylarını görmek için bir mesaj seçin</p>
+            <div className="text-center text-gray-500 py-8 lg:py-12">
+              <div className="text-3xl lg:text-4xl mb-4">📨</div>
+              <p className="text-sm lg:text-base">Wählen Sie eine Nachricht, um die Details anzuzeigen</p>
             </div>
           )}
         </div>
@@ -293,10 +293,10 @@ function MessagesManagement() {
         isOpen={deleteModal.isOpen}
         onClose={closeDeleteModal}
         onConfirm={deleteMessage}
-        title="Mesajı Sil"
-        message={`"${deleteModal.messageName}" adlı kişinin mesajını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`}
-        confirmText="Sil"
-        cancelText="İptal"
+        title="Nachricht löschen"
+        message={`Sind Sie sicher, dass Sie die Nachricht von "${deleteModal.messageName}" löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.`}
+        confirmText="Löschen"
+        cancelText="Abbrechen"
         type="danger"
       />
     </div>

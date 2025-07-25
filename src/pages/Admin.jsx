@@ -44,7 +44,7 @@ function Admin() {
   }
 
   return (
-    <div className='flex h-screen bg-gray-100'>
+    <div className='flex min-h-screen bg-gray-100'>
       {/* Mobile Overlay */}
       {sidebarOpen && (
         <div 
@@ -55,7 +55,7 @@ function Admin() {
 
       {/* Sidebar */}
       <div className={`
-        fixed lg:static inset-y-0 left-0 z-50 lg:z-auto
+        fixed lg:sticky lg:top-0 inset-y-0 left-0 z-50 lg:z-auto
         transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
         lg:translate-x-0 transition-transform duration-300 ease-in-out
       `}>

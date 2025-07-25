@@ -8,13 +8,13 @@ function Header({ activeTab, onMenuClick, sidebarOpen }) {
 
 
       case 'users':
-        return 'Kullanıcı Yönetimi';
+        return 'Benutzerverwaltung';
       case 'content':
-        return 'İçerik Yönetimi';
+        return 'Inhaltsverwaltung';
       case 'contact':
-        return 'İletişim Sayfası';
+        return 'Kontaktseite';
       case 'settings':
-        return 'Sistem Ayarları';
+        return 'Systemeinstellungen';
       default:
         return 'Dashboard';
     }
@@ -23,19 +23,19 @@ function Header({ activeTab, onMenuClick, sidebarOpen }) {
   const getDescription = () => {
     switch (activeTab) {
       case 'dashboard':
-        return 'Genel istatistikler ve özet bilgiler';
+        return 'Allgemeine Statistiken und Zusammenfassungen';
 
 
       case 'users':
-        return 'Kullanıcı hesaplarını yönet';
+        return 'Benutzerverwaltung';
       case 'content':
-        return 'İçerikleri buradan yönetebilirsiniz.';
+        return 'Inhaltsverwaltung';
       case 'contact':
-        return 'İletişim sayfasını buradan yönetebilirsiniz.';
+        return 'Kontaktseite';
       case 'settings':
-        return 'Sistem ayarlarını yapılandır';
+        return 'Systemeinstellungen';
       default:
-        return 'Genel istatistikler ve özet bilgiler';
+        return 'Allgemeine Statistiken und Zusammenfassungen';
     }
   };
 
@@ -88,7 +88,7 @@ function Header({ activeTab, onMenuClick, sidebarOpen }) {
 
         <div className='flex items-center space-x-2 lg:space-x-4'>
           <button className='bg-green-600 text-white px-3 lg:px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm lg:text-base'>
-            <span className='hidden sm:inline'>🔔 Benachrichtigungen</span>
+            <span className='hidden sm:inline'>🔔 Benachrichtigungen anzeigen</span>
             <span className='sm:hidden'>🔔</span>
           </button>
         </div>

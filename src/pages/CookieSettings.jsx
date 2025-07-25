@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 function CookieSettings() {
     const { cookieConsent, updateCookieConsent, resetCookieConsent, exportCookiePreferences } = useCookie();
     const [preferences, setPreferences] = useState({
-        necessary: true,
         analytics: cookieConsent === 'all',
         functional: cookieConsent === 'all',
         marketing: cookieConsent === 'all'
@@ -15,9 +14,6 @@ function CookieSettings() {
         if (preferences.analytics && preferences.functional && preferences.marketing) {
             updateCookieConsent('all');
             toast.success('Alle Cookie-Einstellungen wurden gespeichert!');
-        } else if (preferences.necessary) {
-            updateCookieConsent('necessary');
-            toast.success('Nur notwendige Cookies gespeichert!');
         } else {
             updateCookieConsent('declined');
             toast.success('Cookie-Einstellungen aktualisiert!');
@@ -27,7 +23,6 @@ function CookieSettings() {
     const handleReset = () => {
         resetCookieConsent();
         setPreferences({
-            necessary: true,
             analytics: false,
             functional: false,
             marketing: false
@@ -74,12 +69,10 @@ function CookieSettings() {
                             <span className="text-gray-700">Cookie-Zustimmung:</span>
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                                 cookieConsent === 'all' ? 'bg-green-100 text-green-800' :
-                                cookieConsent === 'necessary' ? 'bg-yellow-100 text-yellow-800' :
                                 cookieConsent === 'declined' ? 'bg-red-100 text-red-800' :
                                 'bg-gray-100 text-gray-800'
                             }`}>
                                 {cookieConsent === 'all' ? 'Alle akzeptiert' :
-                                 cookieConsent === 'necessary' ? 'Nur notwendig' :
                                  cookieConsent === 'declined' ? 'Abgelehnt' : 'Nicht festgelegt'}
                             </span>
                         </div>

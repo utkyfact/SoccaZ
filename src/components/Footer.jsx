@@ -36,7 +36,7 @@ function Footer() {
                             Erleben Sie unvergessliche Fußballmomente auf unseren professionellen Kunstrasenplätzen.
                             Unsere modernen Anlagen und fairen Preise warten auf Sie!
                         </p>
-                        <div className="flex space-x-4">
+                        <div className="flex justify-center md:justify-start space-x-4">
                             <a href="#" className="text-green-200 hover:text-white transition-colors duration-200 group">
                                 <span className="sr-only">Facebook</span>
                                 <svg className="h-6 w-6 hover:scale-110 transition-all duration-200 hover:text-blue-700" fill="currentColor" viewBox="0 0 24 24">
@@ -140,7 +140,7 @@ function Footer() {
                                 Nutzungsbedingungen
                             </Link>
                             <Link to="/cookies" className="text-green-200 hover:text-white text-sm transition-colors duration-200">
-                                Cookie Einstellungen
+                                Cookie
                             </Link>
                         </div>
                     </div>
@@ -151,7 +151,7 @@ function Footer() {
             {showScrollTop && (
                 <button
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50 opacity-100 cursor-pointer"
+                    className="fixed bottom-20 right-6 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50 opacity-100 cursor-pointer"
                     aria-label="Nach oben scrollen"
                     style={{
                         animation: 'fadeIn 0.3s ease-in-out'

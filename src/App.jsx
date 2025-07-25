@@ -15,6 +15,8 @@ import CookieBanner from './components/CookieBanner'
 import { ToastContainer } from 'react-toastify';
 import PrivateRoute from './components/PrivateRoute';
 import Admin from './pages/Admin'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/contact" element={<Contact />} />
 
