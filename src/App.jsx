@@ -33,6 +33,9 @@ function App() {
         draggable
         pauseOnHover
         theme="dark"
+        toastClassName="!text-sm sm:!text-base !max-w-xs sm:!max-w-md !p-2 sm:!p-3 !mt-4 sm:!mt-6"
+        bodyClassName="!text-xs sm:!text-sm"
+        style={{ top: '1rem', right: '1rem' }}
       />
       <Routes>
         <Route path="/" element={<Homepage />} />
