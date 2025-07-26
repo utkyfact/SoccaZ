@@ -264,12 +264,42 @@ function MessagesManagement() {
               <div className="bg-green-50 rounded-lg p-4">
                 <h4 className="text-sm font-medium text-gray-800 mb-2">Hızlı Yanıt</h4>
                 <div className="flex flex-col sm:flex-row gap-2">
-                  <a
-                    href={`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}&body=Sayın ${selectedMessage.name},%0D%0A%0D%0A`}
+                  <button
+                    onClick={() => {
+                      const mailtoLink = `mailto:${selectedMessage.email}?subject=Re: ${encodeURIComponent(selectedMessage.subject)}&body=${encodeURIComponent(`Sehr geehrte/r ${selectedMessage.name},\n\n`)}`;
+                      
+                      // iPhone Safari için alternatif yöntem
+                      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                        // iOS için daha detaylı e-posta bilgilerini kopyala
+                        const emailInfo = `E-Mail-Adresse: ${selectedMessage.email}\nBetreff: Re: ${selectedMessage.subject}\n\nNachricht von: ${selectedMessage.name}\nUrsprüngliche Nachricht:\n${selectedMessage.message}`;
+                        
+                        navigator.clipboard.writeText(emailInfo).then(() => {
+                          toast.success('E-Mail-Informationen in die Zwischenablage kopiert! Öffnen Sie Ihre E-Mail-App.');
+                        }).catch(() => {
+                          // Fallback: window.open ile dene
+                          try {
+                            window.open(mailtoLink, '_blank');
+                          } catch (error) {
+                            // Son çare: kullanıcıya manuel kopyalama seçeneği
+                            const manualInfo = `E-Mail: ${selectedMessage.email}\nBetreff: Re: ${selectedMessage.subject}`;
+                            navigator.clipboard.writeText(manualInfo);
+                            toast.info('E-Mail-Adresse in die Zwischenablage kopiert!');
+                          }
+                        });
+                      } else {
+                        // Diğer cihazlar için normal mailto
+                        try {
+                          window.location.href = mailtoLink;
+                        } catch (error) {
+                          // Fallback
+                          window.open(mailtoLink, '_blank');
+                        }
+                      }
+                    }}
                     className="bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors cursor-pointer text-center"
                   >
                     📧 E-Mail senden
-                  </a>
+                  </button>
                   <button
                     onClick={() => updateMessageStatus(selectedMessage.id, 'replied')}
                     className="bg-blue-600 text-white px-3 py-2 rounded text-sm hover:bg-blue-700 transition-colors cursor-pointer"
@@ -277,6 +307,14 @@ function MessagesManagement() {
                     ✅ Als beantwortet markieren
                   </button>
                 </div>
+                
+                {/* iPhone için ek bilgi */}
+                {/iPad|iPhone|iPod/.test(navigator.userAgent) && (
+                  <div className="mt-2 p-2 bg-blue-50 rounded text-xs text-blue-700">
+                    💡 <strong>iPhone-Nutzer:</strong> E-Mail-Informationen werden automatisch in die Zwischenablage kopiert. 
+                    Öffnen Sie Ihre E-Mail-App (Mail, Gmail, Outlook) und fügen Sie die Informationen ein.
+                  </div>
+                )}
               </div>
             </div>
           ) : (
