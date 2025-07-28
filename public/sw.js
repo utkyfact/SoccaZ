@@ -142,9 +142,18 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
-  if (event.action === 'explore') {
+  // Bildirim verilerini al
+  const notificationData = event.notification.data;
+  const url = notificationData?.url || '/';
+
+  if (event.action === 'explore' || event.action === 'view') {
     event.waitUntil(
-      clients.openWindow('/')
+      clients.openWindow(url)
+    );
+  } else {
+    // Varsayılan olarak ana sayfaya git
+    event.waitUntil(
+      clients.openWindow(url)
     );
   }
 }); 

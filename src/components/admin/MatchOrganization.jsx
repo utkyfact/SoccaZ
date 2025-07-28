@@ -21,7 +21,7 @@ function MatchOrganization() {
   const [loadingParticipants, setLoadingParticipants] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [matchToDelete, setMatchToDelete] = useState(null);
-  const { createNotification } = useNotifications();
+  const { createNotification, sendNotificationToAllUsersGlobal } = useNotifications();
   const qrCanvasRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -111,23 +111,12 @@ function MatchOrganization() {
   // Tüm kullanıcılara bildirim gönder
   const sendNotificationToAllUsers = async (matchData) => {
     try {
-      // Tüm kullanıcıları getir
-      const usersSnapshot = await getDocs(collection(db, 'users'));
-      const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const message = `${matchData.title} - ${new Date(matchData.date).toLocaleDateString('de-DE')} ${matchData.time}. Um teilzunehmen, scannen Sie den QR-Code!`;
+      const link = `/match/${matchData.id}`;
 
-      // Her kullanıcıya bildirim gönder
-      const notificationPromises = users.map(user =>
-        createNotification(
-          user.id,
-          '🏆 Neue Match-Organisation!',
-          `${matchData.title} - ${new Date(matchData.date).toLocaleDateString('de-DE')} ${matchData.time}. Um teilzunehmen, scannen Sie den QR-Code!`,
-          'info',
-          `/match/${matchData.id}`
-        )
-      );
-
-      await Promise.all(notificationPromises);
-      toast.success(`${users.length} Benutzer benachrichtigt!`);
+      // Yeni bildirim sistemi kullan (hem uygulama içi hem telefon bildirimi)
+      await sendNotificationToAllUsersGlobal('🏆 Neue Match-Organisation!', message, 'info', link);
+      toast.success('Benachrichtigungen an alle Benutzer gesendet!');
     } catch (error) {
       console.error('Fehler beim Senden der Benachrichtigungen:', error);
       toast.error('Fehler beim Senden der Benachrichtigungen.');

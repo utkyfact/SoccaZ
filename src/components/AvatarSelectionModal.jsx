@@ -83,7 +83,6 @@ function AvatarSelectionModal({ isOpen, onClose, onSelect, currentAvatarId = 'de
                   
                   <div className="text-center">
                     <h3 className="font-semibold text-gray-900 text-sm">{avatar.name}</h3>
-                    <p className="text-xs text-gray-500 mt-1">{avatar.description}</p>
                   </div>
                 </div>
               </div>

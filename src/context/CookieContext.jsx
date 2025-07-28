@@ -13,15 +13,21 @@ export const useCookie = () => {
 export const CookieProvider = ({ children }) => {
     const [cookieConsent, setCookieConsent] = useState(null);
     const [cookieDate, setCookieDate] = useState(null);
+    const [notificationConsent, setNotificationConsent] = useState(null);
 
     // Local storage'dan çerez tercihlerini yükle
     useEffect(() => {
         const consent = localStorage.getItem('cookieConsent');
         const date = localStorage.getItem('cookieConsentDate');
+        const notificationConsent = localStorage.getItem('notificationConsent');
         
         if (consent) {
             setCookieConsent(consent);
             setCookieDate(date);
+        }
+        
+        if (notificationConsent) {
+            setNotificationConsent(notificationConsent);
         }
     }, []);
 
@@ -34,12 +40,20 @@ export const CookieProvider = ({ children }) => {
         localStorage.setItem('cookieConsentDate', timestamp);
     };
 
+    // Bildirim iznini güncelle
+    const updateNotificationConsent = (consent) => {
+        setNotificationConsent(consent);
+        localStorage.setItem('notificationConsent', consent);
+    };
+
     // Çerez tercihlerini sıfırla
     const resetCookieConsent = () => {
         setCookieConsent(null);
         setCookieDate(null);
+        setNotificationConsent(null);
         localStorage.removeItem('cookieConsent');
         localStorage.removeItem('cookieConsentDate');
+        localStorage.removeItem('notificationConsent');
     };
 
     // Çerez tercihlerini kontrol et
@@ -55,6 +69,8 @@ export const CookieProvider = ({ children }) => {
                 return cookieConsent === 'all';
             case 'functional':
                 return cookieConsent === 'all';
+            case 'notifications':
+                return notificationConsent === 'granted';
             default:
                 return false;
         }
@@ -77,7 +93,9 @@ export const CookieProvider = ({ children }) => {
     const value = {
         cookieConsent,
         cookieDate,
+        notificationConsent,
         updateCookieConsent,
+        updateNotificationConsent,
         resetCookieConsent,
         hasConsent,
         exportCookiePreferences

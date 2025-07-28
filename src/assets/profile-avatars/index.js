@@ -5,44 +5,50 @@ import neymarImg from './neymar.png';
 import mbappeImg from './mbappe.png';
 import haalandImg from './haaland.png';
 import benzemaImg from './benzema.png';
+import icardiImg from './icardi.png';
+import saneImg from './sane.png';
 
 // Profil resmi seçenekleri
 export const profileAvatars = [
   {
     id: 'ronaldo',
     name: 'Cristiano Ronaldo',
-    image: ronaldoImg,
-    description: 'CR7 - Portekizli yıldız'
+    image: ronaldoImg
   },
   {
     id: 'messi',
     name: 'Lionel Messi',
-    image: messiImg,
-    description: 'La Pulga - Arjantinli efsane'
+    image: messiImg
   },
   {
     id: 'neymar',
     name: 'Neymar Jr.',
-    image: neymarImg,
-    description: 'Ney - Brezilyalı samba ustası'
+    image: neymarImg
   },
   {
     id: 'mbappe',
     name: 'Kylian Mbappé',
-    image: mbappeImg,
-    description: 'Kylian - Fransız hız ustası'
+    image: mbappeImg
   },
   {
     id: 'haaland',
     name: 'Erling Haaland',
-    image: haalandImg,
-    description: 'Haaland - Norveçli yıldız'
+    image: haalandImg
   },
   {
     id: 'benzema',
     name: 'Karim Benzema',
-    image: benzemaImg,
-    description: 'Benzema - Fransız efsane'
+    image: benzemaImg
+  },
+  {
+    id: 'icardi',
+    name: 'Mauro Icardi',
+    image: icardiImg
+  },
+  {
+    id: 'Sane',
+    name: 'Leroy Sané',
+    image: saneImg
   }
 ];
 
@@ -50,8 +56,7 @@ export const profileAvatars = [
 export const defaultAvatar = {
   id: 'default',
   name: 'Varsayılan',
-  image: null,
-  description: 'Harf avatarı'
+  image: null
 };
 
 // Profil resmi seçme fonksiyonu

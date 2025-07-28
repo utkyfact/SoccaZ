@@ -130,6 +130,61 @@ export const NotificationProvider = ({ children }) => {
         }
     };
 
+    // Telefon bildirimi gönder
+    const sendPushNotification = async (title, message, link = null) => {
+        try {
+            // Service Worker üzerinden bildirim gönder
+            if ('serviceWorker' in navigator && 'PushManager' in window) {
+                const registration = await navigator.serviceWorker.ready;
+                
+                // Bildirim gönder
+                await registration.showNotification(title, {
+                    body: message,
+                    icon: '/SoccaZ.png', // Uygulama ikonu
+                    badge: '/SoccaZ.png',
+                    tag: 'match-notification',
+                    data: {
+                        url: link || window.location.origin
+                    },
+                    actions: link ? [
+                        {
+                            action: 'view',
+                            title: 'Anzeigen'
+                        }
+                    ] : [],
+                    requireInteraction: true,
+                    silent: false
+                });
+            }
+        } catch (error) {
+            console.error('Fehler beim Senden der Push-Benachrichtigung:', error);
+        }
+    };
+
+    // Tüm kullanıcılara bildirim gönder (admin için)
+    const sendNotificationToAllUsersGlobal = async (title, message, type = 'info', link = null) => {
+        try {
+            // Tüm kullanıcıları getir
+            const usersSnapshot = await getDocs(collection(db, 'users'));
+            const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Her kullanıcı için bildirim oluştur
+            const notificationPromises = users.map(user => 
+                createNotification(user.id, title, message, type, link)
+            );
+
+            await Promise.all(notificationPromises);
+
+            // Bildirim izni olan kullanıcılara push bildirimi gönder
+            if (Notification.permission === 'granted') {
+                await sendPushNotification(title, message, link);
+            }
+
+        } catch (error) {
+            console.error('Fehler beim Senden der Benachrichtigungen an alle Benutzer:', error);
+        }
+    };
+
     const value = {
         notifications,
         unreadCount,
@@ -137,7 +192,9 @@ export const NotificationProvider = ({ children }) => {
         markAsRead,
         markAllAsRead,
         deleteNotification,
-        createNotification
+        createNotification,
+        sendPushNotification,
+        sendNotificationToAllUsersGlobal
     };
 
     return (
