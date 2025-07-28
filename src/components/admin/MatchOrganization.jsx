@@ -147,6 +147,17 @@ function MatchOrganization() {
       // Tarih ve saati birleştir
       const matchDateTime = new Date(`${formData.date}T${formData.time}`);
 
+      // locationCoords değerini kontrol et ve undefined değerleri temizle
+      const cleanLocationCoords = formData.locationCoords && 
+        formData.locationCoords.lat !== undefined && 
+        formData.locationCoords.lng !== undefined 
+        ? {
+            lat: formData.locationCoords.lat,
+            lng: formData.locationCoords.lng,
+            address: formData.locationCoords.address || formData.location
+          }
+        : null;
+
       const matchData = {
         title: formData.title,
         description: formData.description,
@@ -155,7 +166,7 @@ function MatchOrganization() {
         time: formData.time,
         maxParticipants: parseInt(formData.maxParticipants),
         location: formData.location,
-        locationCoords: formData.locationCoords, // Koordinat bilgisi
+        locationCoords: cleanLocationCoords, // Temizlenmiş koordinat bilgisi
         participants: [],
         status: 'active',
         createdAt: new Date()
@@ -370,8 +381,8 @@ function MatchOrganization() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+        const lat = Number(position.coords.latitude);
+        const lng = Number(position.coords.longitude);
 
         setSelectedLocation({
           lat,
@@ -395,13 +406,13 @@ function MatchOrganization() {
 
   // Konumu seç ve form'a ekle
   const selectLocation = () => {
-    if (selectedLocation && selectedLocation.address.trim()) {
+    if (selectedLocation && selectedLocation.lat && selectedLocation.lng && selectedLocation.address.trim()) {
       setFormData({
         ...formData,
         location: selectedLocation.address,
         locationCoords: {
-          lat: selectedLocation.lat,
-          lng: selectedLocation.lng,
+          lat: Number(selectedLocation.lat),
+          lng: Number(selectedLocation.lng),
           address: selectedLocation.address
         }
       });

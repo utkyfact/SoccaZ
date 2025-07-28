@@ -198,11 +198,11 @@ function Matches() {
     const maxParticipants = match.maxParticipants || 0;
 
     if (participantCount >= maxParticipants) {
-      return { text: 'Dolu', color: 'bg-red-100 text-red-800' };
+      return { text: 'Voll', color: 'bg-red-100 text-red-800' };
     } else if (participantCount >= maxParticipants * 0.8) {
-      return { text: 'Az Yer', color: 'bg-yellow-100 text-yellow-800' };
+      return { text: 'Wenig Platz', color: 'bg-yellow-100 text-yellow-800' };
     } else {
-      return { text: 'Müsait', color: 'bg-green-100 text-green-800' };
+      return { text: 'Frei', color: 'bg-green-100 text-green-800' };
     }
   };
 
