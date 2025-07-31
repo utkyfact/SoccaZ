@@ -5,6 +5,7 @@ import { db } from '../../firebase/config';
 import UsersManagement from './UsersManagement';
 import ContentManagement from './ContentManagement';
 import ContactContentManagement from './ContactContentManagement';
+import FooterContentManagement from './FooterContentManagement';
 import MessagesManagement from './MessagesManagement';
 import MatchOrganization from './MatchOrganization';
 import DDoSMonitoring from './DDoSMonitoring';
@@ -137,7 +138,7 @@ function ContentArea({ activeTab }) {
   if (activeTab === 'content') {
     return (
       <main className='flex-1 p-4 lg:p-6'>
-        <ContentManagement />
+        <FooterContentManagement />
       </main>
     );
   }

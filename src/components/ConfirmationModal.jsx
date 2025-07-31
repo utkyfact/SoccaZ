@@ -73,9 +73,35 @@ function ConfirmationModal({ isOpen, onClose, onConfirm, title, message, confirm
 
                 {/* Content */}
                 <div className="p-6">
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                        {message}
-                    </p>
+                    <div className="text-gray-700 text-lg leading-relaxed whitespace-pre-line">
+                        {message.split('\n').map((line, index) => {
+                            if (line.startsWith('**') && line.endsWith('**')) {
+                                // Başlık formatı
+                                const text = line.replace(/\*\*/g, '');
+                                return (
+                                    <div key={index} className="font-semibold text-gray-900 mb-1">
+                                        {text}
+                                    </div>
+                                );
+                            } else if (line.includes('**')) {
+                                // Etiketli satır formatı
+                                const parts = line.split('**');
+                                return (
+                                    <div key={index} className="mb-2">
+                                        <span className="font-semibold text-gray-900">{parts[1]}</span>
+                                        <span className="text-gray-700"> {parts[2]}</span>
+                                    </div>
+                                );
+                            } else {
+                                // Normal metin
+                                return (
+                                    <div key={index} className="mb-2">
+                                        {line}
+                                    </div>
+                                );
+                            }
+                        })}
+                    </div>
                 </div>
 
                 {/* Footer */}

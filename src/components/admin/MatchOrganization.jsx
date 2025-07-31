@@ -31,6 +31,7 @@ function MatchOrganization() {
     fieldName: '',
     date: '',
     time: '',
+    endTime: '',
     maxParticipants: 20,
     location: '',
     locationCoords: null, // {lat, lng, address}
@@ -137,7 +138,7 @@ function MatchOrganization() {
   // Yeni maç oluştur
   const createMatch = async (e) => {
     e.preventDefault();
-    if (!formData.fieldName || !formData.date || !formData.time) {
+    if (!formData.fieldName || !formData.date || !formData.time || !formData.endTime) {
       toast.warning('Bitte füllen Sie alle erforderlichen Felder aus.');
       return;
     }
@@ -164,6 +165,7 @@ function MatchOrganization() {
         fieldName: formData.fieldName,
         date: formData.date, // String olarak kaydet
         time: formData.time,
+        endTime: formData.endTime,
         maxParticipants: parseInt(formData.maxParticipants),
         location: formData.location,
         locationCoords: cleanLocationCoords, // Temizlenmiş koordinat bilgisi
@@ -199,6 +201,7 @@ function MatchOrganization() {
         fieldName: '',
         date: '',
         time: '',
+        endTime: '',
         maxParticipants: 20,
         location: '',
         locationCoords: null,
@@ -561,11 +564,22 @@ function MatchOrganization() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Uhrzeit *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Startzeit *</label>
                 <input
                   type="time"
                   value={formData.time}
                   onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Endzeit *</label>
+                <input
+                  type="time"
+                  value={formData.endTime}
+                  onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
                 />
@@ -665,7 +679,20 @@ function MatchOrganization() {
                     <div className="mt-2 space-y-1 text-sm text-gray-600">
                       <p>🏟️ <strong>Saha:</strong> {match.fieldName}</p>
                       <p>📅 <strong>Datum:</strong> {match.date ? new Date(match.date).toLocaleDateString('de-DE') : 'Datum unbekannt'}</p>
-                      <p>🕐 <strong>Uhrzeit:</strong> {match.time || 'Uhrzeit unbekannt'}</p>
+                      <p>🕐 <strong>Zeit:</strong> {match.time || 'Startzeit unbekannt'} - {match.endTime || 'Endzeit unbekannt'} {(() => {
+                        if (!match.time || !match.endTime) return '';
+                        try {
+                          const [startHour, startMinute] = match.time.split(':').map(Number);
+                          const [endHour, endMinute] = match.endTime.split(':').map(Number);
+                          let startMinutes = startHour * 60 + startMinute;
+                          let endMinutes = endHour * 60 + endMinute;
+                          if (endMinutes < startMinutes) endMinutes += 24 * 60;
+                          const durationHours = (endMinutes - startMinutes) / 60;
+                          return `(${Math.round(durationHours * 10) / 10} std)`;
+                        } catch (error) {
+                          return '';
+                        }
+                      })()}</p>
                       <p>👥 <strong>Teilnehmer:</strong>
                         <button
                           onClick={() => showParticipants(match)}

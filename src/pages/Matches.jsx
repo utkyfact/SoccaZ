@@ -192,6 +192,32 @@ function Matches() {
     }
   };
 
+  // Maç süresini hesapla
+  const getMatchDuration = (startTime, endTime) => {
+    if (!startTime || !endTime) return null;
+    
+    try {
+      const [startHour, startMinute] = startTime.split(':').map(Number);
+      const [endHour, endMinute] = endTime.split(':').map(Number);
+      
+      let startMinutes = startHour * 60 + startMinute;
+      let endMinutes = endHour * 60 + endMinute;
+      
+      // Eğer bitiş saati başlangıçtan küçükse, ertesi güne geçmiş demektir
+      if (endMinutes < startMinutes) {
+        endMinutes += 24 * 60; // 24 saat ekle
+      }
+      
+      const durationMinutes = endMinutes - startMinutes;
+      const durationHours = durationMinutes / 60;
+      
+      return Math.round(durationHours * 10) / 10; // 1 ondalık basamak
+    } catch (error) {
+      console.error('Süre hesaplama hatası:', error);
+      return null;
+    }
+  };
+
   // Maç durumunu belirle
   const getMatchStatus = (match) => {
     const participantCount = match.participants?.length || 0;
@@ -307,18 +333,25 @@ function Matches() {
                     {/* Maç Bilgileri */}
                     <div className="p-6">
                       <div className="space-y-3">
-                        {/* Tarih ve Saat */}
-                        <div className="flex items-center text-gray-600 text-sm">
-                          <FaCalendarAlt className="mr-2" />
-                          <span className="mr-4">
-                            {typeof match.date === 'string'
-                              ? new Date(match.date).toLocaleDateString('de-DE')
-                              : match.date?.toDate?.()?.toLocaleDateString('de-DE') || 'Datum fehlt'
-                            }
-                          </span>
-                          <FaClock className="mr-2" />
-                          <span>{match.time}</span>
-                        </div>
+                                                 {/* Tarih ve Saat */}
+                         <div className="flex items-center text-gray-600 text-sm">
+                           <FaCalendarAlt className="mr-2" />
+                           <span className="mr-4">
+                             {typeof match.date === 'string'
+                               ? new Date(match.date).toLocaleDateString('de-DE')
+                               : match.date?.toDate?.()?.toLocaleDateString('de-DE') || 'Datum fehlt'
+                             }
+                           </span>
+                           <FaClock className="mr-2" />
+                           <span>
+                             {match.time} - {match.endTime || 'Endzeit unbekannt'}
+                             {getMatchDuration(match.time, match.endTime) && (
+                               <span className="ml-2 text-blue-600 font-medium">
+                                 ({getMatchDuration(match.time, match.endTime)} std)
+                               </span>
+                             )}
+                           </span>
+                         </div>
 
                         {/* Saha */}
                         <div className="flex items-center justify-between">
@@ -432,13 +465,13 @@ function Matches() {
           typeof p === 'string' ? p === user.uid : p.userId === user.uid
         ) 
           ? `${selectedMatch?.title} Sind Sie sicher, dass Sie das Spiel verlassen möchten?`
-          : `${selectedMatch?.title} Sind Sie sicher, dass Sie dem Spiel beitreten möchten?\n\nDatum: ${
+          : `Sind Sie sicher, dass Sie dem Spiel beitreten möchten?\n\n**Spiel:** ${selectedMatch?.title}\n**Datum:** ${
               selectedMatch?.date 
                 ? (typeof selectedMatch.date === 'string'
                     ? new Date(selectedMatch.date).toLocaleDateString('de-DE')
                     : selectedMatch.date?.toDate?.()?.toLocaleDateString('de-DE'))
                 : 'Datum fehlt'
-            }\nUhrzeit: ${selectedMatch?.time || 'Nicht angegeben'}\nScha: ${selectedMatch?.fieldName || 'Nicht angegeben'}`
+            }\n**Zeit:** ${selectedMatch?.time || 'Nicht angegeben'} - ${selectedMatch?.endTime || 'Endzeit unbekannt'}${getMatchDuration(selectedMatch?.time, selectedMatch?.endTime) ? ` (${getMatchDuration(selectedMatch?.time, selectedMatch?.endTime)} std)` : ''}\n**Standort:** ${selectedMatch?.fieldName || 'Nicht angegeben'}`
         }
         confirmText={selectedMatch && selectedMatch.participants?.some(p => 
           typeof p === 'string' ? p === user.uid : p.userId === user.uid
