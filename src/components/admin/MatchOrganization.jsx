@@ -21,7 +21,7 @@ function MatchOrganization() {
   const [loadingParticipants, setLoadingParticipants] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [matchToDelete, setMatchToDelete] = useState(null);
-  const { createNotification, sendNotificationToAllUsersGlobal } = useNotifications();
+  const { createNotification } = useNotifications();
   const qrCanvasRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -111,12 +111,23 @@ function MatchOrganization() {
   // Tüm kullanıcılara bildirim gönder
   const sendNotificationToAllUsers = async (matchData) => {
     try {
-      const message = `${matchData.title} - ${new Date(matchData.date).toLocaleDateString('de-DE')} ${matchData.time}. Um teilzunehmen, scannen Sie den QR-Code!`;
-      const link = `/match/${matchData.id}`;
+      // Tüm kullanıcıları getir
+      const usersSnapshot = await getDocs(collection(db, 'users'));
+      const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-      // Yeni bildirim sistemi kullan (hem uygulama içi hem telefon bildirimi)
-      await sendNotificationToAllUsersGlobal('🏆 Neue Match-Organisation!', message, 'info', link);
-      toast.success('Benachrichtigungen an alle Benutzer gesendet!');
+      // Her kullanıcıya bildirim gönder
+      const notificationPromises = users.map(user =>
+        createNotification(
+          user.id,
+          '🏆 Neue Match-Organisation!',
+          `${matchData.title} - ${new Date(matchData.date).toLocaleDateString('de-DE')} ${matchData.time}. Um teilzunehmen, scannen Sie den QR-Code!`,
+          'info',
+          `/match/${matchData.id}`
+        )
+      );
+
+      await Promise.all(notificationPromises);
+      toast.success(`${users.length} Benutzer benachrichtigt!`);
     } catch (error) {
       console.error('Fehler beim Senden der Benachrichtigungen:', error);
       toast.error('Fehler beim Senden der Benachrichtigungen.');
@@ -179,7 +190,7 @@ function MatchOrganization() {
         await sendNotificationToAllUsers({ ...newMatch, id: docRef.id });
       }
 
-      toast.success('Match erfolgreich erstellt!');
+      toast.success('Match erfolgreich erstellt! E-Mail-Benachrichtigungen wurden an alle Benutzer gesendet.');
 
       // Formu temizle
       setFormData({
@@ -648,7 +659,7 @@ function MatchOrganization() {
           <div className="divide-y divide-gray-200">
             {getActiveMatches().map((match) => (
               <div key={match.id} className="p-6 hover:bg-gray-50">
-                <div className="flex justify-between items-start">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                   <div className="flex-1">
                     <h4 className="text-lg font-semibold text-gray-900">{match.title}</h4>
                     <div className="mt-2 space-y-1 text-sm text-gray-600">
@@ -703,7 +714,7 @@ function MatchOrganization() {
           <div className="divide-y divide-gray-200">
             {getExpiredMatches().map((match) => (
               <div key={match.id} className="p-6 hover:bg-gray-50 opacity-75">
-                <div className="flex justify-between items-start">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <h4 className="text-lg font-semibold text-gray-900">{match.title}</h4>

@@ -151,7 +151,7 @@ function Matches() {
           ),
           updatedAt: new Date()
         });
-        toast.success(`Sie haben ${selectedMatch.title} verlassen.`);
+        toast.success(`Sie haben ${selectedMatch.title} verlassen. Eine Bestätigungs-E-Mail wurde gesendet.`);
       } else {
         // Maça katıl
         const participantData = {
@@ -165,7 +165,7 @@ function Matches() {
           participants: [...(selectedMatch.participants || []), participantData],
           updatedAt: new Date()
         });
-        toast.success(`Sie haben ${selectedMatch.title} beigetreten!`);
+        toast.success(`Sie haben ${selectedMatch.title} beigetreten! Eine Bestätigungs-E-Mail wurde gesendet.`);
       }
 
       // Maçları yeniden getir

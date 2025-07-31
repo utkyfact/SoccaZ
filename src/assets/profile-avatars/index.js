@@ -7,6 +7,7 @@ import haalandImg from './haaland.png';
 import benzemaImg from './benzema.png';
 import icardiImg from './icardi.png';
 import saneImg from './sane.png';
+import osimhenImg from './osimhen.png';
 
 // Profil resmi seçenekleri
 export const profileAvatars = [
@@ -49,6 +50,11 @@ export const profileAvatars = [
     id: 'Sane',
     name: 'Leroy Sané',
     image: saneImg
+  },
+  {
+    id:'osimhen',
+    name:'Victor Osimhen',
+    image:osimhenImg
   }
 ];
 

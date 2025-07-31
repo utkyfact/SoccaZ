@@ -124,7 +124,7 @@ function MatchDetail() {
         participants: [...(prev.participants || []), participantData]
       }));
 
-      toast.success('Sie haben das Spiel erfolgreich beigetreten!');
+      toast.success('Sie haben das Spiel erfolgreich beigetreten! Eine Bestätigungs-E-Mail wurde gesendet.');
     } catch (error) {
       console.error('Fehler beim Teilnehmen am Spiel:', error);
       toast.error('Fehler beim Teilnehmen am Spiel.');
@@ -156,7 +156,7 @@ function MatchDetail() {
         )
       }));
 
-      toast.success('Sie haben das Spiel verlassen.');
+      toast.success('Sie haben das Spiel verlassen. Eine Bestätigungs-E-Mail wurde gesendet.');
     } catch (error) {
       console.error('Fehler beim Verlassen des Spiels:', error);
       toast.error('Fehler beim Verlassen des Spiels.');
