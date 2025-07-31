@@ -111,7 +111,7 @@ function Terms() {
               </section>
 
               {/* Ödeme ve Fiyatlandırma */}
-              <section className="mb-8">
+              {/* <section className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Zahlung und Preisgestaltung</h2>
                 <div className="space-y-4 text-gray-700">
                   <p>Informationen zur Zahlung und Preisgestaltung:</p>
@@ -138,11 +138,11 @@ function Terms() {
                     </div>
                   </div>
                 </div>
-              </section>
+              </section> */}
 
               {/* Gizlilik ve Güvenlik */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Datenschutz und Sicherheit</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Datenschutz und Sicherheit</h2>
                 <div className="space-y-4 text-gray-700">
                   <p>
                     Die Schutz Ihrer persönlichen Daten ist uns wichtig. Weitere Informationen finden Sie auf unserer{' '}
@@ -167,7 +167,7 @@ function Terms() {
 
               {/* Sorumluluk Sınırları */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Haftungsbeschränkungen</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Haftungsbeschränkungen</h2>
                 <div className="space-y-4 text-gray-700">
                   <p>SoccaZ übernimmt keine Haftung für folgende Situationen:</p>
                   <ul className="list-disc pl-6 space-y-2">
@@ -183,7 +183,7 @@ function Terms() {
 
               {/* Değişiklikler */}
               <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Änderungen</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Änderungen</h2>
                 <div className="space-y-4 text-gray-700">
                   <p>
                     SoccaZ behält sich vor, diese Nutzungsbedingungen ohne vorherige Ankündigung zu ändern. 
@@ -197,7 +197,7 @@ function Terms() {
               </section>
 
               {/* İletişim */}
-              <section className="mb-8">
+              {/* <section className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Kontakt</h2>
                 <div className="bg-blue-50 p-6 rounded-lg">
                   <p className="text-gray-700 mb-4">
@@ -210,7 +210,7 @@ function Terms() {
                     <p><strong>Arbeitszeiten:</strong> Montag - Sonntag, 08:00 - 22:00</p>
                   </div>
                 </div>
-              </section>
+              </section> */}
 
               {/* Footer */}
               <div className="border-t border-gray-200 pt-8 mt-8">

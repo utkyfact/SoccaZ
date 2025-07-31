@@ -8,6 +8,8 @@ import benzemaImg from './benzema.png';
 import icardiImg from './icardi.png';
 import saneImg from './sane.png';
 import osimhenImg from './osimhen.png';
+import zidaneImg from './zidane.png';
+import ibrahimovicImg from './ibrahimovic.png';
 
 // Profil resmi seçenekleri
 export const profileAvatars = [
@@ -55,13 +57,23 @@ export const profileAvatars = [
     id:'osimhen',
     name:'Victor Osimhen',
     image:osimhenImg
+  },
+  {
+    id:'zidane',
+    name:'Zinedine Zidane',
+    image:zidaneImg
+  },
+  {
+    id:'ibrahimovic',
+    name:'Zlatan Ibrahimović',
+    image:ibrahimovicImg
   }
 ];
 
 // Varsayılan profil resmi
 export const defaultAvatar = {
   id: 'default',
-  name: 'Varsayılan',
+  name: 'Standard',
   image: null
 };
 

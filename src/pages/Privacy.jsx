@@ -66,7 +66,7 @@ function Privacy() {
                   <div className="bg-purple-50 p-4 rounded-lg">
                     <h3 className="font-semibold text-purple-900 mb-2">🌐 Technische Daten:</h3>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>IP-Adresse</li>
+                      {/* <li>IP-Adresse</li> */}
                       <li>Browserinformationen</li>
                       <li>Geräteinformationen</li>
                       <li>Nutzungsstatistiken</li>
@@ -256,7 +256,7 @@ function Privacy() {
                     </div>
                   </div>
 
-                  <div className="bg-purple-50 p-4 rounded-lg">
+                  {/* <div className="bg-purple-50 p-4 rounded-lg">
                     <h3 className="font-semibold text-purple-900 mb-2">📧 Ausübung Ihrer Rechte:</h3>
                     <p className="text-sm mb-2">
                       Um Ihre Rechte auszuüben, kontaktieren Sie uns über folgende Kanäle:
@@ -267,7 +267,7 @@ function Privacy() {
                       <li><strong>Adresse:</strong> İstanbul, Türkiye</li>
                       <li><strong>Online Form:</strong> Profilseite von</li>
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
               </section>
 
@@ -329,20 +329,20 @@ function Privacy() {
               </section>
 
               {/* İletişim */}
-              <section className="mb-8">
+              {/* <section className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Kontakt</h2>
                 <div className="bg-blue-50 p-6 rounded-lg">
                   <p className="text-gray-700 mb-4">
                     Für Fragen zur Datenschutzrichtlinie:
                   </p>
                   <div className="space-y-2 text-sm">
-                    <p><strong>Datenschutzbeauftragter:</strong> SoccaZ Teknoloji A.Ş.</p>
+                    <p><strong>Datenschutzbeauftragter:</strong> SoccaZ</p>
                     <p><strong>E-Mail:</strong> privacy@soccaz.com</p>
-                    <p><strong>Telefon:</strong> +90 (212) 555 0123</p>
-                    <p><strong>Adresse:</strong> İstanbul, Türkiye</p>
+                    <p><strong>Telefon:</strong> 1626262</p>
+                    <p><strong>Adresse:</strong> Neustadt</p>
                   </div>
                 </div>
-              </section>
+              </section> */}
 
               {/* Footer */}
               <div className="border-t border-gray-200 pt-8 mt-8">
